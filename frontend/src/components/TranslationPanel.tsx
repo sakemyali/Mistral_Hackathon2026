@@ -1,6 +1,8 @@
 import { useRef, useState, useCallback } from 'react'
 import { useAppStore } from '../store/appStore'
 import type { TranslatedWord } from '../types'
+import DoraimonFace from './DoraimonFace'
+import DoraimonLoading from './DoraimonLoading'
 
 export default function TranslationPanel() {
   const {
@@ -116,13 +118,11 @@ export default function TranslationPanel() {
             className="flex items-center justify-between px-3 py-1.5 border-b border-white/10 cursor-grab"
             onMouseDown={handleDragStart}
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
+              <DoraimonFace intent="normal" loading={translationLoading} size={18} />
               <span className="text-white/80 text-[10px] font-semibold uppercase tracking-wider">
                 Translation
               </span>
-              {translationLoading && (
-                <div className="w-2.5 h-2.5 border-[1.5px] border-white/20 border-t-blue-400 rounded-full animate-spin" />
-              )}
             </div>
             <div className="flex items-center gap-1">
               {hasContent && (
@@ -155,9 +155,8 @@ export default function TranslationPanel() {
               )}
 
               {!hasContent && translationLoading && (
-                <div className="px-3 py-4 flex items-center justify-center gap-2">
-                  <div className="w-3 h-3 border-2 border-white/20 border-t-blue-400 rounded-full animate-spin" />
-                  <span className="text-white/40 text-xs">Translating...</span>
+                <div className="px-3 py-2 flex items-center justify-center">
+                  <DoraimonLoading size={52} />
                 </div>
               )}
 

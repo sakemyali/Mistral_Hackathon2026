@@ -1,12 +1,14 @@
 import { useRef, useState, useCallback } from 'react'
 import { useAppStore } from '../store/appStore'
 import IntentBadge from './IntentBadge'
+import DoraimonFace from './DoraimonFace'
 import OpacitySlider from './OpacitySlider'
 import LanguagePicker from './LanguagePicker'
 
 export default function Widget() {
   const {
     connected,
+    currentIntent,
     widgetExpanded,
     setWidgetExpanded,
     translationEnabled,
@@ -94,16 +96,13 @@ export default function Widget() {
             rounded-full px-3 py-1.5 border border-white/10 hover:border-white/30
             transition-all shadow-lg cursor-pointer"
         >
-          <div
-            className={`w-2 h-2 rounded-full ${
-              connected ? 'bg-green-400' : 'bg-red-400'
-            }`}
+          <DoraimonFace
+            intent={currentIntent}
+            loading={translationLoading}
+            connected={connected}
+            size={22}
           />
           <span className="text-white text-xs font-medium">dorAImon</span>
-          <IntentBadge />
-          {translationLoading && (
-            <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-          )}
         </button>
       )}
 
@@ -117,15 +116,13 @@ export default function Widget() {
           {/* Header */}
           <div className="flex items-center justify-between px-3 py-2 border-b border-white/10 cursor-grab">
             <div className="flex items-center gap-2">
-              <div
-                className={`w-2 h-2 rounded-full ${
-                  connected ? 'bg-green-400' : 'bg-red-400'
-                }`}
+              <DoraimonFace
+                intent={currentIntent}
+                loading={translationLoading}
+                connected={connected}
+                size={26}
               />
               <span className="text-white text-xs font-semibold">dorAImon</span>
-              {translationLoading && (
-                <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              )}
             </div>
             <div className="flex items-center gap-1">
               <button
