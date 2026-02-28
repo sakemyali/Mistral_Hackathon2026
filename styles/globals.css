@@ -93,6 +93,36 @@ html, body, #root {
   animation: slide-in-right 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* ── Fade-out for suggestion card dismiss ── */
+@keyframes fade-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.95); }
+}
+
+.animate-fade-out {
+  animation: fade-out 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Active processing glow ── */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.1), 0 0 12px rgba(139, 92, 246, 0.05); }
+  50% { box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.25), 0 0 24px rgba(139, 92, 246, 0.15), 0 0 48px rgba(139, 92, 246, 0.05); }
+}
+
+.glow-active {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* ── Status dot breathing ── */
+@keyframes breathe {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+.animate-breathe {
+  animation: breathe 2s ease-in-out infinite;
+}
+
 /* ── Range slider styling ── */
 input[type='range'] {
   -webkit-appearance: none;

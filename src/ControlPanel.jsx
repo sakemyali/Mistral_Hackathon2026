@@ -1,5 +1,19 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 
+const voiceModeLabels = { silent: 'Silent', voice: 'Voice', auto: 'Auto' };
+const voiceModeColors = {
+  silent: 'text-white/30',
+  voice: 'text-emerald-400/70',
+  auto: 'text-violet-400/70',
+};
+
+const pipelineStatusColors = {
+  idle: 'bg-white/20',
+  analyzing: 'bg-amber-400/70 animate-breathe',
+  routing: 'bg-blue-400/70 animate-breathe',
+  acting: 'bg-emerald-400/70 animate-breathe',
+};
+
 export default function ControlPanel({
   opacity,
   setOpacity,
@@ -9,13 +23,16 @@ export default function ControlPanel({
   onClear,
   onClose,
   isLoading,
+  voiceMode = 'auto',
+  onToggleVoice,
+  currentAgent,
+  pipelineStatus = 'idle',
 }) {
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: -1, y: 16 });
   const panelRef = useRef(null);
   const dragOffset = useRef({ x: 0, y: 0 });
 
-  // Position at top-right on mount
   useEffect(() => {
     const init = async () => {
       const display = await window.ghostAPI?.getDisplaySize();
@@ -63,14 +80,19 @@ export default function ControlPanel({
       style={{ left: position.x, top: position.y }}
       onMouseDown={handleDragStart}
     >
-      <div className="glass-panel w-[248px] p-4 cursor-grab active:cursor-grabbing">
+      <div className={`glass-panel w-[248px] p-4 cursor-grab active:cursor-grabbing ${pipelineStatus !== 'idle' ? 'glow-active' : ''}`}>
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-violet-400/70 shadow-[0_0_8px_rgba(167,139,250,0.4)]" />
+            <div className={`w-2 h-2 rounded-full ${pipelineStatusColors[pipelineStatus] || 'bg-violet-400/70'} shadow-[0_0_8px_rgba(167,139,250,0.4)]`} />
             <span className="text-[11px] text-white/50 tracking-[0.2em] uppercase font-medium">
-              Ghost
+              DorAImon
             </span>
+            {currentAgent && (
+              <span className="text-[9px] text-violet-400/50 animate-pulse">
+                {currentAgent}
+              </span>
+            )}
           </div>
           <button
             onClick={onClose}
@@ -119,16 +141,11 @@ export default function ControlPanel({
           {/* Opacity */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-[10px] text-white/30 tracking-wider uppercase">
-                Opacity
-              </label>
+              <label className="text-[10px] text-white/30 tracking-wider uppercase">Opacity</label>
               <span className="text-[10px] text-white/25 tabular-nums">{opacity}%</span>
             </div>
             <input
-              type="range"
-              min={20}
-              max={100}
-              value={opacity}
+              type="range" min={20} max={100} value={opacity}
               onChange={(e) => setOpacity(Number(e.target.value))}
               className="w-full"
             />
@@ -137,19 +154,25 @@ export default function ControlPanel({
           {/* Font size */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-[10px] text-white/30 tracking-wider uppercase">
-                Font Size
-              </label>
+              <label className="text-[10px] text-white/30 tracking-wider uppercase">Font Size</label>
               <span className="text-[10px] text-white/25 tabular-nums">{fontSize}px</span>
             </div>
             <input
-              type="range"
-              min={11}
-              max={24}
-              value={fontSize}
+              type="range" min={11} max={24} value={fontSize}
               onChange={(e) => setFontSize(Number(e.target.value))}
               className="w-full"
             />
+          </div>
+
+          {/* Voice mode toggle */}
+          <div className="flex items-center justify-between">
+            <label className="text-[10px] text-white/30 tracking-wider uppercase">Voice</label>
+            <button
+              onClick={onToggleVoice}
+              className={`text-[10px] tracking-wider uppercase px-2 py-0.5 rounded border border-white/[0.06] hover:border-violet-500/20 transition-colors ${voiceModeColors[voiceMode] || 'text-white/30'}`}
+            >
+              {voiceModeLabels[voiceMode] || voiceMode}
+            </button>
           </div>
         </div>
 
@@ -162,13 +185,9 @@ export default function ControlPanel({
             Clear
           </button>
           <div className="flex items-center gap-2">
-            <span className="text-[9px] text-white/15">
-              \u2318\u21E7S toggle
-            </span>
+            <span className="text-[9px] text-white/15">{'\u2318\u21E7'}S toggle</span>
             <span className="text-[9px] text-white/10">|</span>
-            <span className="text-[9px] text-white/15">
-              \u2318\u21E7C capture
-            </span>
+            <span className="text-[9px] text-white/15">{'\u2318\u21E7'}C capture</span>
           </div>
         </div>
       </div>

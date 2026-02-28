@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import OverlayRenderer from './OverlayRenderer';
 import ControlPanel from './ControlPanel';
+import TextOverlay from './components/TextOverlay';
+import SuggestionCard from './components/SuggestionCard';
+import DebugPanel from './components/DebugPanel';
 
 export default function App() {
   const [isVisible, setIsVisible] = useState(true);
@@ -11,6 +14,15 @@ export default function App() {
   const [panelOpen, setPanelOpen] = useState(true);
   const [subtitlePosition, setSubtitlePosition] = useState({ x: 0, y: 0 });
 
+  // DorAImon pipeline state
+  const [debugInfo, setDebugInfo] = useState(null);
+  const [suggestion, setSuggestion] = useState(null);
+  const [translationBlocks, setTranslationBlocks] = useState([]);
+  const [voiceMode, setVoiceMode] = useState('auto');
+  const [currentAgent, setCurrentAgent] = useState(null);
+  const [pipelineStatus, setPipelineStatus] = useState('idle');
+
+  // Manual capture (Ctrl+Shift+C)
   const handleCapture = useCallback(async () => {
     setIsLoading(true);
     setIsVisible(true);
@@ -40,16 +52,38 @@ export default function App() {
   }, []);
 
   const handleEscape = useCallback(() => {
+    if (suggestion) {
+      setSuggestion(null);
+      return;
+    }
     setPanelOpen(false);
-    // Double-tap ESC hides entirely
     if (!panelOpen) {
       setIsVisible(false);
       window.ghostAPI?.hideOverlay();
     }
-  }, [panelOpen]);
+  }, [panelOpen, suggestion]);
 
   const handleClear = useCallback(() => {
     setMessages([]);
+    setSuggestion(null);
+    setTranslationBlocks([]);
+  }, []);
+
+  const handleAcceptSuggestion = useCallback((data) => {
+    window.ghostAPI?.acceptSuggestion(data);
+    setSuggestion(null);
+  }, []);
+
+  const handleRejectSuggestion = useCallback((data) => {
+    window.ghostAPI?.rejectSuggestion(data);
+    setSuggestion(null);
+  }, []);
+
+  const handleToggleVoice = useCallback(async () => {
+    const result = await window.ghostAPI?.toggleVoiceMode();
+    if (result?.success) {
+      setVoiceMode(result.data.voiceMode);
+    }
   }, []);
 
   // IPC listeners
@@ -62,7 +96,56 @@ export default function App() {
     };
   }, [handleCapture, handleEscape]);
 
-  // Mouse region detection: enable click-through when outside interactive areas
+  // Pipeline events from main process
+  useEffect(() => {
+    const unsubDebug = window.ghostAPI?.onDebugInfo((data) => {
+      setDebugInfo(data);
+      if (data.agent) {
+        setCurrentAgent(data.agent);
+        setPipelineStatus(data.shouldAct ? 'acting' : 'routing');
+      } else {
+        setPipelineStatus('analyzing');
+      }
+    });
+
+    const unsubAgent = window.ghostAPI?.onAgentResult((data) => {
+      const { agent, action, result } = data;
+
+      if (agent === 'vibe' && result?.success) {
+        setSuggestion({
+          ...result.data.suggestion,
+          action: result.data.action,
+        });
+      } else if (agent === 'mistral' && action === 'translate' && result?.success) {
+        if (result.data.blocks) {
+          setTranslationBlocks(result.data.blocks);
+        }
+      } else if (result?.success && result.data?.text) {
+        setMessages((prev) => [
+          ...prev.slice(-4),
+          { id: Date.now(), text: result.data.text, timestamp: new Date() },
+        ]);
+      }
+
+      setCurrentAgent(null);
+      setPipelineStatus('idle');
+    });
+
+    return () => {
+      unsubDebug?.();
+      unsubAgent?.();
+    };
+  }, []);
+
+  // Start screen capture loop on mount
+  useEffect(() => {
+    window.ghostAPI?.startScreenLoop();
+    return () => {
+      window.ghostAPI?.stopScreenLoop();
+    };
+  }, []);
+
+  // Mouse region detection
   useEffect(() => {
     const handleMouseMove = (e) => {
       const interactive = e.target.closest('[data-interactive]');
@@ -91,6 +174,10 @@ export default function App() {
           onClear={handleClear}
           onClose={() => setPanelOpen(false)}
           isLoading={isLoading}
+          voiceMode={voiceMode}
+          onToggleVoice={handleToggleVoice}
+          currentAgent={currentAgent}
+          pipelineStatus={pipelineStatus}
         />
       )}
 
@@ -116,6 +203,23 @@ export default function App() {
             </svg>
           </button>
         </div>
+      )}
+
+      {/* ── Debug panel ── */}
+      <DebugPanel debugInfo={debugInfo} />
+
+      {/* ── Translation overlays (Google Lens-style) ── */}
+      <TextOverlay blocks={translationBlocks} opacity={opacity} />
+
+      {/* ── Suggestion card (Vibe) ── */}
+      {suggestion && (
+        <SuggestionCard
+          suggestion={suggestion}
+          agent={currentAgent || 'vibe'}
+          intent={debugInfo?.intent}
+          onAccept={handleAcceptSuggestion}
+          onReject={handleRejectSuggestion}
+        />
       )}
 
       {/* ── Subtitle area (bottom) ── */}

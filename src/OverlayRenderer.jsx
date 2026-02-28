@@ -203,7 +203,7 @@ export default function OverlayRenderer({
           <div className="glass-panel-light px-5 py-2.5 flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-emerald-400/60 animate-pulse" />
             <span className="text-xs text-white/30 tracking-widest uppercase font-light">
-              Ghost Overlay Active
+              DorAImon Active
             </span>
             <span className="text-[10px] text-white/20 ml-2">
               Ctrl+Shift+C to capture

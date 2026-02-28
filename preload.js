@@ -25,4 +25,29 @@ contextBridge.exposeInMainWorld('ghostAPI', {
   aiCapture: (payload) => ipcRenderer.invoke('ai-capture', payload),
   aiRequest: (service, payload) => ipcRenderer.invoke('ai-request', { service, payload }),
   getAIServices: () => ipcRenderer.invoke('ai-services'),
+
+  // Screen capture loop
+  startScreenLoop: () => ipcRenderer.invoke('start-screen-loop'),
+  stopScreenLoop: () => ipcRenderer.invoke('stop-screen-loop'),
+
+  // Pipeline events from main process
+  onAgentResult: (callback) => {
+    ipcRenderer.on('agent-result', (_event, data) => callback(data));
+    return () => ipcRenderer.removeAllListeners('agent-result');
+  },
+  onDebugInfo: (callback) => {
+    ipcRenderer.on('debug-info', (_event, data) => callback(data));
+    return () => ipcRenderer.removeAllListeners('debug-info');
+  },
+  onPlayAudio: (callback) => {
+    ipcRenderer.on('play-audio', (_event, data) => callback(data));
+    return () => ipcRenderer.removeAllListeners('play-audio');
+  },
+
+  // User actions (feedback for W&B)
+  acceptSuggestion: (data) => ipcRenderer.send('user-action', { action: 'accepted', ...data }),
+  rejectSuggestion: (data) => ipcRenderer.send('user-action', { action: 'rejected', ...data }),
+
+  // Voice mode
+  toggleVoiceMode: () => ipcRenderer.invoke('toggle-voice-mode'),
 });

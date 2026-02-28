@@ -1,14 +1,20 @@
 const MistralService = require('./mistral');
 const ElevenLabsService = require('./elevenlabs');
 const VibeService = require('./vibe');
+const ClassifierService = require('./classifier');
+const RouterService = require('./router');
+const WandbService = require('./wandb');
 
 const services = {};
 
 async function initServices() {
   const registry = {
+    classifier: new ClassifierService(),
+    router: new RouterService(),
     mistral: new MistralService(),
-    elevenlabs: new ElevenLabsService(),
     vibe: new VibeService(),
+    elevenlabs: new ElevenLabsService(),
+    wandb: new WandbService(),
   };
 
   for (const [name, service] of Object.entries(registry)) {
@@ -38,4 +44,8 @@ function getServiceNames() {
   return Object.keys(services);
 }
 
-module.exports = { initServices, routeRequest, getServiceNames };
+function getService(name) {
+  return services[name] || null;
+}
+
+module.exports = { initServices, routeRequest, getServiceNames, getService };

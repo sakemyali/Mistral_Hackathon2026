@@ -1,7 +1,7 @@
 {
-  "name": "ghost-overlay",
+  "name": "doraimon",
   "version": "1.0.0",
-  "description": "Transparent AI overlay — always-on-top HUD with glassmorphism UI",
+  "description": "DorAImon — self-improving AI assistant overlay with multi-agent pipeline",
   "main": "main.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
@@ -9,6 +9,7 @@
     "dev": "webpack --config webpack.config.js --mode development && electron . --dev"
   },
   "dependencies": {
+    "@mistralai/mistralai": "^1.14.1",
     "dotenv": "^17.3.1",
     "electron": "^33.2.0",
     "react": "^18.3.1",
@@ -31,7 +32,7 @@
     "webpack-dev-server": "^5.2.0"
   },
   "build": {
-    "appId": "com.ghost.overlay",
-    "productName": "GhostOverlay"
+    "appId": "com.doraimon.app",
+    "productName": "DorAImon"
   }
 }
