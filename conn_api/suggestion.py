@@ -1,13 +1,12 @@
+import base64
 import json
 import os
-from typing import Any, Dict, List
+import asyncio
+from typing import Any, Dict, List, Optional
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from pydantic import BaseModel, ValidationError
+from elevenlabs.client import ElevenLabs
+from pydantic import BaseModel
 from mistralai import Mistral
-
-
-app: FastAPI = FastAPI()
 
 
 class SuggestionItem(BaseModel):
@@ -26,152 +25,112 @@ class SuggestionItem(BaseModel):
     language: str
 
 
-def build_suggestion_prompt(item: SuggestionItem) -> str:
+async def get_suggestion_advice(item: SuggestionItem) -> Dict[str, Any]:
     """
-    Builds the prompt string for the LLM to provide suggestions.
+    Core logic to get a suggestion from Mistral Chat API and audio from ElevenLabs.
+    This function is designed to be called internally by other Python modules.
 
     Args:
-        item: The input item containing content and context.
+        item (SuggestionItem): The request item containing context and content.
 
     Returns:
-        A formatted string instructing the LLM.
+        Dict[str, Any]: A dictionary containing coordination, content, and audio.
     """
-    prompt: str = (
-        "You are a helpful assistant.\n"
-        f"Context: {item.context}\n"
-        f"Content: {item.content}\n"
-        f"Please analyze the context and content, and provide useful "
-        f"information or suggestions in {item.language}.\n"
-        "CRITICAL INSTRUCTION: You must respond ONLY with a valid "
-        "JSON object.\n"
-        'The JSON must have a single key named "suggestion" '
-        'containing your text. Do not add any other text.\n'
-    )
-    return prompt
+    mistral_key: str = os.getenv("MISTRAL_API_KEY", "")
+    eleven_key: str = os.getenv("ELEVENLABS_API_KEY", "")
 
+    if not mistral_key:
+        return {"error": "MISTRAL_API_KEY is missing."}
 
-@app.websocket("/ws/suggest")
-async def websocket_suggest(websocket: WebSocket) -> None:
-    """
-    WebSocket endpoint for real-time information and suggestions.
+    client: Mistral = Mistral(api_key=mistral_key)
 
-    Args:
-        websocket: The WebSocket connection object.
-    """
-    await websocket.accept()
-    api_key: str = os.getenv("MISTRAL_API_KEY", "")
-
-    if not api_key:
-        await websocket.send_text("Error: API key is missing.")
-        await websocket.close()
-        return
-
-    client: Mistral = Mistral(api_key=api_key)
-
+    # 1. Mistral Chat Completion (Direct API call without Agents)
     try:
-        while True:
-            # Wait for text data from the client
-            data_str: str = await websocket.receive_text()
+        # Instruction for the model to ensure JSON output
+        system_prompt: str = (
+            "You are a helpful assistant. Analyze the user's context and "
+            "content to provide a concise suggestion in the specified language. "
+            "You MUST respond ONLY with a valid JSON object containing "
+            "a single key 'suggestion'."
+        )
 
-            try:
-                data_dict: Dict[str, Any] = json.loads(data_str)
-                req_item: SuggestionItem = SuggestionItem(**data_dict)
-            except (json.JSONDecodeError, ValidationError) as e:
-                error_msg: str = f"Invalid format: {e}"
-                await websocket.send_text(error_msg)
-                continue
+        user_content: str = (
+            f"Language: {item.language}\n"
+            f"Context: {item.context}\n"
+            f"Content: {item.content}"
+        )
 
-            prompt_text: str = build_suggestion_prompt(req_item)
+        response = client.chat.complete(
+            model="mistral-small-latest",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_content}
+            ],
+            response_format={"type": "json_object"}
+        )
 
-            # Call the Mistral Small API
-            response: Any = client.chat.complete(
-                model="mistral-small-latest",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt_text
-                    }
-                ],
-                temperature=0.3,
-                max_tokens=300,
-                response_format={"type": "json_object"}
-            )
+        raw_content: str = response.choices[0].message.content
 
-            raw_content: str = response.choices[0].message.content
-
-            try:
-                parsed_content: Dict[str, str] = json.loads(raw_content)
-                result_text: str = parsed_content.get(
-                    "suggestion",
-                    raw_content
-                )
-            except json.JSONDecodeError:
-                result_text = raw_content
-
-            output_dict: Dict[str, Any] = {
-                "text_coordination": req_item.text_coordination,
-                "content": result_text
-            }
-
-            output_str: str = json.dumps(
-                output_dict,
-                ensure_ascii=False
-            )
-
-            # Send the result back to the client
-            await websocket.send_text(output_str)
-
-    except WebSocketDisconnect:
-        print("Client disconnected.")
-
-
-def run_websocket_test() -> None:
-    """
-    Tests the WebSocket suggestion endpoint with sample data.
-    """
-    from fastapi.testclient import TestClient
-
-    client: TestClient = TestClient(app)
-
-    snippets: List[Dict[str, str]] = [
-        {
-            "context": "User is looking at a restaurant menu.",
-            "content": "Spicy Thai Basil Chicken",
-        },
-        {
-            "context": "User is reading a cloud architecture diagram.",
-            "content": "Amazon S3 Bucket",
-        }
-    ]
-
-    # Generate sample payloads
-    sample_data: List[Dict[str, Any]] = [
-        {
-            "text_coordination": {
-                "x": 200,
-                "y": 300 + (i * 100)
-            },
-            "context": snippet["context"],
-            "content": snippet["content"],
-            "language": "Japanese"
-        }
-        for i, snippet in enumerate(snippets)
-    ]
-
-    try:
-        with client.websocket_connect("/ws/suggest") as ws:
-            for data in sample_data:
-                json_str: str = json.dumps(data)
-                ws.send_text(json_str)
-
-                response_str: str = ws.receive_text()
-
-                print(f"Content: {data['content']}")
-                print(f"Suggestion: {response_str}\n")
+        try:
+            parsed = json.loads(raw_content)
+            result_text = parsed.get("suggestion", raw_content)
+        except json.JSONDecodeError:
+            result_text = raw_content
 
     except Exception as e:
-        print(f"Test failed: {e}")
+        return {"error": f"Mistral API error: {str(e)}"}
+
+    # 2. Text-to-Speech Generation using ElevenLabs
+    audio_b64: Optional[str] = None
+    if eleven_key:
+        try:
+            el_client = ElevenLabs(api_key=eleven_key)
+            # Fetching audio stream from the 2026 SDK convert method
+            audio_stream = el_client.text_to_speech.convert(
+                voice_id="21m00Tcm4TlvDq8ikWAM",  # Rachel
+                output_format="mp3_44100_128",
+                text=result_text,
+                model_id="eleven_multilingual_v2"
+            )
+
+            audio_bytes: bytes = b"".join(list(audio_stream))
+            audio_b64 = base64.b64encode(audio_bytes).decode()
+        except Exception as e:
+            print(f"TTS error: {e}")
+
+    return {
+        "text_coordination": item.text_coordination,
+        "content": result_text,
+        "audio": audio_b64,
+    }
+
+
+def run_internal_test() -> None:
+    """
+    Internal test function to verify Chat API and TTS logic.
+    """
+    sample_payload = SuggestionItem(
+        text_coordination={"x": 100, "y": 200},
+        context="User is looking at a menu in a French bakery.",
+        content="Pain au Chocolat",
+        language="English"
+    )
+
+    print("--- Starting internal Chat API test ---")
+    # Execute the async function using the event loop
+    result = asyncio.run(get_suggestion_advice(sample_payload))
+
+    if "error" in result:
+        print(f"Test Failed: {result['error']}")
+    else:
+        print(f"Mistral Suggestion: {result['content']}")
+
+        if result.get("audio"):
+            out_path = "suggestion_direct_test.mp3"
+            with open(out_path, "wb") as f:
+                f.write(base64.b64decode(result["audio"]))
+            print(f"--- Success: Audio saved to {out_path} ---")
 
 
 if __name__ == "__main__":
-    run_websocket_test()
+    run_internal_test()
