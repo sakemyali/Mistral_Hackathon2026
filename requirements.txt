@@ -1,0 +1,2 @@
+mistralai==1.9.10
+Pillow==10.4.0

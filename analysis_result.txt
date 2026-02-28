@@ -1,0 +1,1562 @@
+=== Mistral OCR Analysis Result ===
+timestamp: 2026-02-28T13:32:17.832Z
+status: success
+elements_detected: 222
+primary_intent: ui_reading
+dominant_language: Japanese
+screen_type: web
+
+--- Extracted Texts (with coordinates) ---
+[1] content: ●
+    top_left: (86, 159)
+    bottom_right: (90, 160)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[2] content: ●
+    top_left: (86, 160)
+    bottom_right: (90, 161)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[3] content: ●
+    top_left: (86, 161)
+    bottom_right: (90, 162)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[4] content: ×
+    top_left: (86, 162)
+    bottom_right: (90, 163)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[5] content: ●
+    top_left: (86, 163)
+    bottom_right: (90, 164)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[6] content: ●
+    top_left: (86, 164)
+    bottom_right: (90, 165)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[7] content: ●
+    top_left: (86, 165)
+    bottom_right: (90, 166)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[8] content: ●
+    top_left: (86, 166)
+    bottom_right: (90, 167)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[9] content: ●
+    top_left: (86, 167)
+    bottom_right: (90, 168)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[10] content: ●
+    top_left: (86, 168)
+    bottom_right: (90, 169)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[11] content: ●
+    top_left: (86, 169)
+    bottom_right: (90, 170)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[12] content: ●
+    top_left: (86, 170)
+    bottom_right: (90, 171)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[13] content: ●
+    top_left: (86, 171)
+    bottom_right: (90, 172)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[14] content: ●
+    top_left: (86, 172)
+    bottom_right: (90, 173)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[15] content: ●
+    top_left: (86, 173)
+    bottom_right: (90, 174)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[16] content: ●
+    top_left: (86, 174)
+    bottom_right: (90, 175)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[17] content: ●
+    top_left: (86, 175)
+    bottom_right: (90, 176)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[18] content: ●
+    top_left: (86, 176)
+    bottom_right: (90, 177)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[19] content: ●
+    top_left: (86, 177)
+    bottom_right: (90, 178)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[20] content: ●
+    top_left: (86, 178)
+    bottom_right: (90, 179)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[21] content: ●
+    top_left: (86, 179)
+    bottom_right: (90, 180)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[22] content: ●
+    top_left: (86, 180)
+    bottom_right: (90, 181)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[23] content: ●
+    top_left: (86, 181)
+    bottom_right: (90, 182)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[24] content: ●
+    top_left: (86, 182)
+    bottom_right: (90, 183)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[25] content: ●
+    top_left: (86, 183)
+    bottom_right: (90, 184)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[26] content: ●
+    top_left: (86, 184)
+    bottom_right: (90, 185)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[27] content: ●
+    top_left: (86, 185)
+    bottom_right: (90, 186)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[28] content: ●
+    top_left: (86, 186)
+    bottom_right: (90, 187)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[29] content: ●
+    top_left: (86, 187)
+    bottom_right: (90, 188)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[30] content: ●
+    top_left: (86, 188)
+    bottom_right: (90, 189)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[31] content: ●
+    top_left: (86, 189)
+    bottom_right: (90, 190)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[32] content: ●
+    top_left: (86, 190)
+    bottom_right: (90, 191)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[33] content: ●
+    top_left: (86, 191)
+    bottom_right: (90, 192)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[34] content: ●
+    top_left: (86, 192)
+    bottom_right: (90, 193)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[35] content: ●
+    top_left: (86, 193)
+    bottom_right: (90, 194)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[36] content: ●
+    top_left: (86, 194)
+    bottom_right: (90, 195)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[37] content: ●
+    top_left: (86, 195)
+    bottom_right: (90, 196)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[38] content: ●
+    top_left: (86, 196)
+    bottom_right: (90, 197)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[39] content: ●
+    top_left: (86, 197)
+    bottom_right: (90, 198)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[40] content: ●
+    top_left: (86, 198)
+    bottom_right: (90, 199)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[41] content: ●
+    top_left: (86, 199)
+    bottom_right: (90, 200)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[42] content: ●
+    top_left: (86, 200)
+    bottom_right: (90, 201)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[43] content: ●
+    top_left: (86, 201)
+    bottom_right: (90, 202)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[44] content: ●
+    top_left: (86, 202)
+    bottom_right: (90, 203)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[45] content: ●
+    top_left: (86, 203)
+    bottom_right: (90, 204)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[46] content: ●
+    top_left: (86, 204)
+    bottom_right: (90, 205)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[47] content: ●
+    top_left: (86, 205)
+    bottom_right: (90, 206)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[48] content: ●
+    top_left: (86, 206)
+    bottom_right: (90, 207)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[49] content: ●
+    top_left: (86, 207)
+    bottom_right: (90, 208)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[50] content: ●
+    top_left: (86, 208)
+    bottom_right: (90, 209)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[51] content: ●
+    top_left: (86, 209)
+    bottom_right: (90, 210)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[52] content: ●
+    top_left: (86, 210)
+    bottom_right: (90, 211)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[53] content: ●
+    top_left: (86, 211)
+    bottom_right: (90, 212)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[54] content: ●
+    top_left: (86, 212)
+    bottom_right: (90, 213)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[55] content: ●
+    top_left: (86, 213)
+    bottom_right: (90, 214)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[56] content: ●
+    top_left: (86, 214)
+    bottom_right: (90, 215)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[57] content: ←
+    top_left: (86, 215)
+    bottom_right: (90, 216)
+    language: Mixed
+    type: ui
+    context: ナビゲーション矢印（左）
+
+[58] content: →
+    top_left: (86, 216)
+    bottom_right: (90, 217)
+    language: Mixed
+    type: ui
+    context: ナビゲーション矢印（右）
+
+[59] content: 0
+    top_left: (86, 217)
+    bottom_right: (90, 218)
+    language: Mixed
+    type: label
+    context: ページ番号または数値
+
+[60] content: 1
+    top_left: (86, 218)
+    bottom_right: (90, 219)
+    language: Mixed
+    type: label
+    context: ページ番号または数値
+
+[61] content: kikkoman.co.jp/homecook/theme/popular/ten_minute
+    top_left: (86, 219)
+    bottom_right: (234, 220)
+    language: Mixed
+    type: link
+    context: ウェブサイトのURL
+
+[62] content: 2
+    top_left: (86, 220)
+    bottom_right: (90, 221)
+    language: Mixed
+    type: label
+    context: ページ番号または数値
+
+[63] content: 3
+    top_left: (86, 221)
+    bottom_right: (90, 222)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[64] content: 4
+    top_left: (86, 222)
+    bottom_right: (90, 223)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[65] content: 5
+    top_left: (86, 223)
+    bottom_right: (90, 224)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[66] content: 6
+    top_left: (86, 224)
+    bottom_right: (90, 225)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[67] content: 7
+    top_left: (86, 225)
+    bottom_right: (90, 226)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[68] content: 8
+    top_left: (86, 226)
+    bottom_right: (90, 227)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[69] content: 9
+    top_left: (86, 227)
+    bottom_right: (90, 228)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[70] content: 10
+    top_left: (86, 228)
+    bottom_right: (94, 229)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[71] content: 11
+    top_left: (86, 229)
+    bottom_right: (94, 230)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[72] content: 12
+    top_left: (86, 230)
+    bottom_right: (94, 231)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[73] content: 13
+    top_left: (86, 231)
+    bottom_right: (94, 232)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[74] content: 14
+    top_left: (86, 232)
+    bottom_right: (94, 233)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[75] content: 15
+    top_left: (86, 233)
+    bottom_right: (94, 234)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[76] content: 16
+    top_left: (86, 234)
+    bottom_right: (94, 235)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[77] content: 17
+    top_left: (86, 235)
+    bottom_right: (94, 236)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[78] content: 18
+    top_left: (86, 236)
+    bottom_right: (94, 237)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[79] content: 19
+    top_left: (86, 237)
+    bottom_right: (94, 238)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[80] content: 20
+    top_left: (86, 238)
+    bottom_right: (94, 239)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[81] content: 21
+    top_left: (86, 239)
+    bottom_right: (94, 240)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[82] content: 22
+    top_left: (86, 240)
+    bottom_right: (94, 241)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[83] content: 23
+    top_left: (86, 241)
+    bottom_right: (94, 242)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[84] content: 24
+    top_left: (86, 242)
+    bottom_right: (94, 243)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[85] content: 25
+    top_left: (86, 243)
+    bottom_right: (94, 244)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[86] content: 26
+    top_left: (86, 244)
+    bottom_right: (94, 245)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[87] content: 27
+    top_left: (86, 245)
+    bottom_right: (94, 246)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[88] content: 28
+    top_left: (86, 246)
+    bottom_right: (94, 247)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[89] content: 29
+    top_left: (86, 247)
+    bottom_right: (94, 248)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[90] content: 30
+    top_left: (86, 248)
+    bottom_right: (94, 249)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[91] content: 31
+    top_left: (86, 249)
+    bottom_right: (94, 250)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[92] content: 32
+    top_left: (86, 250)
+    bottom_right: (94, 251)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[93] content: 33
+    top_left: (86, 251)
+    bottom_right: (94, 252)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[94] content: 34
+    top_left: (86, 252)
+    bottom_right: (94, 253)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[95] content: 35
+    top_left: (86, 253)
+    bottom_right: (94, 254)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[96] content: 36
+    top_left: (86, 254)
+    bottom_right: (94, 255)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[97] content: 37
+    top_left: (86, 255)
+    bottom_right: (94, 256)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[98] content: 38
+    top_left: (86, 256)
+    bottom_right: (94, 257)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[99] content: 39
+    top_left: (86, 257)
+    bottom_right: (94, 258)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[100] content: 40
+    top_left: (86, 258)
+    bottom_right: (94, 259)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[101] content: 41
+    top_left: (86, 259)
+    bottom_right: (94, 260)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[102] content: 42
+    top_left: (86, 260)
+    bottom_right: (94, 261)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[103] content: 43
+    top_left: (86, 261)
+    bottom_right: (94, 262)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[104] content: 44
+    top_left: (86, 262)
+    bottom_right: (94, 263)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[105] content: 45
+    top_left: (86, 263)
+    bottom_right: (94, 264)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[106] content: 46
+    top_left: (86, 264)
+    bottom_right: (94, 265)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[107] content: 47
+    top_left: (86, 265)
+    bottom_right: (94, 266)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[108] content: 48
+    top_left: (86, 266)
+    bottom_right: (94, 267)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[109] content: 49
+    top_left: (86, 267)
+    bottom_right: (94, 268)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[110] content: 50
+    top_left: (86, 268)
+    bottom_right: (94, 269)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[111] content: 51
+    top_left: (86, 269)
+    bottom_right: (94, 270)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[112] content: 52
+    top_left: (86, 270)
+    bottom_right: (94, 271)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[113] content: 53
+    top_left: (86, 271)
+    bottom_right: (94, 272)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[114] content: 54
+    top_left: (86, 272)
+    bottom_right: (94, 273)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[115] content: 55
+    top_left: (86, 273)
+    bottom_right: (94, 274)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[116] content: 56
+    top_left: (86, 274)
+    bottom_right: (94, 275)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[117] content: 57
+    top_left: (86, 275)
+    bottom_right: (94, 276)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[118] content: 58
+    top_left: (86, 276)
+    bottom_right: (94, 277)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[119] content: 59
+    top_left: (86, 277)
+    bottom_right: (94, 278)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[120] content: 60
+    top_left: (86, 278)
+    bottom_right: (94, 279)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[121] content: 61
+    top_left: (86, 279)
+    bottom_right: (94, 280)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[122] content: 62
+    top_left: (86, 280)
+    bottom_right: (94, 281)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[123] content: 63
+    top_left: (86, 281)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[124] content: 64
+    top_left: (86, 282)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[125] content: 65
+    top_left: (86, 283)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[126] content: 66
+    top_left: (86, 284)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[127] content: 67
+    top_left: (86, 285)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[128] content: 68
+    top_left: (86, 286)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[129] content: 69
+    top_left: (86, 287)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[130] content: 70
+    top_left: (86, 288)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[131] content: 71
+    top_left: (86, 289)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[132] content: 72
+    top_left: (86, 290)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[133] content: 73
+    top_left: (86, 291)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[134] content: 74
+    top_left: (86, 292)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[135] content: 75
+    top_left: (86, 293)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[136] content: 76
+    top_left: (86, 294)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[137] content: 77
+    top_left: (86, 295)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[138] content: 78
+    top_left: (86, 296)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[139] content: 79
+    top_left: (86, 297)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[140] content: 80
+    top_left: (86, 298)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[141] content: 31
+    top_left: (86, 299)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[142] content: 32
+    top_left: (86, 300)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[143] content: 33
+    top_left: (86, 301)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[144] content: 34
+    top_left: (86, 302)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[145] content: 35
+    top_left: (86, 303)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[146] content: 36
+    top_left: (86, 304)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[147] content: 37
+    top_left: (86, 305)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[148] content: 38
+    top_left: (86, 306)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[149] content: 39
+    top_left: (86, 307)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[150] content: 40
+    top_left: (86, 308)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[151] content: 41
+    top_left: (86, 309)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[152] content: 42
+    top_left: (86, 310)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[153] content: 43
+    top_left: (86, 311)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[154] content: 44
+    top_left: (86, 312)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[155] content: 45
+    top_left: (86, 313)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[156] content: 46
+    top_left: (86, 314)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[157] content: 47
+    top_left: (86, 315)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[158] content: 48
+    top_left: (86, 316)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[159] content: 49
+    top_left: (86, 317)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[160] content: 50
+    top_left: (86, 318)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[161] content: 51
+    top_left: (86, 319)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[162] content: 52
+    top_left: (86, 320)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[163] content: 53
+    top_left: (86, 321)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[164] content: 54
+    top_left: (86, 322)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[165] content: 55
+    top_left: (86, 323)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[166] content: 56
+    top_left: (86, 324)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[167] content: 57
+    top_left: (86, 325)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[168] content: 58
+    top_left: (86, 326)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[169] content: 59
+    top_left: (86, 327)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[170] content: 32
+    top_left: (86, 328)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[171] content: 33
+    top_left: (86, 329)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[172] content: 34
+    top_left: (86, 330)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[173] content: 35
+    top_left: (86, 331)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[174] content: 36
+    top_left: (86, 332)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[175] content: 37
+    top_left: (86, 333)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[176] content: 38
+    top_left: (86, 334)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[177] content: 39
+    top_left: (86, 335)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[178] content: 40
+    top_left: (86, 336)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[179] content: 41
+    top_left: (86, 337)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[180] content: 42
+    top_left: (86, 338)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[181] content: 43
+    top_left: (86, 339)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[182] content: 44
+    top_left: (86, 340)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[183] content: 45
+    top_left: (86, 341)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[184] content: 46
+    top_left: (86, 342)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[185] content: 47
+    top_left: (86, 343)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[186] content: 48
+    top_left: (86, 344)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[187] content: 49
+    top_left: (86, 345)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[188] content: 50
+    top_left: (86, 346)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[189] content: 51
+    top_left: (86, 347)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[190] content: 52
+    top_left: (86, 348)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[191] content: 53
+    top_left: (86, 349)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[192] content: 54
+    top_left: (86, 350)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[193] content: 55
+    top_left: (86, 351)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[194] content: 56
+    top_left: (86, 352)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[195] content: 57
+    top_left: (86, 353)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[196] content: 58
+    top_left: (86, 354)
+    bottom_right: (94, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[197] content: キッコーマン
+    top_left: (86, 355)
+    bottom_right: (131, 282)
+    language: Japanese
+    type: heading
+    context: ブランド名
+
+[198] content: ホームクッキング
+    top_left: (86, 356)
+    bottom_right: (145, 282)
+    language: Japanese
+    type: heading
+    context: カテゴリ名（ホームクッキング）
+
+[199] content: 今日のおいしいがみつかる。
+    top_left: (86, 357)
+    bottom_right: (179, 282)
+    language: Japanese
+    type: heading
+    context: キャッチコピー
+
+[200] content: 簡単おかず！マーボーもやし【ご飯のすすむ人気の味】
+    top_left: (86, 358)
+    bottom_right: (234, 282)
+    language: Japanese
+    type: heading
+    context: レシピ名
+
+[201] content: 10分
+    top_left: (86, 359)
+    bottom_right: (101, 282)
+    language: Mixed
+    type: label
+    context: 調理時間
+
+[202] content: 202kcal
+    top_left: (86, 360)
+    bottom_right: (112, 282)
+    language: Mixed
+    type: label
+    context: カロリー表示
+
+[203] content: 1.5g
+    top_left: (86, 361)
+    bottom_right: (101, 282)
+    language: Mixed
+    type: label
+    context: 栄養素量（食塩相当量）
+
+[204] content: 10分以内
+    top_left: (86, 362)
+    bottom_right: (116, 282)
+    language: Japanese
+    type: label
+    context: 調理時間カテゴリ
+
+[205] content: 主菜でゆる減塩
+    top_left: (86, 363)
+    bottom_right: (138, 282)
+    language: Japanese
+    type: label
+    context: 健康カテゴリ（減塩）
+
+[206] content: 豚こま肉となすと小松菜のふんわり卵炒め【デイリー人気おかず】
+    top_left: (86, 364)
+    bottom_right: (234, 282)
+    language: Japanese
+    type: heading
+    context: レシピ名
+
+[207] content: うまみ満点！トマト豚バラキムチ【人気のヘルシー主菜】
+    top_left: (86, 365)
+    bottom_right: (234, 282)
+    language: Japanese
+    type: heading
+    context: レシピ名
+
+[208] content: 10分
+    top_left: (86, 366)
+    bottom_right: (101, 282)
+    language: Mixed
+    type: label
+    context: 調理時間
+
+[209] content: 443kcal
+    top_left: (86, 367)
+    bottom_right: (112, 282)
+    language: Mixed
+    type: label
+    context: カロリー表示
+
+[210] content: 1.5g
+    top_left: (86, 368)
+    bottom_right: (101, 282)
+    language: Mixed
+    type: label
+    context: 栄養素量（食塩相当量）
+
+[211] content: 豚肉
+    top_left: (86, 369)
+    bottom_right: (101, 282)
+    language: Japanese
+    type: label
+    context: 食材カテゴリ
+
+[212] content: #
+    top_left: (86, 370)
+    bottom_right: (90, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[213] content: トマト・ミニトマト
+    top_left: (86, 371)
+    bottom_right: (153, 282)
+    language: Japanese
+    type: label
+    context: 食材カテゴリ
+
+[214] content: #
+    top_left: (86, 372)
+    bottom_right: (90, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[215] content: 主菜
+    top_left: (86, 373)
+    bottom_right: (101, 282)
+    language: Japanese
+    type: label
+    context: 料理カテゴリ（主菜）
+
+[216] content: 10分以内
+    top_left: (86, 374)
+    bottom_right: (116, 282)
+    language: Japanese
+    type: label
+    context: 調理時間カテゴリ
+
+[217] content: #
+    top_left: (86, 375)
+    bottom_right: (90, 282)
+    language: Mixed
+    type: text
+    context: 画面内テキスト
+
+[218] content: 主菜でゆる減塩
+    top_left: (86, 376)
+    bottom_right: (138, 282)
+    language: Japanese
+    type: label
+    context: 健康カテゴリ（減塩）
+
+[219] content: トマトだれのこんがり豚ばら焼き【白だしで簡単メニュー】
+    top_left: (86, 377)
+    bottom_right: (234, 282)
+    language: Japanese
+    type: heading
+    context: レシピ名
+
+[220] content: 簡単さっぱり！豚肉と玉ねぎとにんじん（人参）のぼんず炒め
+    top_left: (86, 378)
+    bottom_right: (234, 282)
+    language: Japanese
+    type: heading
+    context: レシピ名
+
+[221] content: 豚バラ肉となすと玉ねぎのしょうか焼
+    top_left: (86, 379)
+    bottom_right: (212, 282)
+    language: Japanese
+    type: heading
+    context: レシピ名
+
+[222] content: 甘辛だれがおいしい！トマト肉巻き【人気の野菜がとれる主菜】
+    top_left: (86, 380)
+    bottom_right: (234, 282)
+    language: Japanese
+    type: heading
+    context: レシピ名

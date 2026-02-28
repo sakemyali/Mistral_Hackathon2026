@@ -1,0 +1,14 @@
+{
+  "mistral_api_key": "ioXzcSiIlimZjqh4MUoePnNvA8ztQX0B",
+  "image_translate": {
+    "image_path": "screenshot.png",
+    "target_language": "English",
+    "ocr_model": "mistral-ocr-latest",
+    "chat_model": "mistral-large-latest",
+    "output_image_path": "translated_image.png",
+    "comparison_image_path": "comparison_image.png",
+    "font_size": 20,
+    "bg_alpha": 180,
+    "prompt": "Translate the following texts to English. Return a JSON object with 'translations' key containing an array of translated texts in the same order."
+  }
+}

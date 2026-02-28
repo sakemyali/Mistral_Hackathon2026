@@ -1,0 +1,3577 @@
+{
+  "words": [
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 159
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 160
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 160
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 161
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 161
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 162
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "×",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 162
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 163
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 163
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 164
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 164
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 165
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 165
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 166
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 166
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 167
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 167
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 168
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 168
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 169
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 169
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 170
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 170
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 171
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 171
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 172
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 172
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 173
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 173
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 174
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 174
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 175
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 175
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 176
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 176
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 177
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 177
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 178
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 178
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 179
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 179
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 180
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 180
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 181
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 181
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 182
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 182
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 183
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 183
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 184
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 184
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 185
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 185
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 186
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 186
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 187
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 187
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 188
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 188
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 189
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 189
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 190
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 190
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 191
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 191
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 192
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 192
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 193
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 193
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 194
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 194
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 195
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 195
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 196
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 196
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 197
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 197
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 198
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 198
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 199
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 199
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 200
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 200
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 201
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 201
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 202
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 202
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 203
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 203
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 204
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 204
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 205
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 205
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 206
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 206
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 207
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 207
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 208
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 208
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 209
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 209
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 210
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 210
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 211
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 211
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 212
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 212
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 213
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 213
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 214
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "●",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 214
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 215
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "←",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 215
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 216
+        }
+      },
+      "language": "Mixed",
+      "type": "ui",
+      "context": "ナビゲーション矢印（左）"
+    },
+    {
+      "content": "→",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 216
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 217
+        }
+      },
+      "language": "Mixed",
+      "type": "ui",
+      "context": "ナビゲーション矢印（右）"
+    },
+    {
+      "content": "0",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 217
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 218
+        }
+      },
+      "language": "Mixed",
+      "type": "label",
+      "context": "ページ番号または数値"
+    },
+    {
+      "content": "1",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 218
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 219
+        }
+      },
+      "language": "Mixed",
+      "type": "label",
+      "context": "ページ番号または数値"
+    },
+    {
+      "content": "kikkoman.co.jp/homecook/theme/popular/ten_minute",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 219
+        },
+        "bottom_right": {
+          "x": 234,
+          "y": 220
+        }
+      },
+      "language": "Mixed",
+      "type": "link",
+      "context": "ウェブサイトのURL"
+    },
+    {
+      "content": "2",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 220
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 221
+        }
+      },
+      "language": "Mixed",
+      "type": "label",
+      "context": "ページ番号または数値"
+    },
+    {
+      "content": "3",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 221
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 222
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "4",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 222
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 223
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "5",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 223
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 224
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "6",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 224
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 225
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "7",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 225
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 226
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "8",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 226
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 227
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "9",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 227
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 228
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "10",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 228
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 229
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "11",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 229
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 230
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "12",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 230
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 231
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "13",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 231
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 232
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "14",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 232
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 233
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "15",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 233
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 234
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "16",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 234
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 235
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "17",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 235
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 236
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "18",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 236
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 237
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "19",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 237
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 238
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "20",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 238
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 239
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "21",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 239
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 240
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "22",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 240
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 241
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "23",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 241
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 242
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "24",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 242
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 243
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "25",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 243
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 244
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "26",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 244
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 245
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "27",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 245
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 246
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "28",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 246
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 247
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "29",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 247
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 248
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "30",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 248
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 249
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "31",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 249
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 250
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "32",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 250
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 251
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "33",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 251
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 252
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "34",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 252
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 253
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "35",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 253
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 254
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "36",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 254
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 255
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "37",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 255
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 256
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "38",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 256
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 257
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "39",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 257
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 258
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "40",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 258
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 259
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "41",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 259
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 260
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "42",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 260
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 261
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "43",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 261
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 262
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "44",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 262
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 263
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "45",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 263
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 264
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "46",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 264
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 265
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "47",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 265
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 266
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "48",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 266
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 267
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "49",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 267
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 268
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "50",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 268
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 269
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "51",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 269
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 270
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "52",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 270
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 271
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "53",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 271
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 272
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "54",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 272
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 273
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "55",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 273
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 274
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "56",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 274
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 275
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "57",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 275
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 276
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "58",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 276
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 277
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "59",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 277
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 278
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "60",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 278
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 279
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "61",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 279
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 280
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "62",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 280
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 281
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "63",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 281
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "64",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 282
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "65",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 283
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "66",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 284
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "67",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 285
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "68",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 286
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "69",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 287
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "70",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 288
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "71",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 289
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "72",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 290
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "73",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 291
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "74",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 292
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "75",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 293
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "76",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 294
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "77",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 295
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "78",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 296
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "79",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 297
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "80",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 298
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "31",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 299
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "32",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 300
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "33",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 301
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "34",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 302
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "35",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 303
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "36",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 304
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "37",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 305
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "38",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 306
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "39",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 307
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "40",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 308
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "41",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 309
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "42",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 310
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "43",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 311
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "44",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 312
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "45",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 313
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "46",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 314
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "47",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 315
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "48",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 316
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "49",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 317
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "50",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 318
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "51",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 319
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "52",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 320
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "53",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 321
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "54",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 322
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "55",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 323
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "56",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 324
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "57",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 325
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "58",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 326
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "59",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 327
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "32",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 328
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "33",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 329
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "34",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 330
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "35",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 331
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "36",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 332
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "37",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 333
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "38",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 334
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "39",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 335
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "40",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 336
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "41",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 337
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "42",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 338
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "43",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 339
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "44",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 340
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "45",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 341
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "46",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 342
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "47",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 343
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "48",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 344
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "49",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 345
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "50",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 346
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "51",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 347
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "52",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 348
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "53",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 349
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "54",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 350
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "55",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 351
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "56",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 352
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "57",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 353
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "58",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 354
+        },
+        "bottom_right": {
+          "x": 94,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "キッコーマン",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 355
+        },
+        "bottom_right": {
+          "x": 131,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "heading",
+      "context": "ブランド名"
+    },
+    {
+      "content": "ホームクッキング",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 356
+        },
+        "bottom_right": {
+          "x": 145,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "heading",
+      "context": "カテゴリ名（ホームクッキング）"
+    },
+    {
+      "content": "今日のおいしいがみつかる。",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 357
+        },
+        "bottom_right": {
+          "x": 179,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "heading",
+      "context": "キャッチコピー"
+    },
+    {
+      "content": "簡単おかず！マーボーもやし【ご飯のすすむ人気の味】",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 358
+        },
+        "bottom_right": {
+          "x": 234,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "heading",
+      "context": "レシピ名"
+    },
+    {
+      "content": "10分",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 359
+        },
+        "bottom_right": {
+          "x": 101,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "label",
+      "context": "調理時間"
+    },
+    {
+      "content": "202kcal",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 360
+        },
+        "bottom_right": {
+          "x": 112,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "label",
+      "context": "カロリー表示"
+    },
+    {
+      "content": "1.5g",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 361
+        },
+        "bottom_right": {
+          "x": 101,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "label",
+      "context": "栄養素量（食塩相当量）"
+    },
+    {
+      "content": "10分以内",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 362
+        },
+        "bottom_right": {
+          "x": 116,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "label",
+      "context": "調理時間カテゴリ"
+    },
+    {
+      "content": "主菜でゆる減塩",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 363
+        },
+        "bottom_right": {
+          "x": 138,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "label",
+      "context": "健康カテゴリ（減塩）"
+    },
+    {
+      "content": "豚こま肉となすと小松菜のふんわり卵炒め【デイリー人気おかず】",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 364
+        },
+        "bottom_right": {
+          "x": 234,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "heading",
+      "context": "レシピ名"
+    },
+    {
+      "content": "うまみ満点！トマト豚バラキムチ【人気のヘルシー主菜】",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 365
+        },
+        "bottom_right": {
+          "x": 234,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "heading",
+      "context": "レシピ名"
+    },
+    {
+      "content": "10分",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 366
+        },
+        "bottom_right": {
+          "x": 101,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "label",
+      "context": "調理時間"
+    },
+    {
+      "content": "443kcal",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 367
+        },
+        "bottom_right": {
+          "x": 112,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "label",
+      "context": "カロリー表示"
+    },
+    {
+      "content": "1.5g",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 368
+        },
+        "bottom_right": {
+          "x": 101,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "label",
+      "context": "栄養素量（食塩相当量）"
+    },
+    {
+      "content": "豚肉",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 369
+        },
+        "bottom_right": {
+          "x": 101,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "label",
+      "context": "食材カテゴリ"
+    },
+    {
+      "content": "#",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 370
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "トマト・ミニトマト",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 371
+        },
+        "bottom_right": {
+          "x": 153,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "label",
+      "context": "食材カテゴリ"
+    },
+    {
+      "content": "#",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 372
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "主菜",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 373
+        },
+        "bottom_right": {
+          "x": 101,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "label",
+      "context": "料理カテゴリ（主菜）"
+    },
+    {
+      "content": "10分以内",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 374
+        },
+        "bottom_right": {
+          "x": 116,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "label",
+      "context": "調理時間カテゴリ"
+    },
+    {
+      "content": "#",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 375
+        },
+        "bottom_right": {
+          "x": 90,
+          "y": 282
+        }
+      },
+      "language": "Mixed",
+      "type": "text",
+      "context": "画面内テキスト"
+    },
+    {
+      "content": "主菜でゆる減塩",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 376
+        },
+        "bottom_right": {
+          "x": 138,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "label",
+      "context": "健康カテゴリ（減塩）"
+    },
+    {
+      "content": "トマトだれのこんがり豚ばら焼き【白だしで簡単メニュー】",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 377
+        },
+        "bottom_right": {
+          "x": 234,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "heading",
+      "context": "レシピ名"
+    },
+    {
+      "content": "簡単さっぱり！豚肉と玉ねぎとにんじん（人参）のぼんず炒め",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 378
+        },
+        "bottom_right": {
+          "x": 234,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "heading",
+      "context": "レシピ名"
+    },
+    {
+      "content": "豚バラ肉となすと玉ねぎのしょうか焼",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 379
+        },
+        "bottom_right": {
+          "x": 212,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "heading",
+      "context": "レシピ名"
+    },
+    {
+      "content": "甘辛だれがおいしい！トマト肉巻き【人気の野菜がとれる主菜】",
+      "coordinate": {
+        "top_left": {
+          "x": 86,
+          "y": 380
+        },
+        "bottom_right": {
+          "x": 234,
+          "y": 282
+        }
+      },
+      "language": "Japanese",
+      "type": "heading",
+      "context": "レシピ名"
+    }
+  ],
+  "overall": {
+    "primary_intent": "ui_reading",
+    "dominant_language": "Japanese",
+    "screen_type": "web",
+    "confidence": 0.95
+  },
+  "intent": {
+    "type": "ui_reading",
+    "confidence": 0.95
+  },
+  "translation_direction": {
+    "source_language": "Japanese",
+    "target_language": "japanese",
+    "reasoning": "Detected Japanese content"
+  },
+  "screen_context": {
+    "screen_type": "web",
+    "elements_detected": 222
+  },
+  "timestamp": "2026-02-28T13:32:17.832Z",
+  "processing_time_ms": 21133
+}
