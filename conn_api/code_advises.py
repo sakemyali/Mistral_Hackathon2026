@@ -1,13 +1,10 @@
+import asyncio
 import json
 import os
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel
 from mistralai import Mistral
-
-
-app: FastAPI = FastAPI()
 
 
 class CodeItem(BaseModel):
@@ -15,7 +12,7 @@ class CodeItem(BaseModel):
     Input schema for the code analysis request.
 
     Attributes:
-        text_coordination: The spatial coordinates of the text.
+        text_coordination: The spatial coordinates (x, y).
         context: The surrounding context or file information.
         content: The actual code to analyze.
         language: The target language for the advice output.
@@ -50,126 +47,82 @@ def build_analysis_prompt(item: CodeItem) -> str:
     return prompt
 
 
-@app.websocket("/ws/advise")
-async def websocket_advise(websocket: WebSocket) -> None:
+async def get_code_advise(item: CodeItem) -> Dict[str, Any]:
     """
-    WebSocket endpoint for real-time code analysis.
+    Core logic to get code advice from Mistral Chat API.
+    This function is designed to be called internally by other modules.
 
     Args:
-        websocket: The WebSocket connection object.
+        item (CodeItem): The request item containing code and context.
+
+    Returns:
+        Dict[str, Any]: A dictionary containing coordination and agent advice.
     """
-    await websocket.accept()
     api_key: str = os.getenv("MISTRAL_API_KEY", "")
 
     if not api_key:
-        await websocket.send_text("Error: API key is missing.")
-        await websocket.close()
-        return
+        return {"error": "MISTRAL_API_KEY is missing."}
 
     client: Mistral = Mistral(api_key=api_key)
+    prompt_text: str = build_analysis_prompt(item)
 
     try:
-        while True:
-            data_str: str = await websocket.receive_text()
+        # Call the Codestral (devstral) API via Chat Completion
+        response = client.chat.complete(
+            model="codestral-latest", # model name updated for general usage
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt_text
+                }
+            ],
+            temperature=0.2,
+            max_tokens=300,
+            response_format={"type": "json_object"}
+        )
 
-            try:
-                data_dict: Dict[str, Any] = json.loads(data_str)
-                req_item: CodeItem = CodeItem(**data_dict)
-            except (json.JSONDecodeError, ValidationError) as e:
-                error_msg: str = f"Invalid format: {e}"
-                await websocket.send_text(error_msg)
-                continue
+        raw_content: str = response.choices[0].message.content
 
-            prompt_text: str = build_analysis_prompt(req_item)
-
-            # Call the Codestral API
-            response: Any = client.chat.complete(
-                model="devstral-latest",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt_text
-                    }
-                ],
-                temperature=0.2,
-                max_tokens=300,
-                response_format={"type": "json_object"}
+        try:
+            parsed_content: Dict[str, str] = json.loads(raw_content)
+            result_text: str = parsed_content.get(
+                "advice",
+                raw_content
             )
+        except json.JSONDecodeError:
+            result_text = raw_content
 
-            raw_content: str = response.choices[0].message.content
-
-            try:
-                parsed_content: Dict[str, str] = json.loads(raw_content)
-                result_text: str = parsed_content.get(
-                    "advice",
-                    raw_content
-                )
-            except json.JSONDecodeError:
-                result_text = raw_content
-
-            output_dict: Dict[str, Any] = {
-                "text_coordination": req_item.text_coordination,
-                "content": result_text
-            }
-
-            output_str: str = json.dumps(
-                output_dict,
-                ensure_ascii=False
-            )
-
-            await websocket.send_text(output_str)
-
-    except WebSocketDisconnect:
-        print("Client disconnected.")
-
-
-def run_websocket_test() -> None:
-    """
-    Tests the WebSocket analysis endpoint with sample data.
-    """
-    from fastapi.testclient import TestClient
-
-    client: TestClient = TestClient(app)
-
-    # Sample code snippets to analyze
-    snippets: List[Dict[str, str]] = [
-        {
-            "context": "Python file handling.",
-            "content": "f = open('data.txt')\ndata = f.read()",
-        },
-        {
-            "context": "C language memory allocation.",
-            "content": "char *str = malloc(10);\nstrcpy(str, \"Hello\");",
+        return {
+            "text_coordination": item.text_coordination,
+            "content": result_text
         }
-    ]
-
-    sample_data: List[Dict[str, Any]] = [
-        {
-            "text_coordination": {
-                "x": 100,
-                "y": 150 + (i * 100)
-            },
-            "context": snippet["context"],
-            "content": snippet["content"],
-            "language": "Japanese"
-        }
-        for i, snippet in enumerate(snippets)
-    ]
-
-    try:
-        with client.websocket_connect("/ws/advise") as ws:
-            for data in sample_data:
-                json_str: str = json.dumps(data)
-                ws.send_text(json_str)
-
-                response_str: str = ws.receive_text()
-
-                print(f"Code: {data['content']}")
-                print(f"Advice: {response_str}\n")
 
     except Exception as e:
-        print(f"Test failed: {e}")
+        return {"error": f"API call failed: {str(e)}"}
+
+
+def run_internal_test() -> None:
+    """
+    Directly tests the logic function without any network overhead.
+    """
+    # Sample code snippet to analyze
+    item = CodeItem(
+        text_coordination={"x": 100, "y": 200},
+        context="C language memory allocation.",
+        content="char *str = malloc(10);\nstrcpy(str, \"Hello\");",
+        language="Japanese"
+    )
+
+    print("--- Starting internal code analysis test ---")
+    # Execute the async function in a synchronous context for verification
+    result = asyncio.run(get_code_advise(item))
+
+    if "error" in result:
+        print(f"Test Failed: {result['error']}")
+    else:
+        print(f"Code Content:\n{item.content}")
+        print(f"Advice Result:\n{result['content']}")
 
 
 if __name__ == "__main__":
-    run_websocket_test()
+    run_internal_test()
