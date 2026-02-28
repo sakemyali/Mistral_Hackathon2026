@@ -1,13 +1,6 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import OverlayRenderer from './OverlayRenderer';
 import ControlPanel from './ControlPanel';
-
-const DEMO_RESPONSES = [
-  "The candidate is describing a distributed caching strategy using Redis with write-through invalidation. Consider asking about cache coherence in multi-region deployments.",
-  "They mentioned event sourcing \u2014 a strong architectural pattern. Follow up on how they'd handle event replay and schema evolution over time.",
-  "Good answer on database indexing. They could strengthen it by discussing partial indexes and covering indexes for their specific query patterns.",
-  "The system design looks solid. Key improvement: add a circuit breaker between the API gateway and downstream microservices to handle cascading failures.",
-];
 
 export default function App() {
   const [isVisible, setIsVisible] = useState(true);
@@ -17,23 +10,33 @@ export default function App() {
   const [fontSize, setFontSize] = useState(15);
   const [panelOpen, setPanelOpen] = useState(true);
   const [subtitlePosition, setSubtitlePosition] = useState({ x: 0, y: 0 });
-  const demoIndex = useRef(0);
 
-  // Simulate AI capture with demo responses
-  const handleCapture = useCallback(() => {
+  const handleCapture = useCallback(async () => {
     setIsLoading(true);
     setIsVisible(true);
 
-    const delay = 800 + Math.random() * 1200;
-    setTimeout(() => {
-      setIsLoading(false);
-      const text = DEMO_RESPONSES[demoIndex.current % DEMO_RESPONSES.length];
-      demoIndex.current += 1;
+    try {
+      const result = await window.ghostAPI?.aiCapture({
+        context: 'screen-capture',
+        timestamp: Date.now(),
+      });
+
+      const text = result?.success
+        ? result.data.text || result.data.result || 'No response'
+        : `Error: ${result?.error || 'Unknown error'}`;
+
       setMessages((prev) => [
-        ...prev.slice(-4), // keep last 5 total
+        ...prev.slice(-4),
         { id: Date.now(), text, timestamp: new Date() },
       ]);
-    }, delay);
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev.slice(-4),
+        { id: Date.now(), text: `Capture failed: ${err.message}`, timestamp: new Date() },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   const handleEscape = useCallback(() => {

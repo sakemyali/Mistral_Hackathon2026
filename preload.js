@@ -20,4 +20,9 @@ contextBridge.exposeInMainWorld('ghostAPI', {
     ipcRenderer.on('escape-pressed', () => callback());
     return () => ipcRenderer.removeAllListeners('escape-pressed');
   },
+
+  // AI services
+  aiCapture: (payload) => ipcRenderer.invoke('ai-capture', payload),
+  aiRequest: (service, payload) => ipcRenderer.invoke('ai-request', { service, payload }),
+  getAIServices: () => ipcRenderer.invoke('ai-services'),
 });

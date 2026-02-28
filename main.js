@@ -1,5 +1,7 @@
+require('dotenv').config();
 const { app, BrowserWindow, globalShortcut, ipcMain, screen } = require('electron');
 const path = require('path');
+const { initServices, routeRequest, getServiceNames } = require('./services');
 
 let overlayWindow = null;
 let isVisible = true;
@@ -75,9 +77,24 @@ ipcMain.on('hide-overlay', () => {
   }
 });
 
+// ── AI Service IPC Handlers ──────────────────────────────────
+
+ipcMain.handle('ai-capture', async (_event, payload) => {
+  return await routeRequest('mistral', { type: 'capture', payload });
+});
+
+ipcMain.handle('ai-request', async (_event, { service, payload }) => {
+  return await routeRequest(service, { type: 'request', payload });
+});
+
+ipcMain.handle('ai-services', async () => {
+  return getServiceNames();
+});
+
 // ── App Lifecycle ─────────────────────────────────────────────
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  await initServices();
   createOverlayWindow();
 
   // Toggle visibility: Ctrl+Shift+S (Cmd+Shift+S on macOS)
