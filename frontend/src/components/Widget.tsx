@@ -99,7 +99,7 @@ export default function Widget() {
               connected ? 'bg-green-400' : 'bg-red-400'
             }`}
           />
-          <span className="text-white text-xs font-medium">Doraemon</span>
+          <span className="text-white text-xs font-medium">dorAImon</span>
           <IntentBadge />
           {translationLoading && (
             <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -122,7 +122,7 @@ export default function Widget() {
                   connected ? 'bg-green-400' : 'bg-red-400'
                 }`}
               />
-              <span className="text-white text-xs font-semibold">Doraemon</span>
+              <span className="text-white text-xs font-semibold">dorAImon</span>
               {translationLoading && (
                 <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               )}

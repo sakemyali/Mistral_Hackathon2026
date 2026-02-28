@@ -90,7 +90,7 @@ async def lifespan(app: FastAPI):
     metrics.finish()
 
 
-app = FastAPI(title="Doraemon Backend", lifespan=lifespan)
+app = FastAPI(title="dorAImon Backend", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

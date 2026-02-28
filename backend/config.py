@@ -21,5 +21,5 @@ MINISTRAL_MODEL = os.getenv("MINISTRAL_MODEL", "ministral-3b-latest")
 
 # Weights & Biases (optional)
 WANDB_ENABLED = os.getenv("WANDB_ENABLED", "false").lower() in ("true", "1", "yes")
-WANDB_PROJECT = os.getenv("WANDB_PROJECT", "doraemon")
+WANDB_PROJECT = os.getenv("WANDB_PROJECT", "dorAImon")
 WANDB_RUN_NAME = os.getenv("WANDB_RUN_NAME", "")

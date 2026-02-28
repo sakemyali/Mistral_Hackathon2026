@@ -1,10 +1,10 @@
-# Doraemon
+# dorAImon
 
 Real-time AI productivity monitor that watches your screen, understands what you're doing, and provides live translation overlays — all running locally with a transparent Electron overlay.
 
 ## What It Does
 
-Doraemon captures your screen in real-time and runs three parallel AI pipelines:
+dorAImon captures your screen in real-time and runs three parallel AI pipelines:
 
 - **OCR Pipeline (2 FPS)** — Extracts all visible text with bounding boxes using Tesseract
 - **Vision Pipeline (0.25 FPS)** — Analyzes the screen with Pixtral-12B to understand what app/site you're using and what you're doing
@@ -46,7 +46,7 @@ On top of that, a **floating translation panel** overlays your screen — transl
 ### 1. Clone and configure
 
 ```bash
-git clone <repo-url> && cd doraemon
+git clone <repo-url> && cd dorAImon
 cp backend/.env.example backend/.env
 ```
 
@@ -103,7 +103,7 @@ npm run dev
 | `Alt+H` | Toggle overlay visibility |
 | `Alt+T` | Toggle translation mode |
 | `Alt+R` | Select screen region for OCR |
-| `Alt+Q` | Quit Doraemon |
+| `Alt+Q` | Quit dorAImon |
 | `Escape` | Cancel region selection |
 
 ## Configuration
@@ -119,7 +119,7 @@ All config is via environment variables in `backend/.env`:
 | `CLASSIFIER_FPS` | `0.5` | Intent classification rate (every 2s) |
 | `WS_PORT` | `8000` | WebSocket server port |
 | `WANDB_ENABLED` | `false` | Enable Weights & Biases metrics logging |
-| `WANDB_PROJECT` | `doraemon` | W&B project name |
+| `WANDB_PROJECT` | `dorAImon` | W&B project name |
 
 ## Translation
 
@@ -134,7 +134,7 @@ The overlay includes a draggable floating translation panel (Cluely-style sideba
 ## Project Structure
 
 ```
-doraemon/
+dorAImon/
 ├── start.sh                    # One-command launcher
 ├── backend/
 │   ├── main.py                 # FastAPI + WebSocket server

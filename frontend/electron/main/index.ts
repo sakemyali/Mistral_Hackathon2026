@@ -119,7 +119,7 @@ function createTray() {
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAARklEQVQ4y2P4z8BQz0BAwAADTAxEApIMMIIaQBYgyQArqAEkAZwGMDIyMjDgALgMYCIkF0wdBjAxkOgFJHsBUYBsLyAKAAAKJBHxDeddQAAAABJRU5ErkJggg=='
   )
   tray = new Tray(icon)
-  tray.setToolTip('Doraemon')
+  tray.setToolTip('dorAImon')
 
   const updateMenu = () => {
     if (!tray || isQuitting) return
@@ -138,7 +138,7 @@ function createTray() {
       },
       { type: 'separator' },
       {
-        label: 'Quit Doraemon',
+        label: 'Quit dorAImon',
         click: () => gracefulQuit(),
       },
     ])

@@ -1,6 +1,6 @@
 #!/bin/bash
 DIR="$(cd "$(dirname "$0")" && pwd)"
-PIDFILE="$DIR/.doraemon.pid"
+PIDFILE="$DIR/.dorAImon.pid"
 
 kill_tree() {
   local pid=$1

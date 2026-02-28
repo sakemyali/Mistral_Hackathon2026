@@ -1,4 +1,4 @@
-"""Centralized Weights & Biases metrics for Doraemon.
+"""Centralized Weights & Biases metrics for dorAImon.
 
 wandb is an optional dependency. If not installed or not configured,
 every public function in this module silently becomes a no-op.
@@ -27,7 +27,7 @@ except ImportError:
 # --- Lifecycle ----------------------------------------------------------------
 
 def init(
-    project="doraemon",
+    project="dorAImon",
     run_name=None,  # type: Optional[str]
     config=None,  # type: Optional[Dict]
 ):
