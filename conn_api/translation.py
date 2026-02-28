@@ -76,7 +76,7 @@ async def websocket_translate(websocket: WebSocket) -> None:
 
             # Call the Mistral API
             response: Any = client.chat.complete(
-                model="mistral-medium-latest",
+                model="mistral-small-latest",
                 messages=[
                     {
                         "role": "user",

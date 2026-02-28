@@ -83,9 +83,9 @@ async def websocket_suggest(websocket: WebSocket) -> None:
 
             prompt_text: str = build_suggestion_prompt(req_item)
 
-            # Call the Mistral Medium API
+            # Call the Mistral Small API
             response: Any = client.chat.complete(
-                model="mistral-medium-latest",
+                model="mistral-small-latest",
                 messages=[
                     {
                         "role": "user",

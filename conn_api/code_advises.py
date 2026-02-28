@@ -84,7 +84,7 @@ async def websocket_advise(websocket: WebSocket) -> None:
 
             # Call the Codestral API
             response: Any = client.chat.complete(
-                model="codestral-latest",
+                model="devstral-latest",
                 messages=[
                     {
                         "role": "user",
