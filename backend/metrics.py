@@ -7,6 +7,7 @@ every public function in this module silently becomes a no-op.
 import asyncio
 import logging
 import os
+import re
 import threading
 from typing import Dict, Optional
 
@@ -26,6 +27,32 @@ except ImportError:
 
 # --- Lifecycle ----------------------------------------------------------------
 
+def _next_run_name(project, base_name):
+    # type: (str, str) -> str
+    """Return the next auto-incremented run name based on existing wandb runs.
+
+    E.g. if base_name='run1' and runs 'run1'..'run3' already exist, returns 'run4'.
+    Falls back to base_name if the API query fails or base_name has no trailing digits.
+    """
+    match = re.match(r'^(.*?)(\d+)$', base_name)
+    if not match:
+        return base_name
+    prefix = match.group(1)
+    pattern = re.compile(r'^' + re.escape(prefix) + r'(\d+)$')
+    try:
+        api = wandb.Api()
+        runs = api.runs(project)
+        max_num = 0
+        for run in runs:
+            m = pattern.match(run.name or "")
+            if m:
+                max_num = max(max_num, int(m.group(1)))
+        return "{}{}".format(prefix, max_num + 1)
+    except Exception as e:
+        logger.warning("wandb run name increment failed, using base name: %s", e)
+        return base_name
+
+
 def init(
     project="dorAImon",
     run_name=None,  # type: Optional[str]
@@ -38,6 +65,8 @@ def init(
         logger.info("wandb not installed, metrics disabled")
         return False
     try:
+        if run_name:
+            run_name = _next_run_name(project, run_name)
         wandb.init(
             project=project,
             name=run_name,
