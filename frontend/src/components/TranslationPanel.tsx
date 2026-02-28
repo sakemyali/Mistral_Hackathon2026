@@ -1,4 +1,6 @@
+import { useRef, useState, useCallback } from 'react'
 import { useAppStore } from '../store/appStore'
+import type { TranslatedWord } from '../types'
 
 export default function TranslationPanel() {
   const {
@@ -7,59 +9,190 @@ export default function TranslationPanel() {
     translationLoading,
   } = useAppStore()
 
+  // Dragging
+  const panelRef = useRef<HTMLDivElement>(null)
+  // Use screen.availWidth (primary monitor) instead of window.innerWidth (all monitors)
+  const [position, setPosition] = useState(() => ({
+    x: Math.min(window.screen.availWidth - 340, 1200),
+    y: 80,
+  }))
+  const [dragging, setDragging] = useState(false)
+  const dragOffset = useRef({ x: 0, y: 0 })
+  const [collapsed, setCollapsed] = useState(false)
+
+  // Highlight: show where the original text is on screen
+  const [highlight, setHighlight] = useState<TranslatedWord | null>(null)
+  const highlightTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const handleMouseEnter = useCallback(() => {
+    window.electronAPI?.setIgnoreMouse(false)
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    if (!dragging) {
+      window.electronAPI?.setIgnoreMouse(true)
+    }
+  }, [dragging])
+
+  const handleDragStart = useCallback(
+    (e: React.MouseEvent) => {
+      if ((e.target as HTMLElement).closest('button')) return
+      setDragging(true)
+      dragOffset.current = {
+        x: e.clientX - position.x,
+        y: e.clientY - position.y,
+      }
+
+      const handleMove = (ev: MouseEvent) => {
+        setPosition({
+          x: ev.clientX - dragOffset.current.x,
+          y: ev.clientY - dragOffset.current.y,
+        })
+      }
+
+      const handleUp = () => {
+        setDragging(false)
+        window.removeEventListener('mousemove', handleMove)
+        window.removeEventListener('mouseup', handleUp)
+      }
+
+      window.addEventListener('mousemove', handleMove)
+      window.addEventListener('mouseup', handleUp)
+    },
+    [position],
+  )
+
+  const handleLineClick = useCallback((line: TranslatedWord) => {
+    // Toggle: click same line again to dismiss
+    setHighlight((prev) => (prev === line ? null : line))
+    if (highlightTimer.current) clearTimeout(highlightTimer.current)
+    highlightTimer.current = setTimeout(() => setHighlight(null), 2500)
+  }, [])
+
   if (!translationEnabled) return null
 
+  const hasContent = translatedWords.length > 0
+
   return (
-    <div className="fixed inset-0 pointer-events-none">
-      {/* Loading indicator */}
-      {translationLoading && translatedWords.length === 0 && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
-          <div className="bg-black/75 backdrop-blur-md rounded-full px-4 py-1.5
-            flex items-center gap-2 border border-white/15">
-            <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            <span className="text-white text-xs font-medium">Translating...</span>
-          </div>
-        </div>
+    <>
+      {/* Highlight rectangle on screen — pointer-events-none */}
+      {highlight && (
+        <div
+          className="fixed pointer-events-none"
+          style={{
+            left: highlight.x - 4,
+            top: highlight.y - 3,
+            width: highlight.width + 8,
+            height: highlight.height + 6,
+            zIndex: 99997,
+            border: '2px solid rgba(59, 130, 246, 0.7)',
+            borderRadius: 4,
+            backgroundColor: 'rgba(59, 130, 246, 0.08)',
+            boxShadow: '0 0 12px rgba(59, 130, 246, 0.3)',
+            animation: 'highlightPulse 2.5s ease-out forwards',
+          }}
+        />
       )}
 
-      {/* Translation overlays — fully click-through */}
-      {translatedWords.map((line, i) => (
+      {/* Panel */}
+      <div
+        ref={panelRef}
+        className="fixed pointer-events-auto select-none animate-[fadeIn_0.2s_ease-out]"
+        style={{
+          left: position.x,
+          top: position.y,
+          zIndex: 99998,
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <div
-          key={`${line.x}-${line.y}-${i}`}
-          className="absolute pointer-events-none animate-[fadeIn_0.25s_ease-out]"
-          style={{
-            left: line.x,
-            top: line.y,
-            width: line.width,
-            height: line.height,
-          }}
+          className="bg-gray-900/90 backdrop-blur-md rounded-xl border border-white/10
+            shadow-2xl overflow-hidden transition-all"
+          style={{ width: collapsed ? 160 : 320 }}
         >
-          {/* Soft blur to obscure original text */}
+          {/* Header */}
           <div
-            className="absolute inset-0"
-            style={{
-              backdropFilter: 'blur(4px)',
-              WebkitBackdropFilter: 'blur(4px)',
-              backgroundColor: 'rgba(255, 255, 255, 0.7)',
-              borderRadius: 2,
-            }}
-          />
-
-          {/* Translated text */}
-          <span
-            className="absolute inset-0 flex items-center text-gray-900 leading-none"
-            style={{
-              fontSize: Math.max(10, Math.min(line.height * 0.78, 18)),
-              fontWeight: 500,
-              letterSpacing: '0.01em',
-              paddingLeft: 1,
-              paddingRight: 1,
-            }}
+            className="flex items-center justify-between px-3 py-1.5 border-b border-white/10 cursor-grab"
+            onMouseDown={handleDragStart}
           >
-            {line.translated}
-          </span>
+            <div className="flex items-center gap-2">
+              <span className="text-white/80 text-[10px] font-semibold uppercase tracking-wider">
+                Translation
+              </span>
+              {translationLoading && (
+                <div className="w-2.5 h-2.5 border-[1.5px] border-white/20 border-t-blue-400 rounded-full animate-spin" />
+              )}
+            </div>
+            <div className="flex items-center gap-1">
+              {hasContent && (
+                <span className="text-white/30 text-[9px]">
+                  {translatedWords.length} line{translatedWords.length !== 1 ? 's' : ''}
+                </span>
+              )}
+              <button
+                onClick={() => setCollapsed(!collapsed)}
+                className="text-white/40 hover:text-white text-xs px-1 cursor-pointer transition-colors"
+                title={collapsed ? 'Expand' : 'Collapse'}
+              >
+                {collapsed ? '◂' : '▸'}
+              </button>
+            </div>
+          </div>
+
+          {/* Content */}
+          {!collapsed && (
+            <div
+              className="overflow-y-auto overscroll-contain"
+              style={{ maxHeight: 'min(60vh, 500px)' }}
+            >
+              {!hasContent && !translationLoading && (
+                <div className="px-3 py-4 text-center">
+                  <span className="text-white/25 text-xs">
+                    No text detected
+                  </span>
+                </div>
+              )}
+
+              {!hasContent && translationLoading && (
+                <div className="px-3 py-4 flex items-center justify-center gap-2">
+                  <div className="w-3 h-3 border-2 border-white/20 border-t-blue-400 rounded-full animate-spin" />
+                  <span className="text-white/40 text-xs">Translating...</span>
+                </div>
+              )}
+
+              {hasContent && (
+                <div className="flex flex-col">
+                  {translatedWords.map((line, i) => (
+                    <div
+                      key={`${line.original}-${i}`}
+                      className={`px-3 py-2 border-b border-white/5 last:border-b-0
+                        cursor-pointer transition-colors ${
+                          highlight === line
+                            ? 'bg-blue-500/15'
+                            : 'hover:bg-white/5'
+                        }`}
+                      onClick={() => handleLineClick(line)}
+                    >
+                      {/* Translated text */}
+                      <div
+                        className="text-white text-sm leading-relaxed"
+                        style={{ fontWeight: 450 }}
+                      >
+                        {line.translated}
+                      </div>
+                      {/* Original text (subtle) */}
+                      <div className="text-white/30 text-[10px] leading-snug mt-0.5 truncate">
+                        {line.original}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
-      ))}
-    </div>
+      </div>
+    </>
   )
 }

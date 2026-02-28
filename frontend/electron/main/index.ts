@@ -37,6 +37,7 @@ if (!app.requestSingleInstanceLock()) {
 let overlayWindow: BrowserWindow | null = null
 let tray: Tray | null = null
 let overlayVisible = true
+let isQuitting = false
 
 const preload = path.join(__dirname, '../preload/index.mjs')
 const indexHtml = path.join(RENDERER_DIST, 'index.html')
@@ -80,11 +81,35 @@ function createOverlayWindow() {
   overlayWindow.setAlwaysOnTop(true, 'screen-saver')
   overlayWindow.setContentProtection(true)
 
+  overlayWindow.on('closed', () => {
+    overlayWindow = null
+  })
+
   if (VITE_DEV_SERVER_URL) {
     overlayWindow.loadURL(VITE_DEV_SERVER_URL)
   } else {
     overlayWindow.loadFile(indexHtml)
   }
+}
+
+// ─── Graceful quit ──────────────────────────────────────────────────────────
+function gracefulQuit() {
+  if (isQuitting) return
+  isQuitting = true
+
+  globalShortcut.unregisterAll()
+
+  if (tray) {
+    tray.destroy()
+    tray = null
+  }
+
+  if (overlayWindow && !overlayWindow.isDestroyed()) {
+    overlayWindow.destroy()
+  }
+  overlayWindow = null
+
+  app.quit()
 }
 
 // ─── System tray ─────────────────────────────────────────────────────────────
@@ -97,6 +122,7 @@ function createTray() {
   tray.setToolTip('Doraemon')
 
   const updateMenu = () => {
+    if (!tray || isQuitting) return
     const contextMenu = Menu.buildFromTemplate([
       {
         label: overlayVisible ? 'Hide Overlay' : 'Show Overlay',
@@ -104,15 +130,16 @@ function createTray() {
       },
       {
         label: 'Toggle Translation',
-        click: () => overlayWindow?.webContents.send('toggle-translation'),
+        click: () => {
+          if (!isQuitting && overlayWindow && !overlayWindow.isDestroyed()) {
+            overlayWindow.webContents.send('toggle-translation')
+          }
+        },
       },
       { type: 'separator' },
       {
         label: 'Quit Doraemon',
-        click: () => {
-          overlayWindow?.webContents.send('app-quit')
-          setTimeout(() => app.quit(), 300)
-        },
+        click: () => gracefulQuit(),
       },
     ])
     tray?.setContextMenu(contextMenu)
@@ -126,7 +153,7 @@ function createTray() {
 
 // ─── Toggle overlay visibility ───────────────────────────────────────────────
 function toggleOverlay() {
-  if (!overlayWindow) return
+  if (!overlayWindow || overlayWindow.isDestroyed() || isQuitting) return
   if (overlayVisible) {
     overlayWindow.hide()
   } else {
@@ -140,17 +167,20 @@ function toggleOverlay() {
 // ─── Global hotkeys ──────────────────────────────────────────────────────────
 function registerHotkeys() {
   globalShortcut.register('Alt+T', () => {
-    overlayWindow?.webContents.send('toggle-translation')
+    if (!isQuitting && overlayWindow && !overlayWindow.isDestroyed()) {
+      overlayWindow.webContents.send('toggle-translation')
+    }
   })
   globalShortcut.register('Alt+H', () => {
     toggleOverlay()
   })
   globalShortcut.register('Alt+Q', () => {
-    overlayWindow?.webContents.send('app-quit')
-    setTimeout(() => app.quit(), 300)
+    gracefulQuit()
   })
   globalShortcut.register('Alt+R', () => {
-    overlayWindow?.webContents.send('start-region-select')
+    if (!isQuitting && overlayWindow && !overlayWindow.isDestroyed()) {
+      overlayWindow.webContents.send('start-region-select')
+    }
   })
 }
 
@@ -158,46 +188,50 @@ function registerHotkeys() {
 
 // Toggle click-through on/off for the widget area
 ipcMain.on('set-ignore-mouse', (_event, ignore: boolean) => {
-  if (overlayWindow) {
-    if (ignore) {
-      overlayWindow.setIgnoreMouseEvents(true, { forward: true })
-    } else {
-      overlayWindow.setIgnoreMouseEvents(false)
-    }
+  if (isQuitting || !overlayWindow || overlayWindow.isDestroyed()) return
+  if (ignore) {
+    overlayWindow.setIgnoreMouseEvents(true, { forward: true })
+  } else {
+    overlayWindow.setIgnoreMouseEvents(false)
   }
 })
 
 // Set window opacity
 ipcMain.on('set-opacity', (_event, opacity: number) => {
-  overlayWindow?.setOpacity(Math.max(0.1, Math.min(1, opacity)))
+  if (isQuitting || !overlayWindow || overlayWindow.isDestroyed()) return
+  overlayWindow.setOpacity(Math.max(0.1, Math.min(1, opacity)))
 })
 
 // Quit from renderer
 ipcMain.on('quit-app', () => {
-  app.quit()
+  gracefulQuit()
 })
 
 // Copy text to clipboard
 ipcMain.on('copy-to-clipboard', (_event, text: string) => {
+  if (isQuitting) return
   clipboard.writeText(text)
 })
 
 // Region selection result from renderer
 ipcMain.on('set-capture-region', (_event, region: { x: number; y: number; width: number; height: number } | null) => {
-  // Forward to renderer for use in OCR requests
-  overlayWindow?.webContents.send('capture-region-updated', region)
+  if (isQuitting || !overlayWindow || overlayWindow.isDestroyed()) return
+  overlayWindow.webContents.send('capture-region-updated', region)
 })
 
 // Region selecting mode: register/unregister temporary Escape shortcut
 // (overlay is focusable:false so keydown events never reach the renderer)
 ipcMain.on('region-selecting', (_event, active: boolean) => {
+  if (isQuitting) return
   if (active) {
     globalShortcut.register('Escape', () => {
-      overlayWindow?.webContents.send('cancel-region-select')
+      if (!isQuitting && overlayWindow && !overlayWindow.isDestroyed()) {
+        overlayWindow.webContents.send('cancel-region-select')
+      }
       globalShortcut.unregister('Escape')
     })
   } else {
-    globalShortcut.unregister('Escape')
+    try { globalShortcut.unregister('Escape') } catch { /* already unregistered */ }
   }
 })
 
@@ -207,6 +241,10 @@ app.whenReady().then(() => {
   createOverlayWindow()
   createTray()
   registerHotkeys()
+})
+
+app.on('before-quit', () => {
+  isQuitting = true
 })
 
 app.on('will-quit', () => {
@@ -219,6 +257,7 @@ app.on('window-all-closed', () => {
 })
 
 app.on('activate', () => {
+  if (isQuitting) return
   const allWindows = BrowserWindow.getAllWindows()
   if (allWindows.length) {
     allWindows[0].focus()

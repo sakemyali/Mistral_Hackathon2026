@@ -2,6 +2,21 @@
 DIR="$(cd "$(dirname "$0")" && pwd)"
 PIDFILE="$DIR/.doraemon.pid"
 
+kill_tree() {
+  local pid=$1
+  # Kill all children first, then the parent — works on macOS
+  pkill -INT -P $pid 2>/dev/null
+  kill -INT $pid 2>/dev/null
+  # Wait for graceful shutdown (up to 3s)
+  for i in {1..10}; do
+    kill -0 $pid 2>/dev/null || return 0
+    sleep 0.3
+  done
+  # Force kill if still alive
+  pkill -9 -P $pid 2>/dev/null
+  kill -9 $pid 2>/dev/null
+}
+
 stop_all() {
   if [ ! -f "$PIDFILE" ]; then
     echo "No running instance found."
@@ -10,10 +25,8 @@ stop_all() {
   BACKEND_PID=$(sed -n '1p' "$PIDFILE")
   FRONTEND_PID=$(sed -n '2p' "$PIDFILE")
   echo "Stopping backend (PID $BACKEND_PID) and frontend (PID $FRONTEND_PID)..."
-  kill $BACKEND_PID 2>/dev/null
-  kill $FRONTEND_PID 2>/dev/null
-  wait $BACKEND_PID 2>/dev/null
-  wait $FRONTEND_PID 2>/dev/null
+  kill_tree $BACKEND_PID
+  kill_tree $FRONTEND_PID
   rm -f "$PIDFILE"
   echo "Done."
   exit 0
@@ -33,10 +46,8 @@ fi
 cleanup() {
   echo ""
   echo "Shutting down..."
-  kill $BACKEND_PID 2>/dev/null
-  kill $FRONTEND_PID 2>/dev/null
-  wait $BACKEND_PID 2>/dev/null
-  wait $FRONTEND_PID 2>/dev/null
+  kill_tree $BACKEND_PID
+  kill_tree $FRONTEND_PID
   rm -f "$PIDFILE"
   echo "Done."
   exit 0
@@ -63,4 +74,19 @@ echo "Frontend PID: $FRONTEND_PID"
 echo "Press Ctrl+C or run './start.sh stop' to stop both."
 echo ""
 
-wait
+# Wait for EITHER process to exit, then clean up both
+while true; do
+  if ! kill -0 $BACKEND_PID 2>/dev/null; then
+    echo "Backend exited."
+    kill_tree $FRONTEND_PID
+    rm -f "$PIDFILE"
+    exit 0
+  fi
+  if ! kill -0 $FRONTEND_PID 2>/dev/null; then
+    echo "Frontend exited."
+    kill_tree $BACKEND_PID
+    rm -f "$PIDFILE"
+    exit 0
+  fi
+  sleep 1
+done

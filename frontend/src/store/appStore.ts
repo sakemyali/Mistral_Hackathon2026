@@ -8,7 +8,6 @@ interface AppState {
   intentConfidence: number
   intentReasoning: string
   ocrWords: OCRWord[]
-  prevOcrText: string
   translationEnabled: boolean
   translationLoading: boolean
   sourceLang: string
@@ -25,7 +24,6 @@ interface AppActions {
   setConnected: (connected: boolean) => void
   setIntent: (intent: Intent, confidence: number, reasoning: string) => void
   setOCRWords: (words: OCRWord[]) => void
-  setPrevOcrText: (text: string) => void
   setTranslationEnabled: (enabled: boolean) => void
   setTranslationLoading: (loading: boolean) => void
   setLanguages: (source: string, target: string) => void
@@ -44,7 +42,6 @@ export const useAppStore = create<AppState & AppActions>((set) => ({
   intentConfidence: 0,
   intentReasoning: '',
   ocrWords: [],
-  prevOcrText: '',
   translationEnabled: false,
   translationLoading: false,
   sourceLang: 'English',
@@ -60,7 +57,6 @@ export const useAppStore = create<AppState & AppActions>((set) => ({
   setIntent: (intent, confidence, reasoning) =>
     set({ currentIntent: intent, intentConfidence: confidence, intentReasoning: reasoning }),
   setOCRWords: (words) => set({ ocrWords: words }),
-  setPrevOcrText: (text) => set({ prevOcrText: text }),
   setTranslationEnabled: (enabled) => set({ translationEnabled: enabled }),
   setTranslationLoading: (loading) => set({ translationLoading: loading }),
   setLanguages: (source, target) => set({ sourceLang: source, targetLang: target }),

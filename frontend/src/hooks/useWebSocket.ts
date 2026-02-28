@@ -2,6 +2,12 @@ import { useEffect, useRef, useCallback } from 'react'
 import { useAppStore } from '../store/appStore'
 import type { WSMessage } from '../types'
 
+let isAppQuitting = false
+
+export function markQuitting() {
+  isAppQuitting = true
+}
+
 export function useWebSocket() {
   const wsRef = useRef<WebSocket | null>(null)
   const reconnectTimer = useRef<ReturnType<typeof setTimeout>>()
@@ -13,6 +19,7 @@ export function useWebSocket() {
   >(null)
 
   const connect = useCallback(() => {
+    if (isAppQuitting) return
     if (wsRef.current?.readyState === WebSocket.OPEN) return
 
     const ws = new WebSocket(wsUrl)
@@ -35,6 +42,10 @@ export function useWebSocket() {
           case 'translation_result':
             translationHandlerRef.current?.(msg.request_id, msg.translations)
             break
+          case 'error':
+            console.error('[WS] Backend error:', msg.message)
+            useAppStore.getState().setTranslationLoading(false)
+            break
         }
       } catch (e) {
         console.error('[WS] Parse error:', e)
@@ -42,9 +53,12 @@ export function useWebSocket() {
     }
 
     ws.onclose = () => {
-      console.log('[WS] Disconnected, reconnecting in 3s...')
       setConnected(false)
-      reconnectTimer.current = setTimeout(connect, 3000)
+      // Don't reconnect if app is quitting
+      if (!isAppQuitting) {
+        console.log('[WS] Disconnected, reconnecting in 3s...')
+        reconnectTimer.current = setTimeout(connect, 3000)
+      }
     }
 
     ws.onerror = () => {
@@ -55,7 +69,7 @@ export function useWebSocket() {
   }, [wsUrl, setConnected, setIntent, setOCRWords])
 
   const send = useCallback((data: object) => {
-    if (wsRef.current?.readyState === WebSocket.OPEN) {
+    if (!isAppQuitting && wsRef.current?.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify(data))
     }
   }, [])

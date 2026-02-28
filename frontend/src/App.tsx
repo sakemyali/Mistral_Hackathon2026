@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useWebSocket } from './hooks/useWebSocket'
+import { useWebSocket, markQuitting } from './hooks/useWebSocket'
 import { useTranslation } from './hooks/useTranslation'
 import { useAppStore } from './store/appStore'
 import Overlay from './components/Overlay'
@@ -23,14 +23,15 @@ function App() {
       // Alt+T: toggle translation
       cleanups.push(
         window.electronAPI.onToggleTranslation(() => {
-          setTranslationEnabled(!translationEnabled)
+          const current = useAppStore.getState().translationEnabled
+          setTranslationEnabled(!current)
         }),
       )
 
-      // Alt+Q: quit notification
+      // Main process tells us app is quitting — stop WS reconnects
       cleanups.push(
         window.electronAPI.onAppQuit(() => {
-          window.electronAPI?.quit()
+          markQuitting()
         }),
       )
 
@@ -52,7 +53,7 @@ function App() {
     return () => {
       cleanups.forEach((fn) => fn())
     }
-  }, [translationEnabled, setTranslationEnabled, setRegionSelecting, setCaptureRegion])
+  }, [setTranslationEnabled, setRegionSelecting, setCaptureRegion])
 
   return <Overlay />
 }

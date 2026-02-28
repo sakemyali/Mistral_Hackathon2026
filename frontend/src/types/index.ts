@@ -36,7 +36,13 @@ export interface AgentAction {
   data: unknown
 }
 
-export type WSMessage = IntentUpdate | OCRUpdate | TranslationResult
+export interface ErrorMessage {
+  type: 'error'
+  message: string
+  request_id: string
+}
+
+export type WSMessage = IntentUpdate | OCRUpdate | TranslationResult | ErrorMessage
 
 export interface TranslatedWord {
   original: string

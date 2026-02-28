@@ -3,12 +3,10 @@ import { v4 as uuidv4 } from 'uuid'
 import { useAppStore } from '../store/appStore'
 import type { OCRWord, TranslatedWord } from '../types'
 
-const DEBOUNCE_MS = 600
-const STALE_SIMILARITY_THRESHOLD = 0.3 // if less than 30% of words match, clear overlays
+const THROTTLE_MS = 800
+const STALE_SIMILARITY_THRESHOLD = 0.3
+const MIN_LINE_LENGTH = 3
 
-/**
- * Group OCR words into lines based on vertical proximity.
- */
 function groupWordsIntoLines(words: OCRWord[], threshold = 12): OCRWord[][] {
   if (words.length === 0) return []
   const sorted = [...words].sort((a, b) => a.y - b.y || a.x - b.x)
@@ -25,9 +23,28 @@ function groupWordsIntoLines(words: OCRWord[], threshold = 12): OCRWord[][] {
   return lines
 }
 
-/**
- * Compute word overlap ratio between two sets of text.
- */
+function mergeIntoParagraphs(lines: OCRWord[][]): OCRWord[][][] {
+  if (lines.length === 0) return []
+  const paragraphs: OCRWord[][][] = [[lines[0]]]
+  for (let i = 1; i < lines.length; i++) {
+    const prevLine = lines[i - 1]
+    const currLine = lines[i]
+    const prevBottom = Math.max(...prevLine.map((w) => w.y + w.height))
+    const currTop = Math.min(...currLine.map((w) => w.y))
+    const prevAvgHeight = prevLine.reduce((s, w) => s + w.height, 0) / prevLine.length
+    const gap = currTop - prevBottom
+    const prevLeft = Math.min(...prevLine.map((w) => w.x))
+    const currLeft = Math.min(...currLine.map((w) => w.x))
+    const xAligned = Math.abs(prevLeft - currLeft) < 100
+    if (gap < prevAvgHeight * 1.5 && xAligned) {
+      paragraphs[paragraphs.length - 1].push(currLine)
+    } else {
+      paragraphs.push([currLine])
+    }
+  }
+  return paragraphs
+}
+
 function wordSimilarity(a: string, b: string): number {
   if (!a || !b) return 0
   const setA = new Set(a.toLowerCase().split(/\s+/))
@@ -44,37 +61,48 @@ export function useTranslation(
     ((requestId: string, translations: string[]) => void) | null
   >,
 ) {
-  const {
-    translationEnabled,
-    ocrWords,
-    sourceLang,
-    targetLang,
-    autoDetectLang,
-    prevOcrText,
-    setTranslatedWords,
-    setTranslationLoading,
-    setPrevOcrText,
-  } = useAppStore()
+  // Only subscribe to the values the effect actually needs as triggers
+  const translationEnabled = useAppStore((s) => s.translationEnabled)
+  const ocrWords = useAppStore((s) => s.ocrWords)
+  const sourceLang = useAppStore((s) => s.sourceLang)
+  const targetLang = useAppStore((s) => s.targetLang)
+  const autoDetectLang = useAppStore((s) => s.autoDetectLang)
 
-  const pendingRef = useRef<Map<string, OCRWord[][]>>(new Map())
-  const lastTextRef = useRef<string>('')
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  // Stable setters (never change)
+  const setTranslatedWords = useAppStore((s) => s.setTranslatedWords)
+  const setTranslationLoading = useAppStore((s) => s.setTranslationLoading)
+
+  // Refs for tracking — NO store deps, no re-render cycles
+  const pendingRef = useRef<Map<string, { paragraphs: OCRWord[][][] }>>(new Map())
+  const lastTextRef = useRef('')
+  const prevTextRef = useRef('')  // stale detection — ref instead of store
+  const lastSentRef = useRef(0)
+  const trailingRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Register the translation result handler
   useEffect(() => {
     translationHandlerRef.current = (requestId: string, translations: string[]) => {
-      const lines = pendingRef.current.get(requestId)
-      if (!lines) return
+      const pending = pendingRef.current.get(requestId)
+      if (!pending) return
       pendingRef.current.delete(requestId)
 
-      const result: TranslatedWord[] = lines.map((lineWords, i) => {
-        const minX = Math.min(...lineWords.map((w) => w.x))
-        const minY = Math.min(...lineWords.map((w) => w.y))
-        const maxRight = Math.max(...lineWords.map((w) => w.x + w.width))
-        const maxBottom = Math.max(...lineWords.map((w) => w.y + w.height))
+      const { paragraphs } = pending
+      // OCR coordinates are in physical pixels (mss captures at native resolution),
+      // but the Electron overlay uses CSS/logical pixels. Divide by devicePixelRatio
+      // to convert (e.g., 2× on Retina displays).
+      const dpr = window.devicePixelRatio || 1
+      const result: TranslatedWord[] = paragraphs.map((paraLines, i) => {
+        const allWords = paraLines.flat()
+        const minX = Math.min(...allWords.map((w) => w.x)) / dpr
+        const minY = Math.min(...allWords.map((w) => w.y)) / dpr
+        const maxRight = Math.max(...allWords.map((w) => w.x + w.width)) / dpr
+        const maxBottom = Math.max(...allWords.map((w) => w.y + w.height)) / dpr
+        const original = paraLines
+          .map((lineWords) => lineWords.map((w) => w.text).join(' '))
+          .join(' ')
         return {
-          original: lineWords.map((w) => w.text).join(' '),
-          translated: translations[i] || lineWords.map((w) => w.text).join(' '),
+          original,
+          translated: translations[i] || original,
           x: minX,
           y: minY,
           width: maxRight - minX,
@@ -84,54 +112,97 @@ export function useTranslation(
       setTranslatedWords(result)
       setTranslationLoading(false)
     }
-
     return () => {
       translationHandlerRef.current = null
     }
   }, [translationHandlerRef, setTranslatedWords, setTranslationLoading])
 
-  // Request translation when OCR words change, debounced and deduped
+  // Fire a translation request
+  const sendRef = useRef(send)
+  sendRef.current = send
+  const sourceLangRef = useRef(sourceLang)
+  sourceLangRef.current = sourceLang
+  const targetLangRef = useRef(targetLang)
+  targetLangRef.current = targetLang
+  const autoDetectRef = useRef(autoDetectLang)
+  autoDetectRef.current = autoDetectLang
+
+  const fireTranslation = useRef((words: OCRWord[], text: string) => {
+    lastTextRef.current = text
+    lastSentRef.current = Date.now()
+
+    const lines = groupWordsIntoLines(words)
+    const meaningfulLines = lines.filter((lineWords) => {
+      const lineText = lineWords.map((w) => w.text).join(' ').trim()
+      return lineText.length >= MIN_LINE_LENGTH
+    })
+
+    if (meaningfulLines.length === 0) {
+      setTranslationLoading(false)
+      return
+    }
+
+    const paragraphs = mergeIntoParagraphs(meaningfulLines)
+    const texts = paragraphs.map((paraLines) =>
+      paraLines.map((lineWords) => lineWords.map((w) => w.text).join(' ')).join(' '),
+    )
+
+    const requestId = uuidv4()
+    pendingRef.current.set(requestId, { paragraphs })
+
+    console.log(`[Translation] Sending ${texts.length} paragraphs, id=${requestId.slice(0, 8)}`)
+
+    sendRef.current({
+      type: 'translate',
+      texts,
+      source_lang: autoDetectRef.current ? 'Auto' : sourceLangRef.current,
+      target_lang: targetLangRef.current,
+      request_id: requestId,
+    })
+  }).current
+
+  // Throttle effect — only depends on ocrWords and translationEnabled (no store cycle)
   useEffect(() => {
     if (!translationEnabled || ocrWords.length === 0) {
       setTranslatedWords([])
       setTranslationLoading(false)
       lastTextRef.current = ''
+      prevTextRef.current = ''
       return
     }
 
     const currentText = ocrWords.map((w) => w.text).join(' ')
 
-    // Stale detection: if screen changed drastically, clear old overlays immediately
-    if (prevOcrText && wordSimilarity(currentText, prevOcrText) < STALE_SIMILARITY_THRESHOLD) {
+    // Stale detection using ref (no store update = no re-render cycle)
+    if (prevTextRef.current && wordSimilarity(currentText, prevTextRef.current) < STALE_SIMILARITY_THRESHOLD) {
       setTranslatedWords([])
     }
-    setPrevOcrText(currentText)
+    prevTextRef.current = currentText
 
+    // Skip if text hasn't changed
     if (currentText === lastTextRef.current) return
-
-    if (timerRef.current) clearTimeout(timerRef.current)
 
     setTranslationLoading(true)
 
-    timerRef.current = setTimeout(() => {
-      lastTextRef.current = currentText
-      const lines = groupWordsIntoLines(ocrWords)
-      const texts = lines.map((lineWords) => lineWords.map((w) => w.text).join(' '))
+    // Clear any pending trailing call
+    if (trailingRef.current) clearTimeout(trailingRef.current)
 
-      const requestId = uuidv4()
-      pendingRef.current.set(requestId, lines)
+    const elapsed = Date.now() - lastSentRef.current
 
-      send({
-        type: 'translate',
-        texts,
-        source_lang: autoDetectLang ? 'Auto' : sourceLang,
-        target_lang: targetLang,
-        request_id: requestId,
-      })
-    }, DEBOUNCE_MS)
+    if (elapsed >= THROTTLE_MS) {
+      fireTranslation(ocrWords, currentText)
+    } else {
+      trailingRef.current = setTimeout(() => {
+        const latest = useAppStore.getState()
+        const latestText = latest.ocrWords.map((w) => w.text).join(' ')
+        if (latestText !== lastTextRef.current && latest.ocrWords.length > 0) {
+          fireTranslation(latest.ocrWords, latestText)
+        }
+      }, THROTTLE_MS - elapsed)
+    }
 
     return () => {
-      if (timerRef.current) clearTimeout(timerRef.current)
+      if (trailingRef.current) clearTimeout(trailingRef.current)
     }
-  }, [ocrWords, translationEnabled, sourceLang, targetLang, autoDetectLang, send, setTranslatedWords, setTranslationLoading, prevOcrText, setPrevOcrText])
+  }, [ocrWords, translationEnabled, setTranslatedWords, setTranslationLoading])
 }
