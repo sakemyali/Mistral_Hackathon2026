@@ -85,9 +85,18 @@ async def get_suggestion_advice(item: SuggestionItem) -> Dict[str, Any]:
     if eleven_key:
         try:
             el_client = ElevenLabs(api_key=eleven_key)
+
+            # Switch voice ID based on language
+            voice_mapping: Dict[str, str] = {
+                "Japanese": os.getenv("VOICE_ID_JP"),
+                "English": os.getenv("VOICE_ID_EN")
+            }
+            # Fallback to English if language is not in mapping
+            selected_voice_id = voice_mapping.get(item.language, os.getenv("VOICE_ID_EN"))
+
             # Fetching audio stream from the 2026 SDK convert method
             audio_stream = el_client.text_to_speech.convert(
-                voice_id="21m00Tcm4TlvDq8ikWAM",  # Rachel
+                voice_id=selected_voice_id,
                 output_format="mp3_44100_128",
                 text=result_text,
                 model_id="eleven_multilingual_v2"
