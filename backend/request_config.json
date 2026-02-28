@@ -1,0 +1,7 @@
+{
+  "process": {
+    "base_url": "http://localhost:8000",
+    "image_path": "./スクリーンショット 2026-02-28 19.29.15.png",
+    "target_language": "English"
+  }
+}

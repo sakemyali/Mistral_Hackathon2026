@@ -1,0 +1,15 @@
+{
+  "base_url": "http://localhost:8000",
+  "process": {
+    "input_type": "text",
+    "target_language": "English",
+    "session_id": "smoke-test",
+    "prompt": "こんにちは。わたしはわかつきです。ご飯ください"
+  },
+  "image_translate": {
+    "image_path": "./スクリーンショット 2026-02-28 17.08.14.png",
+    "target_language": "English",
+    "model": "pixtral-large-latest",
+    "prompt": "Read all visible text in the image and translate it to English. Return only translated text."
+  }
+}

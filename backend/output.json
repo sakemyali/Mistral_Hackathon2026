@@ -1,0 +1,105 @@
+{
+  "Text Coordination": [
+    {
+      "dpi": 200,
+      "height": 1059,
+      "width": 957,
+      "notes": [
+        "Primary image (img-0.jpeg): Final plated dish (pork belly & ume-shiso roll).",
+        "Step-by-step images (img-1 to img-6.jpeg): Ingredients, sauce prep, shiso cutting, umeboshi paste, meat layering, and rolling process."
+      ]
+    }
+  ],
+  "Context": "A user-shared recipe for *Ume-Shiso Pork Belly Rolls*—a tangy, refreshing twist on classic teriyaki-glazed meat rolls, ideal for bento lunches or quick dinners, posted on a Japanese home-cooking community platform.",
+  "Content": {
+    "title": "Easy Tonight’s Dinner! Pork Belly & Ume-Shiso Meat Rolls (Bento-Friendly)",
+    "description": "This dish elevates classic sweet-savory teriyaki glaze with the bright acidity of pickled umeboshi (plum) and fresh shiso leaves, creating a refreshing, appetite-stimulating pork roll. The bold flavors make it perfect for lunch, dinner, or as a *rice-thief* (go-han-doro) bento item that pairs wonderfully with steamed rice.",
+    "ingredients": {
+      "servings": "2–3",
+      "list": [
+        {
+          "name": "Pork belly slices",
+          "amount": "230g"
+        },
+        {
+          "name": "Shiso (perilla) leaves",
+          "amount": "8 leaves"
+        },
+        {
+          "name": "Umeboshi (pickled plums, shiso-marinated)",
+          "amount": "2 plums (40g)"
+        },
+        {
+          "name": "Katakuriko (potato starch)",
+          "amount": "20g"
+        },
+        {
+          "name": "Rice oil",
+          "amount": "1 tsp (or as needed)"
+        },
+        {
+          "name": "▶ **Sauce (mix together)**",
+          "items": [
+            {
+              "name": "Cooking sake",
+              "amount": "40g"
+            },
+            {
+              "name": "Soy sauce",
+              "amount": "25g"
+            },
+            {
+              "name": "Mirin",
+              "amount": "30g"
+            },
+            {
+              "name": "Brown sugar (or kibizato)",
+              "amount": "15g"
+            }
+          ]
+        }
+      ]
+    },
+    "instructions": [
+      {
+        "step": 1,
+        "text": "Gather all ingredients. Combine liquid seasonings (▶) in a bowl."
+      },
+      {
+        "step": 2,
+        "text": "Trim shiso stems and cut leaves in half lengthwise."
+      },
+      {
+        "step": 3,
+        "text": "Remove umeboshi pits, mash the flesh into a paste."
+      },
+      {
+        "step": 4,
+        "text": "Layer 2 pork belly slices slightly offset. Place ½ tsp umeboshi paste and a shiso half on the meat, then roll tightly. Repeat."
+      },
+      {
+        "step": 5,
+        "text": "Lightly coat rolls in potato starch. Pan-fry in oil over medium heat until browned, then add the sauce to glaze."
+      },
+      {
+        "step": 6,
+        "text": "Slice into bite-sized pieces and serve with rice or pack in a bento."
+      }
+    ],
+    "community_reactions": {
+      "emoji": {
+        "smile": 13
+      },
+      "comments": [
+        {
+          "user": "First-time *Tsukurepo* (cooking report) attempt!"
+        }
+      ],
+      "account": {
+        "name": "kirin’s Family Table",
+        "handle": "@cook_43132891"
+      }
+    }
+  },
+  "Langrage": "English"
+}
