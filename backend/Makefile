@@ -1,6 +1,6 @@
 PYTHON_BIN ?= python3.10
 
-.PHONY: help up down rebuild logs ps test image-test setup-local reset-venv run-local
+.PHONY: help up down rebuild logs ps main main-forever setup-local reset-venv run-local
 
 help:
 	@echo "Targets:"
@@ -9,10 +9,11 @@ help:
 	@echo "  make rebuild       - Rebuild and start Docker services"
 	@echo "  make logs          - Follow Docker logs"
 	@echo "  make ps            - Show Docker service status"
-	@echo "  make test          - Run API smoke test against localhost:8000"
+	@echo "  make main          - Copy .env.example to .env, then run main.py"
+	@echo "  make main-forever  - Copy .env.example to .env, then run main.py forever"
 	@echo "  make setup-local   - Create venv (Python 3.10+) and install requirements"
 	@echo "  make reset-venv    - Recreate .venv with Python 3.10+"
-	@echo "  make run-local     - Run FastAPI locally (no Docker)"
+	@echo "  make run-local     - Copy .env.example to .env, then run FastAPI locally"
 
 up:
 	docker compose up
@@ -29,11 +30,13 @@ logs:
 ps:
 	docker compose ps
 
-test:
-	python3 test.py
+main:
+	cp .env.example .env
+	python3 main.py --config request_config.json
 
-image-test:
-	python3 image_translate_test.py
+main-forever:
+	cp .env.example .env
+	python3 main.py --config request_config.json --forever --interval-sec 2
 
 setup-local:
 	$(PYTHON_BIN) --version
@@ -45,4 +48,5 @@ reset-venv:
 	$(MAKE) setup-local
 
 run-local:
+	cp .env.example .env
 	. .venv/bin/activate && uvicorn app:app --reload --port 8000

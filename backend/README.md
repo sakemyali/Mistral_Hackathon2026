@@ -103,3 +103,35 @@ Run image translate test:
 ```bash
 python image_translate_test.py --config request_config.json
 ```
+
+
+## 10. Unified image/audio backend flow
+New endpoint: `POST /v1/process-unified`
+
+Request format:
+```json
+{
+  "process": {
+    "base_url": "http://localhost:8000",
+    "image_path": "./path/to/screenshot.png",
+    "target_language": "English",
+    "todo": ""
+  }
+}
+```
+
+Rules implemented:
+- Extract text from image with `MISTRAL_OCR_MODEL` (`mistral-ocr-latest` by default)
+- Or transcribe audio file with `MISTRAL_AUDIO_MODEL`
+- Analyze text intent with `MISTRAL_TEXT_MODEL`
+- Branch:
+  - Code request -> `MISTRAL_CODE_MODEL` and return JSON with code + explanation
+  - Special model instruction -> run selected model
+  - Default/no instruction -> translation flow and return JSON keys:
+    - `Text Coordination`, `Context`, `Content`, `Language`
+- If `target_language` is omitted, source language is kept
+
+Test:
+```bash
+python unified_process_test.py --config request_config.json
+```

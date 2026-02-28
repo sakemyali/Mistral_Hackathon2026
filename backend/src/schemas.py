@@ -36,3 +36,19 @@ class ImageTranslateRequest(BaseModel):
 class ImageTranslateResponse(BaseModel):
     result: str
     model_used: str
+
+
+class UnifiedProcessPayload(BaseModel):
+    base_url: Optional[str] = None
+    image_path: Optional[str] = None
+    audio_path: Optional[str] = None
+    target_language: Optional[str] = None
+    todo: Optional[str] = None
+
+
+class UnifiedProcessRequest(BaseModel):
+    process: UnifiedProcessPayload
+
+
+class UnifiedProcessResponse(BaseModel):
+    process: dict
