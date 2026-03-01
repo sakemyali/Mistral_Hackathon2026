@@ -161,7 +161,12 @@ export function useTranslation(
     })
   }).current
 
-  // Throttle effect — only depends on ocrWords and translationEnabled (no store cycle)
+  // When language changes, invalidate cached text so the throttle effect re-translates
+  useEffect(() => {
+    lastTextRef.current = ''
+  }, [sourceLang, targetLang])
+
+  // Throttle effect — depends on ocrWords, translationEnabled, and language settings
   useEffect(() => {
     if (!translationEnabled || ocrWords.length === 0) {
       setTranslatedWords([])
@@ -204,5 +209,5 @@ export function useTranslation(
     return () => {
       if (trailingRef.current) clearTimeout(trailingRef.current)
     }
-  }, [ocrWords, translationEnabled, setTranslatedWords, setTranslationLoading])
+  }, [ocrWords, translationEnabled, sourceLang, targetLang, setTranslatedWords, setTranslationLoading])
 }

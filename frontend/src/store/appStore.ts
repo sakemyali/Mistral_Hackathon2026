@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Intent, OCRWord, TranslatedWord, CaptureRegion, AgentAction, ChatMessage } from '../types'
+import type { Intent, OCRWord, TranslatedWord, AgentAction, ChatMessage, MonitorInfo } from '../types'
 
 interface AppState {
   connected: boolean
@@ -16,8 +16,9 @@ interface AppState {
   translatedWords: TranslatedWord[]
   widgetExpanded: boolean
   overlayOpacity: number
-  captureRegion: CaptureRegion | null
-  regionSelecting: boolean
+  // Monitor selection
+  availableMonitors: MonitorInfo[]
+  selectedMonitor: number
   // Agent state
   agentAction: AgentAction | null
   codeSuggestionVisible: boolean
@@ -48,8 +49,8 @@ interface AppActions {
   setTranslatedWords: (words: TranslatedWord[]) => void
   setWidgetExpanded: (expanded: boolean) => void
   setOverlayOpacity: (opacity: number) => void
-  setCaptureRegion: (region: CaptureRegion | null) => void
-  setRegionSelecting: (selecting: boolean) => void
+  setAvailableMonitors: (monitors: MonitorInfo[]) => void
+  setSelectedMonitor: (index: number) => void
   // Agent actions
   setAgentAction: (action: AgentAction | null) => void
   dismissCodeSuggestion: () => void
@@ -85,8 +86,9 @@ export const useAppStore = create<AppState & AppActions>((set) => ({
   translatedWords: [],
   widgetExpanded: false,
   overlayOpacity: 0.85,
-  captureRegion: null,
-  regionSelecting: false,
+  // Monitor defaults
+  availableMonitors: [],
+  selectedMonitor: 1,
   // Agent defaults
   agentAction: null,
   codeSuggestionVisible: false,
@@ -111,13 +113,13 @@ export const useAppStore = create<AppState & AppActions>((set) => ({
   setOCRWords: (words) => set({ ocrWords: words }),
   setTranslationEnabled: (enabled) => set({ translationEnabled: enabled }),
   setTranslationLoading: (loading) => set({ translationLoading: loading }),
-  setLanguages: (source, target) => set({ sourceLang: source, targetLang: target }),
+  setLanguages: (source, target) => set({ sourceLang: source, targetLang: target, translatedWords: [] }),
   setAutoDetectLang: (autoDetect) => set({ autoDetectLang: autoDetect }),
   setTranslatedWords: (words) => set({ translatedWords: words }),
   setWidgetExpanded: (expanded) => set({ widgetExpanded: expanded }),
   setOverlayOpacity: (opacity) => set({ overlayOpacity: opacity }),
-  setCaptureRegion: (region) => set({ captureRegion: region }),
-  setRegionSelecting: (selecting) => set({ regionSelecting: selecting }),
+  setAvailableMonitors: (monitors) => set({ availableMonitors: monitors }),
+  setSelectedMonitor: (index) => set({ selectedMonitor: index }),
   // Agent actions
   setAgentAction: (action) => set({ agentAction: action, codeSuggestionVisible: action !== null }),
   dismissCodeSuggestion: () => set({ codeSuggestionVisible: false }),

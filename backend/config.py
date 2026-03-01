@@ -35,6 +35,7 @@ VIBE_COOLDOWN_SECONDS = float(os.getenv("VIBE_COOLDOWN_SECONDS", "10"))
 VIBE_SIMILARITY_THRESHOLD = float(os.getenv("VIBE_SIMILARITY_THRESHOLD", "0.85"))
 VIBE_NARRATION_GUARD_SECONDS = float(os.getenv("VIBE_NARRATION_GUARD_SECONDS", "8"))
 NORMAL_COOLDOWN_SECONDS = float(os.getenv("NORMAL_COOLDOWN_SECONDS", "30"))
+VIBE_PENDING_TIMEOUT_SECONDS = float(os.getenv("VIBE_PENDING_TIMEOUT_SECONDS", "60"))
 
 # Weights & Biases (optional)
 WANDB_ENABLED = os.getenv("WANDB_ENABLED", "false").lower() in ("true", "1", "yes")

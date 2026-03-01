@@ -74,8 +74,6 @@ export interface ErrorMessage {
   request_id: string
 }
 
-export type WSMessage = IntentUpdate | OCRUpdate | TranslationResult | ChatResponse | ErrorMessage
-
 export interface TranslatedWord {
   original: string
   translated: string
@@ -85,29 +83,30 @@ export interface TranslatedWord {
   height: number
 }
 
-export interface CaptureRegion {
-  x: number
-  y: number
+export interface MonitorInfo {
+  index: number
   width: number
   height: number
 }
+
+export interface MonitorList {
+  type: 'monitor_list'
+  monitors: MonitorInfo[]
+}
+
+export type WSMessage = IntentUpdate | OCRUpdate | TranslationResult | ChatResponse | ErrorMessage | MonitorList
 
 declare global {
   interface Window {
     electronAPI: {
       setIgnoreMouse: (ignore: boolean) => void
+      setFocusable: (focusable: boolean) => void
       setOpacity: (opacity: number) => void
       quit: () => void
       copyToClipboard: (text: string) => void
       pasteToActiveWindow: (text: string) => Promise<{ success: boolean; error?: string }>
-      setCaptureRegion: (region: CaptureRegion | null) => void
-      setRegionSelecting: (active: boolean) => void
-      setFocusable: (focusable: boolean) => void
       onToggleTranslation: (callback: () => void) => () => void
       onAppQuit: (callback: () => void) => () => void
-      onStartRegionSelect: (callback: () => void) => () => void
-      onCaptureRegionUpdated: (callback: (region: CaptureRegion | null) => void) => () => void
-      onCancelRegionSelect: (callback: () => void) => () => void
       // F6: Minimized head mode
       onToggleMinimize: (callback: () => void) => () => void
       // F7: Keyboard shortcuts

@@ -39,12 +39,22 @@ export default function ChatWidget() {
     }
   }, [chatOpen])
 
+  // Restore non-focusable state when chat closes
+  useEffect(() => {
+    if (!chatOpen) {
+      window.electronAPI?.setFocusable(false)
+      window.electronAPI?.setIgnoreMouse(true)
+    }
+  }, [chatOpen])
+
   const handleMouseEnter = useCallback(() => {
     window.electronAPI?.setIgnoreMouse(false)
+    window.electronAPI?.setFocusable(true)
   }, [])
 
   const handleMouseLeave = useCallback(() => {
     if (!dragging) {
+      window.electronAPI?.setFocusable(false)
       window.electronAPI?.setIgnoreMouse(true)
     }
   }, [dragging])

@@ -10,11 +10,8 @@ function App() {
   useTranslation(send, translationHandlerRef)
   useNarration()
 
-  const captureRegion = useAppStore((s) => s.captureRegion)
   const {
     setTranslationEnabled,
-    setRegionSelecting,
-    setCaptureRegion,
     setAssistantEnabled,
     setWsSend,
     setMinimized,
@@ -26,11 +23,6 @@ function App() {
   useEffect(() => {
     setWsSend(send)
   }, [send, setWsSend])
-
-  // Send capture region to backend whenever it changes
-  useEffect(() => {
-    send({ type: 'set_capture_region', region: captureRegion })
-  }, [captureRegion, send])
 
   // Wire up IPC listeners from Electron main process
   useEffect(() => {
@@ -50,20 +42,6 @@ function App() {
       cleanups.push(
         window.electronAPI.onAppQuit(() => {
           markQuitting()
-        }),
-      )
-
-      // Alt+R: start region selection
-      cleanups.push(
-        window.electronAPI.onStartRegionSelect(() => {
-          setRegionSelecting(true)
-        }),
-      )
-
-      // Capture region update from main process
-      cleanups.push(
-        window.electronAPI.onCaptureRegionUpdated((region) => {
-          setCaptureRegion(region)
         }),
       )
 
@@ -121,7 +99,7 @@ function App() {
     return () => {
       cleanups.forEach((fn) => fn())
     }
-  }, [send, setTranslationEnabled, setRegionSelecting, setCaptureRegion, setAssistantEnabled, setMinimized, setChatOpen, dismissCodeSuggestion])
+  }, [send, setTranslationEnabled, setAssistantEnabled, setMinimized, setChatOpen, dismissCodeSuggestion])
 
   return <Overlay />
 }

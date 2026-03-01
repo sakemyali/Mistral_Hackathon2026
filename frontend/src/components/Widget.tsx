@@ -15,10 +15,9 @@ export default function Widget() {
     translationEnabled,
     setTranslationEnabled,
     translationLoading,
-    captureRegion,
-    setCaptureRegion,
-    regionSelecting,
-    setRegionSelecting,
+    availableMonitors,
+    selectedMonitor,
+    setSelectedMonitor,
     agentAction,
     narrationPlaying,
     assistantEnabled,
@@ -69,14 +68,14 @@ export default function Widget() {
     [position],
   )
 
-  const handleStartRegion = useCallback(() => {
-    setRegionSelecting(true)
-  }, [setRegionSelecting])
-
-  const handleResetRegion = useCallback(() => {
-    setCaptureRegion(null)
-    window.electronAPI?.setCaptureRegion(null)
-  }, [setCaptureRegion])
+  const handleMonitorChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      const idx = Number(e.target.value)
+      setSelectedMonitor(idx)
+      wsSend?.({ type: 'set_capture_monitor', monitor_index: idx })
+    },
+    [setSelectedMonitor, wsSend],
+  )
 
   const handleQuit = useCallback(() => {
     window.electronAPI?.quit()
@@ -215,48 +214,31 @@ export default function Widget() {
             {/* Language picker (shown when translation is on) */}
             {translationEnabled && <LanguagePicker />}
 
-            {/* Region selection */}
-            <div className="flex flex-col gap-1.5">
+            {/* Monitor selector */}
+            {availableMonitors.length > 0 && (
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <label className="text-white/70 text-xs">Capture Region</label>
-                  <span className="text-white/30 text-[9px]">Alt+R</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-1.5">
-                {!captureRegion ? (
-                  <button
-                    onClick={handleStartRegion}
-                    disabled={regionSelecting}
-                    className="bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 text-[10px]
-                      rounded px-2 py-0.5 border border-blue-500/30 cursor-pointer
-                      disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  >
-                    {regionSelecting ? 'Selecting...' : 'Select Region'}
-                  </button>
+                <label className="text-white/70 text-xs">Monitor</label>
+                {availableMonitors.length === 1 ? (
+                  <span className="text-white/40 text-[10px]">
+                    {availableMonitors[0].width}×{availableMonitors[0].height}
+                  </span>
                 ) : (
-                  <>
-                    <span className="text-green-400/70 text-[10px]">
-                      {captureRegion.width}×{captureRegion.height}
-                    </span>
-                    <button
-                      onClick={handleStartRegion}
-                      className="bg-white/10 hover:bg-white/20 text-white/70 text-[10px]
-                        rounded px-2 py-0.5 cursor-pointer transition-colors"
-                    >
-                      Reselect
-                    </button>
-                    <button
-                      onClick={handleResetRegion}
-                      className="bg-white/10 hover:bg-red-500/20 text-white/50 hover:text-red-400
-                        text-[10px] rounded px-2 py-0.5 cursor-pointer transition-colors"
-                    >
-                      Reset
-                    </button>
-                  </>
+                  <select
+                    value={selectedMonitor}
+                    onChange={handleMonitorChange}
+                    className="bg-white/10 text-white text-[10px] rounded px-1.5 py-0.5
+                      border border-white/20 cursor-pointer outline-none
+                      hover:border-white/30 transition-colors"
+                  >
+                    {availableMonitors.map((m) => (
+                      <option key={m.index} value={m.index} className="bg-gray-900 text-white">
+                        Monitor {m.index} ({m.width}×{m.height})
+                      </option>
+                    ))}
+                  </select>
                 )}
               </div>
-            </div>
+            )}
 
             {/* Voice selector */}
             <VoiceSelector />
@@ -284,7 +266,6 @@ export default function Widget() {
               <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
                 <span className="text-white/30 text-[9px]">Alt+T  Translate</span>
                 <span className="text-white/30 text-[9px]">Alt+H  Minimize</span>
-                <span className="text-white/30 text-[9px]">Alt+R  Region</span>
                 <span className="text-white/30 text-[9px]">Alt+S  Assistant</span>
                 <span className="text-white/30 text-[9px]">Alt+D  Dismiss</span>
                 <span className="text-white/30 text-[9px]">Alt+A  Apply</span>
