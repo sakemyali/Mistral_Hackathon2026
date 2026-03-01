@@ -28,6 +28,7 @@ from config import (
     VIBE_SIMILARITY_THRESHOLD,
     VIBE_NARRATION_GUARD_SECONDS,
     NORMAL_COOLDOWN_SECONDS,
+    VIBE_PENDING_TIMEOUT_SECONDS,
 )
 from prompts import VIBE_AGENT_PROMPT
 
@@ -50,6 +51,7 @@ class VibeAgent(BaseAgent):
         # Turn awareness
         self._suggestion_history: List[Dict[str, str]] = []  # last 5
         self._pending_suggestion: Optional[Dict[str, str]] = None
+        self._pending_suggestion_time: float = 0.0
 
     def record_feedback(self, action: str):
         """Record user feedback (applied/dismissed) for turn awareness."""
@@ -81,9 +83,13 @@ class VibeAgent(BaseAgent):
         if context.confidence < 0.5:
             return False
 
-        # Gate 2: Pending suggestion — don't generate new ones until user dismisses/applies
+        # Gate 2: Pending suggestion — don't spam, but auto-clear if stale (timeout)
         if self._pending_suggestion is not None:
-            return False
+            if (time.time() - self._pending_suggestion_time) < VIBE_PENDING_TIMEOUT_SECONDS:
+                return False
+            # Timed out — clear stale pending suggestion so new ones can generate
+            print(f"[VibeAgent] Pending suggestion timed out after {VIBE_PENDING_TIMEOUT_SECONDS}s, clearing")
+            self._pending_suggestion = None
 
         # Gate 3: Exact dedup via MD5 hash
         ocr_hash = hashlib.md5(context.ocr_text.encode()).hexdigest()
@@ -171,12 +177,13 @@ class VibeAgent(BaseAgent):
             print(f"[VibeAgent] API error: {e}")
             explanation = f"Could not analyze: {str(e)}"
 
-        # Store as pending for turn awareness
+        # Store as pending for turn awareness (with timestamp for timeout)
         self._pending_suggestion = {
             "explanation": explanation,
             "suggestion_type": suggestion_type,
             "content": content[:100],
         }
+        self._pending_suggestion_time = time.time()
 
         # --- Chain to narration service for optional TTS ---
         narration: Optional[Dict[str, Any]] = None

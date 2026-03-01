@@ -10,6 +10,7 @@ export function useNarration() {
   const agentAction = useAppStore((s) => s.agentAction)
   const voiceEnabled = useAppStore((s) => s.voiceEnabled)
   const assistantEnabled = useAppStore((s) => s.assistantEnabled)
+  const codeSuggestionVisible = useAppStore((s) => s.codeSuggestionVisible)
   const setNarrationPlaying = useAppStore((s) => s.setNarrationPlaying)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const urlRef = useRef<string | null>(null)
@@ -26,6 +27,19 @@ export function useNarration() {
       setNarrationPlaying(false)
     }
   }, [assistantEnabled, setNarrationPlaying])
+
+  // Stop audio when suggestion is dismissed or accepted
+  useEffect(() => {
+    if (!codeSuggestionVisible && audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current = null
+      if (urlRef.current) {
+        URL.revokeObjectURL(urlRef.current)
+        urlRef.current = null
+      }
+      setNarrationPlaying(false)
+    }
+  }, [codeSuggestionVisible, setNarrationPlaying])
 
   useEffect(() => {
     if (!agentAction || !voiceEnabled || !assistantEnabled) return

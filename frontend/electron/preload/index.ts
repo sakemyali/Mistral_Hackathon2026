@@ -9,28 +9,20 @@ function onIpc(channel: string, callback: (...args: unknown[]) => void) {
 contextBridge.exposeInMainWorld('electronAPI', {
   setIgnoreMouse: (ignore: boolean) =>
     ipcRenderer.send('set-ignore-mouse', ignore),
+  setFocusable: (focusable: boolean) =>
+    ipcRenderer.send('set-focusable', focusable),
   setOpacity: (opacity: number) =>
     ipcRenderer.send('set-opacity', opacity),
   quit: () =>
     ipcRenderer.send('quit-app'),
   copyToClipboard: (text: string) =>
     ipcRenderer.send('copy-to-clipboard', text),
-  setCaptureRegion: (region: { x: number; y: number; width: number; height: number } | null) =>
-    ipcRenderer.send('set-capture-region', region),
-  setRegionSelecting: (active: boolean) =>
-    ipcRenderer.send('region-selecting', active),
-  setFocusable: (focusable: boolean) =>
-    ipcRenderer.send('set-focusable', focusable),
   pasteToActiveWindow: (text: string) =>
     ipcRenderer.invoke('paste-to-active-window', text),
 
   // Listen for main process events
   onToggleTranslation: (callback: () => void) => onIpc('toggle-translation', callback),
   onAppQuit: (callback: () => void) => onIpc('app-quit', callback),
-  onStartRegionSelect: (callback: () => void) => onIpc('start-region-select', callback),
-  onCaptureRegionUpdated: (callback: (region: { x: number; y: number; width: number; height: number } | null) => void) =>
-    onIpc('capture-region-updated', callback as (...args: unknown[]) => void),
-  onCancelRegionSelect: (callback: () => void) => onIpc('cancel-region-select', callback),
 
   // F6: Minimized head mode
   onToggleMinimize: (callback: () => void) => onIpc('toggle-minimize', callback),

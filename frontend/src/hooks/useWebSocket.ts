@@ -35,7 +35,11 @@ export function useWebSocket() {
         switch (msg.type) {
           case 'intent_update':
             setIntent(msg.intent, msg.confidence, msg.reasoning)
-            useAppStore.getState().setAgentAction(msg.agent_action)
+            // Only update agentAction when there's a NEW action — don't clear on null
+            // (null just means "no agent triggered this tick", not "dismiss current suggestion")
+            if (msg.agent_action) {
+              useAppStore.getState().setAgentAction(msg.agent_action)
+            }
             break
           case 'ocr_update':
             setOCRWords(msg.words)
@@ -49,6 +53,9 @@ export function useWebSocket() {
               text: msg.text,
               timestamp: Date.now(),
             })
+            break
+          case 'monitor_list':
+            useAppStore.getState().setAvailableMonitors(msg.monitors)
             break
           case 'error':
             console.error('[WS] Backend error:', msg.message)

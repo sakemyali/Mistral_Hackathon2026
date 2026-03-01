@@ -114,6 +114,15 @@ app.add_middleware(
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
+    # Send available monitors to new client
+    try:
+        monitors = pipeline.list_monitors()
+        await websocket.send_text(json.dumps({
+            "type": "monitor_list",
+            "monitors": monitors,
+        }))
+    except Exception as e:
+        print(f"[WS] Failed to send monitor list: {e}")
     try:
         while True:
             data = await websocket.receive_text()
@@ -153,9 +162,8 @@ async def websocket_endpoint(websocket: WebSocket):
             elif msg.get("type") == "set_voice":
                 pipeline.set_voice_id(msg.get("voice_id"))
 
-            elif msg.get("type") == "set_capture_region":
-                region = msg.get("region")  # {x, y, width, height} or null
-                pipeline.set_capture_region(region)
+            elif msg.get("type") == "set_capture_monitor":
+                pipeline.set_capture_monitor(msg.get("monitor_index", 1))
 
             elif msg.get("type") == "suggestion_feedback":
                 pipeline.record_suggestion_feedback(msg.get("action", "dismissed"))

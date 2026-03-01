@@ -98,9 +98,13 @@ class PipelineOrchestrator:
     def get_voice_id(self) -> Optional[str]:
         return self._voice_id
 
-    def set_capture_region(self, region: Optional[Dict[str, int]]):
-        """Set a sub-region for screen capture. None = full monitor."""
-        self.capture.set_capture_region(region)
+    def set_capture_monitor(self, index: int):
+        """Switch which monitor the capture pipeline uses."""
+        self.capture.set_monitor(index)
+
+    def list_monitors(self):
+        """Return available monitors for the frontend selector."""
+        return ScreenCapture.list_monitors()
 
     async def start(
         self,

@@ -175,7 +175,6 @@ function registerHotkeys() {
   globalShortcut.register('Alt+T', () => sendToRenderer('toggle-translation'))
   globalShortcut.register('Alt+H', () => sendToRenderer('toggle-minimize'))
   globalShortcut.register('Alt+Q', () => gracefulQuit())
-  globalShortcut.register('Alt+R', () => sendToRenderer('start-region-select'))
   globalShortcut.register('Alt+D', () => sendToRenderer('dismiss-suggestion'))
   globalShortcut.register('Alt+A', () => sendToRenderer('apply-suggestion'))
   globalShortcut.register('Alt+C', () => sendToRenderer('toggle-chat'))
@@ -191,6 +190,15 @@ ipcMain.on('set-ignore-mouse', (_event, ignore: boolean) => {
     overlayWindow.setIgnoreMouseEvents(true, { forward: true })
   } else {
     overlayWindow.setIgnoreMouseEvents(false)
+  }
+})
+
+// Toggle focusable state for keyboard input (chat)
+ipcMain.on('set-focusable', (_event, focusable: boolean) => {
+  if (isQuitting || !overlayWindow || overlayWindow.isDestroyed()) return
+  overlayWindow.setFocusable(focusable)
+  if (focusable) {
+    overlayWindow.focus()
   }
 })
 
@@ -248,39 +256,6 @@ ipcMain.handle('paste-to-active-window', async (_event, text: string) => {
   } catch (err) {
     console.error('[Paste] Keyboard simulation failed:', err)
     return { success: false, error: String(err) }
-  }
-})
-
-// Temporarily toggle window focusable (for region selection)
-ipcMain.on('set-focusable', (_event, focusable: boolean) => {
-  if (isQuitting || !overlayWindow || overlayWindow.isDestroyed()) return
-  overlayWindow.setFocusable(focusable)
-  if (focusable) {
-    overlayWindow.focus()
-  } else {
-    overlayWindow.setIgnoreMouseEvents(true, { forward: true })
-  }
-})
-
-// Region selection result from renderer
-ipcMain.on('set-capture-region', (_event, region: { x: number; y: number; width: number; height: number } | null) => {
-  if (isQuitting || !overlayWindow || overlayWindow.isDestroyed()) return
-  overlayWindow.webContents.send('capture-region-updated', region)
-})
-
-// Region selecting mode: register/unregister temporary Escape shortcut
-// (overlay is focusable:false so keydown events never reach the renderer)
-ipcMain.on('region-selecting', (_event, active: boolean) => {
-  if (isQuitting) return
-  if (active) {
-    globalShortcut.register('Escape', () => {
-      if (!isQuitting && overlayWindow && !overlayWindow.isDestroyed()) {
-        overlayWindow.webContents.send('cancel-region-select')
-      }
-      globalShortcut.unregister('Escape')
-    })
-  } else {
-    try { globalShortcut.unregister('Escape') } catch { /* already unregistered */ }
   }
 })
 
