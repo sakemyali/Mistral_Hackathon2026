@@ -1,6 +1,6 @@
 import asyncio
 import time
-from typing import Awaitable, Callable, Optional
+from typing import Awaitable, Callable, Dict, Optional
 
 from capture import ScreenCapture
 from ocr import extract_text_with_boxes, OCRResult
@@ -20,6 +20,30 @@ class PipelineOrchestrator:
         self._latest_intent: Optional[IntentResult] = None
         self._last_classified_text: Optional[str] = None
         self._running = False
+        # Toggle flags — when both are off, OCR/Vision/Classifier loops idle
+        self._assistant_enabled = True
+        self._translation_enabled = False
+        # Voice selection
+        self._voice_id: Optional[str] = None
+
+    def set_assistant_enabled(self, enabled: bool):
+        self._assistant_enabled = enabled
+        print(f"[Pipeline] Assistant {'enabled' if enabled else 'disabled'}")
+
+    def set_translation_enabled(self, enabled: bool):
+        self._translation_enabled = enabled
+        print(f"[Pipeline] Translation {'enabled' if enabled else 'disabled'}")
+
+    def set_voice_id(self, voice_id: Optional[str]):
+        self._voice_id = voice_id
+        print(f"[Pipeline] Voice ID set to {voice_id}")
+
+    def get_voice_id(self) -> Optional[str]:
+        return self._voice_id
+
+    def set_capture_region(self, region: Optional[Dict[str, int]]):
+        """Set a sub-region for screen capture. None = full monitor."""
+        self.capture.set_capture_region(region)
 
     async def start(
         self,
@@ -42,6 +66,11 @@ class PipelineOrchestrator:
         interval = 1.0 / OCR_FPS
 
         while self._running:
+            # Skip OCR if neither assistant nor translation needs it
+            if not self._assistant_enabled and not self._translation_enabled:
+                await asyncio.sleep(interval)
+                continue
+
             start = time.time()
             try:
                 frame = await loop.run_in_executor(None, self.capture.grab_frame)
@@ -63,6 +92,11 @@ class PipelineOrchestrator:
         interval = 1.0 / VISION_FPS
 
         while self._running:
+            # Vision only needed for assistant
+            if not self._assistant_enabled:
+                await asyncio.sleep(interval)
+                continue
+
             start = time.time()
             try:
                 frame = await loop.run_in_executor(None, self.capture.grab_frame)
@@ -87,6 +121,11 @@ class PipelineOrchestrator:
         interval = 1.0 / CLASSIFIER_FPS
 
         while self._running:
+            # Classifier only needed for assistant
+            if not self._assistant_enabled:
+                await asyncio.sleep(interval)
+                continue
+
             if (
                 self._latest_ocr
                 and self._latest_ocr.full_text
@@ -118,6 +157,7 @@ class PipelineOrchestrator:
                         ocr_text=self._latest_ocr.full_text,
                         vision_analysis=vision_str,
                         timestamp=time.time(),
+                        voice_id=self._voice_id,
                     )
                     agent_result = await agent_registry.route(ctx)
                     await on_intent(intent, agent_result)
@@ -125,6 +165,45 @@ class PipelineOrchestrator:
                     print(f"[Classifier] Error: {e}")
 
             await asyncio.sleep(interval)
+
+    def record_suggestion_feedback(self, action: str):
+        """Forward feedback (applied/dismissed) to the VibeAgent for turn awareness."""
+        from agents.vibe_agent import VibeAgent
+        for agent in agent_registry._agents:
+            if isinstance(agent, VibeAgent):
+                agent.record_feedback(action)
+                break
+
+    async def handle_chat(self, user_message: str) -> str:
+        """Handle a chat message using current screen context. Works even when assistant is OFF."""
+        from mistralai import Mistral
+        from config import MISTRAL_API_KEY, DEVSTRAL_MODEL
+        from prompts import CHAT_SYSTEM_PROMPT, CHAT_USER_PROMPT
+
+        vision_str = self._latest_vision or "No visual analysis available"
+        ocr_str = self._latest_ocr.full_text if self._latest_ocr else "No OCR text available"
+
+        prompt = CHAT_USER_PROMPT.format(
+            vision_analysis=vision_str,
+            ocr_text=ocr_str[:2000],
+            user_message=user_message,
+        )
+
+        try:
+            client = Mistral(api_key=MISTRAL_API_KEY)
+            response = client.chat.complete(
+                model=DEVSTRAL_MODEL,
+                messages=[
+                    {"role": "system", "content": CHAT_SYSTEM_PROMPT},
+                    {"role": "user", "content": prompt},
+                ],
+                temperature=0.5,
+                max_tokens=500,
+            )
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            print(f"[Chat] Error: {e}")
+            return f"Sorry, I couldn't process that: {e}"
 
     def stop(self):
         self._running = False

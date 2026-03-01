@@ -63,13 +63,15 @@ async def lifespan(app: FastAPI):
         )
 
     async def on_intent(intent: IntentResult, agent_result: Optional[AgentResponse]):
+        # If assistant is disabled, suppress agent actions (don't broadcast suggestions/narration)
+        effective_agent = agent_result if pipeline._assistant_enabled else None
         await manager.broadcast(
             {
                 "type": "intent_update",
                 "intent": intent.intent,
                 "confidence": intent.confidence,
                 "reasoning": intent.reasoning,
-                "agent_action": agent_result.model_dump() if agent_result else None,
+                "agent_action": effective_agent.model_dump() if effective_agent else None,
             }
         )
 
@@ -128,6 +130,45 @@ async def websocket_endpoint(websocket: WebSocket):
                             {
                                 "type": "error",
                                 "message": f"Translation failed: {e}",
+                                "request_id": msg.get("request_id"),
+                            }
+                        )
+                    )
+
+            elif msg.get("type") == "toggle_assistant":
+                pipeline.set_assistant_enabled(msg.get("enabled", True))
+
+            elif msg.get("type") == "toggle_translation":
+                pipeline.set_translation_enabled(msg.get("enabled", True))
+
+            elif msg.get("type") == "set_voice":
+                pipeline.set_voice_id(msg.get("voice_id"))
+
+            elif msg.get("type") == "set_capture_region":
+                region = msg.get("region")  # {x, y, width, height} or null
+                pipeline.set_capture_region(region)
+
+            elif msg.get("type") == "suggestion_feedback":
+                pipeline.record_suggestion_feedback(msg.get("action", "dismissed"))
+
+            elif msg.get("type") == "chat_message":
+                try:
+                    reply = await pipeline.handle_chat(msg.get("text", ""))
+                    await websocket.send_text(
+                        json.dumps(
+                            {
+                                "type": "chat_response",
+                                "text": reply,
+                                "request_id": msg.get("request_id"),
+                            }
+                        )
+                    )
+                except Exception as e:
+                    await websocket.send_text(
+                        json.dumps(
+                            {
+                                "type": "error",
+                                "message": f"Chat failed: {e}",
                                 "request_id": msg.get("request_id"),
                             }
                         )
