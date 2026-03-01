@@ -1,121 +1,183 @@
-# DorAImon
+# Doraemon
 
-**Mistral AI Hackathon Tokyo 2026**
+Real-time AI productivity monitor that watches your screen, understands what you're doing, and provides live translation overlays — all running locally with a transparent Electron overlay.
 
-A self-improving AI assistant that lives as an invisible overlay on your screen. DorAImon watches what you're doing — coding, reading foreign text, hitting errors — and proactively helps through a multi-agent pipeline powered by Mistral AI.
+## What It Does
 
-Captures your screen at 2fps, runs Pixtral vision analysis, classifies intent, routes to the right agent, and renders contextual help as glassmorphism overlays — all while staying invisible to your mouse and screen recordings.
+Doraemon captures your screen in real-time and runs three parallel AI pipelines:
 
-![Electron](https://img.shields.io/badge/Electron-33-47848F?logo=electron&logoColor=white)
-![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
-![Mistral](https://img.shields.io/badge/Mistral_AI-FF7000?logo=data:image/svg+xml;base64,&logoColor=white)
-![Tailwind](https://img.shields.io/badge/Tailwind-3.4-38B2AC?logo=tailwindcss&logoColor=white)
+- **OCR Pipeline (2 FPS)** — Extracts all visible text with bounding boxes using Tesseract
+- **Vision Pipeline (0.25 FPS)** — Analyzes the screen with Pixtral-12B to understand what app/site you're using and what you're doing
+- **Intent Classifier (0.5 FPS)** — Classifies your productivity state as `normal`, `hesitant` (stuck/distracted), or `typo` using Ministral-3B
 
----
+On top of that, a **floating translation panel** overlays your screen — translating any on-screen text in real-time with language auto-detection. Click any translated line to highlight where the original text is on screen.
 
-## How It Works
+## Architecture
 
 ```
-Screen (2fps) -> Pixtral Vision -> Classify -> Route -> Execute -> Render -> Feedback -> Loop
+┌─────────────────────────────────────────────────┐
+│  Electron Overlay (React + Zustand + Tailwind)  │
+│  - Transparent, click-through, always-on-top    │
+│  - Spans all monitors                           │
+│  - Translation panel, region selector, widget   │
+└──────────────────────┬──────────────────────────┘
+                       │ WebSocket (ws://localhost:8000)
+┌──────────────────────┴──────────────────────────┐
+│  FastAPI Backend (Python)                        │
+│  ┌────────────┐ ┌──────────┐ ┌───────────────┐  │
+│  │ OCR (2fps) │ │ Vision   │ │ Classifier    │  │
+│  │ Tesseract  │ │ Pixtral  │ │ Ministral-3B  │  │
+│  └────────────┘ └──────────┘ └───────────────┘  │
+│  ┌────────────────────────────────────────────┐  │
+│  │ Translator (Argos Translate — offline)     │  │
+│  └────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────┘
 ```
 
-1. **Screen Capture** — 2fps screenshots via Electron `desktopCapturer`
-2. **Vision Analysis** — Pixtral-12B analyzes what's on screen (throttled every 3s)
-3. **Intent Classifier** — heuristic + vision-augmented detection: hesitation, foreign text, errors, fluent typing
-4. **Action Router** — selects the right agent based on intent + confidence
-5. **Agent Execution** — Mistral (vision/translate), Vibe (code suggestions), ElevenLabs (voice)
-6. **Overlay Render** — glassmorphism UI: translation boxes, code diffs, subtitles, debug panel
-7. **User Feedback** — accept/reject logged to W&B as reward signals for self-improvement
+## Prerequisites
 
-## Quick Start
+- **Python 3.9+**
+- **Node.js 18+**
+- **Tesseract OCR** — `brew install tesseract` (macOS) or `apt install tesseract-ocr` (Linux)
+- **Mistral API key** — Get one at [console.mistral.ai](https://console.mistral.ai)
+
+## Setup
+
+### 1. Clone and configure
 
 ```bash
-git clone <repo>
-cd doraimon
-cp .env.example .env
-# Add your MISTRAL_API_KEY (required for real vision/translation)
-npm install
-npm start
+git clone <repo-url> && cd doraemon
+cp backend/.env.example backend/.env
 ```
 
-Works without API keys too — falls back to stubs for demo/development.
+Edit `backend/.env` and add your Mistral API key:
+
+```env
+MISTRAL_API_KEY=your_key_here
+```
+
+### 2. Install backend dependencies
+
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+### 3. Install frontend dependencies
+
+```bash
+cd frontend
+npm install
+```
+
+## Running
+
+The easiest way — start both backend and frontend with one command:
+
+```bash
+./start.sh
+```
+
+To stop:
+
+```bash
+./start.sh stop
+```
+
+### Manual start
+
+```bash
+# Terminal 1 — Backend
+cd backend
+python3 -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+# Terminal 2 — Frontend
+cd frontend
+npm run dev
+```
 
 ## Hotkeys
 
 | Shortcut | Action |
-|---|---|
-| `Ctrl+Shift+S` | Show / hide overlay |
-| `Ctrl+Shift+C` | Manual AI capture |
-| `Escape` | Close panel (tap twice to hide overlay) |
+|----------|--------|
+| `Alt+H` | Toggle overlay visibility |
+| `Alt+T` | Toggle translation mode |
+| `Alt+R` | Select screen region for OCR |
+| `Alt+Q` | Quit Doraemon |
+| `Escape` | Cancel region selection |
 
-## Agents
+## Configuration
 
-| Agent | Model | Role |
-|---|---|---|
-| **Mistral** | Pixtral-12B / Mistral Large | Vision analysis, OCR, translation, language detection |
-| **Vibe** | Vibe CLI | Code suggestions, error fixes, refactoring |
-| **ElevenLabs** | eleven_multilingual_v2 | Voice narration personality |
-| **W&B** | Weights & Biases | Experiment tracking, RL reward logging |
+All config is via environment variables in `backend/.env`:
 
-## Features
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `MISTRAL_API_KEY` | — | **Required.** Mistral AI API key |
+| `CAPTURE_MONITOR` | `1` | Which monitor to capture (1 = primary) |
+| `OCR_FPS` | `2` | OCR capture rate |
+| `VISION_FPS` | `0.25` | Vision analysis rate (every 4s) |
+| `CLASSIFIER_FPS` | `0.5` | Intent classification rate (every 2s) |
+| `WS_PORT` | `8000` | WebSocket server port |
+| `WANDB_ENABLED` | `false` | Enable Weights & Biases metrics logging |
+| `WANDB_PROJECT` | `doraemon` | W&B project name |
 
-- **Click-through transparency** — overlay is invisible to your mouse except UI elements
-- **Content-protected** — hidden from screen recordings (OBS, Zoom, etc.)
-- **Real Mistral vision** — Pixtral-12B analyzes your screen, feeds the classifier
-- **Google Lens-style translation** — OCR bounding boxes with translated text overlays
-- **Code suggestion cards** — accept/reject Vibe-generated diffs
-- **Voice assistant** — DorAImon narrates what it's doing (Silent/Voice/Auto modes)
-- **Debug panel** — real-time pipeline visualization (intent, confidence, agent, latency)
-- **Self-improving** — user actions logged as reward signals for offline RL training
+## Translation
 
-## Tech Stack
+The overlay includes a draggable floating translation panel (Cluely-style sidebar):
 
-| Layer | Technology |
-|---|---|
-| Desktop runtime | Electron 33 |
-| UI framework | React 18 |
-| Styling | Tailwind CSS 3.4 + glassmorphism |
-| Vision AI | Mistral AI (Pixtral-12B + Mistral Large) via `@mistralai/mistralai` SDK |
-| Code agent | Vibe CLI |
-| Voice | ElevenLabs |
-| Tracking | Weights & Biases |
-| Build | Webpack 5 + Babel |
+- **Real-time** — Translates on-screen text as you browse, with 800ms throttle
+- **Auto-detect** — Automatically detects the source language using `langdetect`
+- **Click to highlight** — Click any translated line to see where the original text is on screen
+- **Offline** — Uses Argos Translate for local, private translation
+- **10 languages** — English, Japanese, French, Spanish, German, Chinese, Korean, Portuguese, Arabic, Russian
 
 ## Project Structure
 
 ```
-main.js                  Electron main — capture loop, pipeline, hotkeys, IPC
-preload.js               Security bridge (contextBridge)
-services/
-  base-service.js        Abstract service interface
-  index.js               Service registry + router
-  classifier.js          Intent detection (heuristic + vision)
-  router.js              Agent selection logic
-  mistral.js             Pixtral vision, translation, chat (real SDK)
-  vibe.js                Code suggestions via CLI subprocess
-  elevenlabs.js          Voice narration assistant
-  wandb.js               Experiment tracking + feedback logging
-src/
-  App.jsx                Root component, pipeline wiring
-  OverlayRenderer.jsx    Subtitle display, typewriter animation
-  ControlPanel.jsx       HUD controls, pipeline status, voice toggle
-  components/
-    TextOverlay.jsx      Google Lens-style translation boxes
-    SuggestionCard.jsx   Code diff cards (accept/reject)
-    DebugPanel.jsx       Agent routing visualization
+doraemon/
+├── start.sh                    # One-command launcher
+├── backend/
+│   ├── main.py                 # FastAPI + WebSocket server
+│   ├── capture.py              # Screen capture (mss)
+│   ├── ocr.py                  # Tesseract OCR with bounding boxes
+│   ├── vision.py               # Pixtral-12B screen analysis
+│   ├── classifier.py           # Ministral-3B intent classifier
+│   ├── translator.py           # Argos Translate (offline)
+│   ├── pipelines.py            # Pipeline orchestrator
+│   ├── metrics.py              # W&B metrics logging
+│   ├── config.py               # Environment config
+│   ├── agents/                 # Extensible agent system
+│   │   ├── base.py             # Abstract agent interface
+│   │   └── registry.py         # Agent router
+│   └── requirements.txt
+└── frontend/
+    ├── electron/
+    │   ├── main/index.ts       # Electron main process (overlay, tray, hotkeys)
+    │   └── preload/index.ts    # IPC bridge
+    └── src/
+        ├── App.tsx             # Root app with WebSocket + IPC wiring
+        ├── components/
+        │   ├── Overlay.tsx     # Main overlay container
+        │   ├── Widget.tsx      # Productivity widget
+        │   ├── TranslationPanel.tsx  # Floating translation sidebar
+        │   ├── LanguagePicker.tsx    # Source/target language selector
+        │   └── RegionSelector.tsx    # Screen region selection tool
+        ├── hooks/
+        │   ├── useWebSocket.ts      # WebSocket connection manager
+        │   └── useTranslation.ts    # Translation throttle + paragraph merging
+        ├── store/appStore.ts        # Zustand global state
+        └── types/index.ts           # TypeScript interfaces
 ```
 
-## Environment Variables
+## Building for Production
 
 ```bash
-MISTRAL_API_KEY=         # Required for real vision/translation
-ELEVENLABS_API_KEY=      # Optional — voice narration
-WANDB_API_KEY=           # Optional — experiment tracking
-CAPTURE_FPS=2            # Screen capture framerate
-VISION_THROTTLE_MS=3000  # Throttle Pixtral calls (ms)
-DEBUG_MODE=true          # Enable debug logging
+cd frontend
+npm run build
 ```
 
-## Team
+This compiles TypeScript, bundles with Vite, and packages the Electron app.
 
-Built at the Mistral AI Hackathon, Tokyo 2026.
+## License
+
+MIT

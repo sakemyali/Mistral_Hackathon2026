@@ -1,0 +1,72 @@
+_wandb:
+    value:
+        cli_version: 0.25.0
+        e:
+            apqsj6yk4luomzhlbgy8s5i88q16iqnh:
+                apple:
+                    ecpuCores: 4
+                    gpuCores: 8
+                    memoryGb: 8
+                    name: Apple M2
+                    pcpuCores: 4
+                    ramTotalBytes: "8589934592"
+                    swapTotalBytes: "7516192768"
+                args:
+                    - main:app
+                    - --host
+                    - 0.0.0.0
+                    - --port
+                    - "8000"
+                    - --reload
+                cpu_count: 8
+                cpu_count_logical: 8
+                disk:
+                    /:
+                        total: "245107195904"
+                        used: "155257372672"
+                email: emoulayali54@gmail.com
+                executable: /Library/Developer/CommandLineTools/usr/bin/python3
+                git:
+                    commit: 2c94540a459b447600245c9638e3b4eb6724bab0
+                    remote: https://github.com/sakemyali/Mistral_Hackathon2026.git
+                host: mys-MacBook-Air.local
+                memory:
+                    total: "8589934592"
+                os: macOS-14.5-arm64-arm-64bit
+                program: <python with no main file>
+                python: CPython 3.9.6
+                root: /Users/mvrm/Desktop/Hackathons/test/doraemon/backend
+                startedAt: "2026-02-28T19:51:06.406636Z"
+                writerId: apqsj6yk4luomzhlbgy8s5i88q16iqnh
+        m: []
+        python_version: 3.9.6
+        t:
+            "1":
+                - 1
+                - 33
+                - 49
+                - 105
+            "2":
+                - 1
+                - 33
+                - 49
+                - 105
+            "3":
+                - 2
+                - 13
+                - 16
+                - 61
+            "4": 3.9.6
+            "5": 0.25.0
+            "12": 0.25.0
+            "13": darwin-arm64
+classifier_fps:
+    value: 0.5
+ministral_model:
+    value: ministral-3b-latest
+ocr_fps:
+    value: 2
+pixtral_model:
+    value: pixtral-12b-2409
+vision_fps:
+    value: 0.25
