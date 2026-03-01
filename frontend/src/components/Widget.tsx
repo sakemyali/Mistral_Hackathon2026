@@ -18,6 +18,9 @@ export default function Widget() {
     setCaptureRegion,
     regionSelecting,
     setRegionSelecting,
+    agentAction,
+    voiceEnabled,
+    setVoiceEnabled,
   } = useAppStore()
 
   const widgetRef = useRef<HTMLDivElement>(null)
@@ -217,6 +220,38 @@ export default function Widget() {
                 )}
               </div>
             </div>
+
+            {/* Voice toggle */}
+            <div className="flex items-center justify-between">
+              <label className="text-white/70 text-xs">Voice</label>
+              <button
+                onClick={() => setVoiceEnabled(!voiceEnabled)}
+                className={`relative w-8 h-4 rounded-full transition-colors cursor-pointer ${
+                  voiceEnabled ? 'bg-blue-500' : 'bg-white/20'
+                }`}
+              >
+                <div
+                  className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform ${
+                    voiceEnabled ? 'translate-x-4' : 'translate-x-0.5'
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* Agent status */}
+            {agentAction && (
+              <div className="flex items-center gap-1.5">
+                <span className="text-white/40 text-[10px] uppercase tracking-wider">Agent</span>
+                <span className="text-blue-400/80 text-[10px] font-medium">
+                  {agentAction.agent_name}
+                </span>
+                {agentAction.action && (
+                  <span className="text-white/30 text-[9px]">
+                    {agentAction.action}
+                  </span>
+                )}
+              </div>
+            )}
 
             {/* Opacity */}
             <OpacitySlider />

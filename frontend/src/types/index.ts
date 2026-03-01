@@ -36,6 +36,22 @@ export interface AgentAction {
   data: unknown
 }
 
+export interface CodeSuggestion {
+  raw: string
+  context: string
+}
+
+export interface NarrationData {
+  audioBuffer: string | null
+  text: string
+  voiceMode: string
+}
+
+export interface VibeAgentData {
+  suggestion: CodeSuggestion
+  narration: NarrationData | null
+}
+
 export interface ErrorMessage {
   type: 'error'
   message: string

@@ -35,6 +35,7 @@ export function useWebSocket() {
         switch (msg.type) {
           case 'intent_update':
             setIntent(msg.intent, msg.confidence, msg.reasoning)
+            useAppStore.getState().setAgentAction(msg.agent_action)
             break
           case 'ocr_update':
             setOCRWords(msg.words)

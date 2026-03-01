@@ -1,12 +1,14 @@
 import { useEffect } from 'react'
 import { useWebSocket, markQuitting } from './hooks/useWebSocket'
 import { useTranslation } from './hooks/useTranslation'
+import { useNarration } from './hooks/useNarration'
 import { useAppStore } from './store/appStore'
 import Overlay from './components/Overlay'
 
 function App() {
   const { send, translationHandlerRef } = useWebSocket()
   useTranslation(send, translationHandlerRef)
+  useNarration()
 
   const {
     translationEnabled,

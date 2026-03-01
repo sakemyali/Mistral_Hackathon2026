@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Intent, OCRWord, TranslatedWord, CaptureRegion } from '../types'
+import type { Intent, OCRWord, TranslatedWord, CaptureRegion, AgentAction } from '../types'
 
 interface AppState {
   connected: boolean
@@ -18,6 +18,13 @@ interface AppState {
   overlayOpacity: number
   captureRegion: CaptureRegion | null
   regionSelecting: boolean
+  // Agent state
+  agentAction: AgentAction | null
+  codeSuggestionVisible: boolean
+  narrationPlaying: boolean
+  voiceEnabled: boolean
+  voiceIdEn: string
+  voiceIdJp: string
 }
 
 interface AppActions {
@@ -33,6 +40,13 @@ interface AppActions {
   setOverlayOpacity: (opacity: number) => void
   setCaptureRegion: (region: CaptureRegion | null) => void
   setRegionSelecting: (selecting: boolean) => void
+  // Agent actions
+  setAgentAction: (action: AgentAction | null) => void
+  dismissCodeSuggestion: () => void
+  setNarrationPlaying: (playing: boolean) => void
+  setVoiceEnabled: (enabled: boolean) => void
+  setVoiceIdEn: (id: string) => void
+  setVoiceIdJp: (id: string) => void
 }
 
 export const useAppStore = create<AppState & AppActions>((set) => ({
@@ -52,6 +66,13 @@ export const useAppStore = create<AppState & AppActions>((set) => ({
   overlayOpacity: 0.85,
   captureRegion: null,
   regionSelecting: false,
+  // Agent defaults
+  agentAction: null,
+  codeSuggestionVisible: false,
+  narrationPlaying: false,
+  voiceEnabled: true,
+  voiceIdEn: 'JBFqnCBsd6RMkjVDRZzb',
+  voiceIdJp: 'pFZP5JQG7iQjIQuC4Bku',
 
   setConnected: (connected) => set({ connected }),
   setIntent: (intent, confidence, reasoning) =>
@@ -66,4 +87,11 @@ export const useAppStore = create<AppState & AppActions>((set) => ({
   setOverlayOpacity: (opacity) => set({ overlayOpacity: opacity }),
   setCaptureRegion: (region) => set({ captureRegion: region }),
   setRegionSelecting: (selecting) => set({ regionSelecting: selecting }),
+  // Agent actions
+  setAgentAction: (action) => set({ agentAction: action, codeSuggestionVisible: action !== null }),
+  dismissCodeSuggestion: () => set({ codeSuggestionVisible: false }),
+  setNarrationPlaying: (playing) => set({ narrationPlaying: playing }),
+  setVoiceEnabled: (enabled) => set({ voiceEnabled: enabled }),
+  setVoiceIdEn: (id) => set({ voiceIdEn: id }),
+  setVoiceIdJp: (id) => set({ voiceIdJp: id }),
 }))
