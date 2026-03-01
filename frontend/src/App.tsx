@@ -10,23 +10,39 @@ function App() {
   useTranslation(send, translationHandlerRef)
   useNarration()
 
+  const captureRegion = useAppStore((s) => s.captureRegion)
   const {
-    translationEnabled,
     setTranslationEnabled,
     setRegionSelecting,
     setCaptureRegion,
+    setAssistantEnabled,
+    setWsSend,
+    setMinimized,
+    setChatOpen,
+    dismissCodeSuggestion,
   } = useAppStore()
+
+  // Register wsSend in store so Widget/ChatWidget can use it
+  useEffect(() => {
+    setWsSend(send)
+  }, [send, setWsSend])
+
+  // Send capture region to backend whenever it changes
+  useEffect(() => {
+    send({ type: 'set_capture_region', region: captureRegion })
+  }, [captureRegion, send])
 
   // Wire up IPC listeners from Electron main process
   useEffect(() => {
     const cleanups: (() => void)[] = []
 
     if (window.electronAPI) {
-      // Alt+T: toggle translation
+      // Alt+T: toggle translation + notify backend
       cleanups.push(
         window.electronAPI.onToggleTranslation(() => {
-          const current = useAppStore.getState().translationEnabled
-          setTranslationEnabled(!current)
+          const next = !useAppStore.getState().translationEnabled
+          setTranslationEnabled(next)
+          send({ type: 'toggle_translation', enabled: next })
         }),
       )
 
@@ -50,12 +66,62 @@ function App() {
           setCaptureRegion(region)
         }),
       )
+
+      // Alt+H: toggle minimized mode
+      if (window.electronAPI.onToggleMinimize) {
+        cleanups.push(
+          window.electronAPI.onToggleMinimize(() => {
+            const current = useAppStore.getState().minimized
+            setMinimized(!current)
+          }),
+        )
+      }
+
+      // Alt+D: dismiss suggestion + notify backend
+      if (window.electronAPI.onDismissSuggestion) {
+        cleanups.push(
+          window.electronAPI.onDismissSuggestion(() => {
+            send({ type: 'suggestion_feedback', action: 'dismissed' })
+            dismissCodeSuggestion()
+          }),
+        )
+      }
+
+      // Alt+A: apply suggestion
+      if (window.electronAPI.onApplySuggestion) {
+        cleanups.push(
+          window.electronAPI.onApplySuggestion(() => {
+            window.dispatchEvent(new CustomEvent('doraemon-apply-suggestion'))
+          }),
+        )
+      }
+
+      // Alt+C: toggle chat
+      if (window.electronAPI.onToggleChat) {
+        cleanups.push(
+          window.electronAPI.onToggleChat(() => {
+            const current = useAppStore.getState().chatOpen
+            setChatOpen(!current)
+          }),
+        )
+      }
+
+      // Alt+S: toggle assistant
+      if (window.electronAPI.onToggleAssistant) {
+        cleanups.push(
+          window.electronAPI.onToggleAssistant(() => {
+            const next = !useAppStore.getState().assistantEnabled
+            setAssistantEnabled(next)
+            send({ type: 'toggle_assistant', enabled: next })
+          }),
+        )
+      }
     }
 
     return () => {
       cleanups.forEach((fn) => fn())
     }
-  }, [setTranslationEnabled, setRegionSelecting, setCaptureRegion])
+  }, [send, setTranslationEnabled, setRegionSelecting, setCaptureRegion, setAssistantEnabled, setMinimized, setChatOpen, dismissCodeSuggestion])
 
   return <Overlay />
 }

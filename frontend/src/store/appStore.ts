@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Intent, OCRWord, TranslatedWord, CaptureRegion, AgentAction } from '../types'
+import type { Intent, OCRWord, TranslatedWord, CaptureRegion, AgentAction, ChatMessage } from '../types'
 
 interface AppState {
   connected: boolean
@@ -26,6 +26,15 @@ interface AppState {
   voiceIdEn: string
   voiceIdJp: string
   diffPreviewVisible: boolean
+  // Toggle + WS send
+  assistantEnabled: boolean
+  wsSend: ((data: object) => void) | null
+  selectedVoiceId: string
+  // Minimized mode
+  minimized: boolean
+  // Chat
+  chatOpen: boolean
+  chatMessages: ChatMessage[]
 }
 
 interface AppActions {
@@ -50,6 +59,15 @@ interface AppActions {
   setVoiceIdJp: (id: string) => void
   showDiffPreview: () => void
   hideDiffPreview: () => void
+  // Toggle + WS
+  setAssistantEnabled: (enabled: boolean) => void
+  setWsSend: (send: ((data: object) => void) | null) => void
+  setSelectedVoiceId: (id: string) => void
+  // Minimized
+  setMinimized: (minimized: boolean) => void
+  // Chat
+  setChatOpen: (open: boolean) => void
+  addChatMessage: (msg: ChatMessage) => void
 }
 
 export const useAppStore = create<AppState & AppActions>((set) => ({
@@ -77,6 +95,15 @@ export const useAppStore = create<AppState & AppActions>((set) => ({
   voiceIdEn: 'JBFqnCBsd6RMkjVDRZzb',
   voiceIdJp: 'pFZP5JQG7iQjIQuC4Bku',
   diffPreviewVisible: false,
+  // Toggle + WS
+  assistantEnabled: true,
+  wsSend: null,
+  selectedVoiceId: 'JBFqnCBsd6RMkjVDRZzb',
+  // Minimized
+  minimized: false,
+  // Chat
+  chatOpen: false,
+  chatMessages: [],
 
   setConnected: (connected) => set({ connected }),
   setIntent: (intent, confidence, reasoning) =>
@@ -100,4 +127,18 @@ export const useAppStore = create<AppState & AppActions>((set) => ({
   setVoiceIdJp: (id) => set({ voiceIdJp: id }),
   showDiffPreview: () => set({ diffPreviewVisible: true }),
   hideDiffPreview: () => set({ diffPreviewVisible: false }),
+  // Toggle + WS
+  setAssistantEnabled: (enabled) =>
+    set(
+      enabled
+        ? { assistantEnabled: true }
+        : { assistantEnabled: false, agentAction: null, codeSuggestionVisible: false, narrationPlaying: false },
+    ),
+  setWsSend: (send) => set({ wsSend: send }),
+  setSelectedVoiceId: (id) => set({ selectedVoiceId: id }),
+  // Minimized
+  setMinimized: (minimized) => set({ minimized: minimized }),
+  // Chat
+  setChatOpen: (open) => set({ chatOpen: open }),
+  addChatMessage: (msg) => set((s) => ({ chatMessages: [...s.chatMessages, msg] })),
 }))

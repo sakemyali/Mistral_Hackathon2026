@@ -9,12 +9,26 @@ import type { VibeAgentData } from '../types'
 export function useNarration() {
   const agentAction = useAppStore((s) => s.agentAction)
   const voiceEnabled = useAppStore((s) => s.voiceEnabled)
+  const assistantEnabled = useAppStore((s) => s.assistantEnabled)
   const setNarrationPlaying = useAppStore((s) => s.setNarrationPlaying)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const urlRef = useRef<string | null>(null)
 
+  // Stop audio immediately when assistant is disabled
   useEffect(() => {
-    if (!agentAction || !voiceEnabled) return
+    if (!assistantEnabled && audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current = null
+      if (urlRef.current) {
+        URL.revokeObjectURL(urlRef.current)
+        urlRef.current = null
+      }
+      setNarrationPlaying(false)
+    }
+  }, [assistantEnabled, setNarrationPlaying])
+
+  useEffect(() => {
+    if (!agentAction || !voiceEnabled || !assistantEnabled) return
 
     const data = agentAction.data as VibeAgentData | undefined
     const audioBuffer = data?.narration?.audioBuffer
@@ -69,5 +83,5 @@ export function useNarration() {
       }
       setNarrationPlaying(false)
     }
-  }, [agentAction, voiceEnabled, setNarrationPlaying])
+  }, [agentAction, voiceEnabled, assistantEnabled, setNarrationPlaying])
 }

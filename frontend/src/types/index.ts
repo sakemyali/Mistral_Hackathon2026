@@ -30,6 +30,12 @@ export interface TranslationResult {
   request_id: string
 }
 
+export interface ChatResponse {
+  type: 'chat_response'
+  text: string
+  request_id: string
+}
+
 export interface AgentAction {
   agent_name: string
   action: string | null
@@ -37,6 +43,8 @@ export interface AgentAction {
 }
 
 export interface CodeSuggestion {
+  suggestion_type?: 'code' | 'idea' | 'tip' | 'action'
+  content?: string
   code_before: string
   code_after: string
   explanation: string
@@ -54,13 +62,19 @@ export interface VibeAgentData {
   narration: NarrationData | null
 }
 
+export interface ChatMessage {
+  role: 'user' | 'assistant'
+  text: string
+  timestamp: number
+}
+
 export interface ErrorMessage {
   type: 'error'
   message: string
   request_id: string
 }
 
-export type WSMessage = IntentUpdate | OCRUpdate | TranslationResult | ErrorMessage
+export type WSMessage = IntentUpdate | OCRUpdate | TranslationResult | ChatResponse | ErrorMessage
 
 export interface TranslatedWord {
   original: string
@@ -88,11 +102,19 @@ declare global {
       pasteToActiveWindow: (text: string) => Promise<{ success: boolean; error?: string }>
       setCaptureRegion: (region: CaptureRegion | null) => void
       setRegionSelecting: (active: boolean) => void
+      setFocusable: (focusable: boolean) => void
       onToggleTranslation: (callback: () => void) => () => void
       onAppQuit: (callback: () => void) => () => void
       onStartRegionSelect: (callback: () => void) => () => void
       onCaptureRegionUpdated: (callback: (region: CaptureRegion | null) => void) => () => void
       onCancelRegionSelect: (callback: () => void) => () => void
+      // F6: Minimized head mode
+      onToggleMinimize: (callback: () => void) => () => void
+      // F7: Keyboard shortcuts
+      onDismissSuggestion: (callback: () => void) => () => void
+      onApplySuggestion: (callback: () => void) => () => void
+      onToggleChat: (callback: () => void) => () => void
+      onToggleAssistant: (callback: () => void) => () => void
     }
   }
 }

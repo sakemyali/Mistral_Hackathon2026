@@ -43,6 +43,13 @@ export function useWebSocket() {
           case 'translation_result':
             translationHandlerRef.current?.(msg.request_id, msg.translations)
             break
+          case 'chat_response':
+            useAppStore.getState().addChatMessage({
+              role: 'assistant',
+              text: msg.text,
+              timestamp: Date.now(),
+            })
+            break
           case 'error':
             console.error('[WS] Backend error:', msg.message)
             useAppStore.getState().setTranslationLoading(false)
