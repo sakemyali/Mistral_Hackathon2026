@@ -92,7 +92,7 @@ async def generate_narration(
             audio_stream = el_client.text_to_speech.convert(
                 voice_id=voice_id,
                 text=narration_text,
-                model_id="eleven_multilingual_v2",
+                model_id="eleven_multilingual_v3",
                 output_format="mp3_44100_128",
             )
 
