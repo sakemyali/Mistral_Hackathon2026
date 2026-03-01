@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY", "")
+MISTRAL_OCR_MODEL = os.getenv("MISTRAL_OCR_MODEL", "mistral-ocr-latest")
+MISTRAL_TEXT_MODEL = os.getenv("MISTRAL_TEXT_MODEL", "mistral-large-latest")
 OCR_FPS = float(os.getenv("OCR_FPS", "2"))
 VISION_FPS = float(os.getenv("VISION_FPS", "0.25"))
 CLASSIFIER_FPS = float(os.getenv("CLASSIFIER_FPS", "0.5"))

@@ -5,16 +5,18 @@ from typing import List, Optional
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
 
 from pipelines import PipelineOrchestrator
 from translator import translate_batch
 from ocr import OCRResult
 from classifier import IntentResult
 from agents.base import AgentResponse
+from doraimon_integration import run_doraimon_pipeline
 from config import (
     WANDB_ENABLED, WANDB_PROJECT, WANDB_RUN_NAME,
     OCR_FPS, VISION_FPS, CLASSIFIER_FPS,
-    PIXTRAL_MODEL, MINISTRAL_MODEL,
+    MISTRAL_OCR_MODEL, MISTRAL_TEXT_MODEL,
 )
 import metrics
 
@@ -47,6 +49,13 @@ manager = ConnectionManager()
 pipeline = PipelineOrchestrator()
 
 
+class DoraimonProcessRequest(BaseModel):
+    image_path: str = Field(min_length=1)
+    target_language: str = "Japanese"
+    ocr_output_path: str = "ocr_output.json"
+    coord_output_path: str = "output.json"
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     if WANDB_ENABLED:
@@ -57,8 +66,8 @@ async def lifespan(app: FastAPI):
                 "ocr_fps": OCR_FPS,
                 "vision_fps": VISION_FPS,
                 "classifier_fps": CLASSIFIER_FPS,
-                "pixtral_model": PIXTRAL_MODEL,
-                "ministral_model": MINISTRAL_MODEL,
+                "ocr_model": MISTRAL_OCR_MODEL,
+                "text_model": MISTRAL_TEXT_MODEL,
             },
         )
 
@@ -181,3 +190,15 @@ async def websocket_endpoint(websocket: WebSocket):
 @app.get("/health")
 async def health():
     return {"status": "ok", "clients": len(manager.active)}
+
+
+@app.post("/v1/doraimon/process")
+async def doraimon_process(req: DoraimonProcessRequest):
+    result = await asyncio.to_thread(
+        run_doraimon_pipeline,
+        image_path=req.image_path,
+        target_language=req.target_language,
+        ocr_output_path=req.ocr_output_path,
+        coord_output_path=req.coord_output_path,
+    )
+    return {"status": "ok", **result}

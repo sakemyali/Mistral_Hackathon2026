@@ -1,4 +1,5 @@
 import { useAppStore } from '../store/appStore'
+import TranslationOverlay from './TranslationOverlay'
 import TranslationPanel from './TranslationPanel'
 import CodeSuggestionPanel from './CodeSuggestionPanel'
 import ChatWidget from './ChatWidget'
@@ -19,6 +20,7 @@ export default function Overlay() {
 
   return (
     <div className="fixed inset-0 pointer-events-none">
+      <TranslationOverlay />
       <TranslationPanel />
       <CodeSuggestionPanel />
       <ChatWidget />

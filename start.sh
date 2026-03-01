@@ -36,11 +36,41 @@ if [ "$1" = "stop" ]; then
   stop_all
 fi
 
+# Prerequisite checks / auto-setup
+if ! command -v npm >/dev/null 2>&1; then
+  echo "npm is not installed or not in PATH."
+  echo "Install Node.js first, then re-run ./start.sh"
+  exit 1
+fi
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "python3 is not installed or not in PATH."
+  exit 1
+fi
+
 # Check .env
 if [ ! -f "$DIR/backend/.env" ]; then
   echo "No backend/.env found. Copying from .env.example..."
   cp "$DIR/backend/.env.example" "$DIR/backend/.env"
   echo "Edit backend/.env to add your MISTRAL_API_KEY"
+fi
+
+# Ensure frontend dependencies (fixes: "vite: command not found")
+if [ ! -x "$DIR/frontend/node_modules/.bin/vite" ]; then
+  echo "Installing frontend dependencies (npm install)..."
+  (cd "$DIR/frontend" && npm install) || {
+    echo "Failed to install frontend dependencies."
+    exit 1
+  }
+fi
+
+# Ensure backend dependencies include elevenlabs
+if ! (cd "$DIR/backend" && python3 -c "import elevenlabs" >/dev/null 2>&1); then
+  echo "Installing backend dependencies (pip install -r requirements.txt)..."
+  (cd "$DIR/backend" && python3 -m pip install -r requirements.txt) || {
+    echo "Failed to install backend dependencies."
+    exit 1
+  }
 fi
 
 cleanup() {

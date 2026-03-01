@@ -181,3 +181,27 @@ This compiles TypeScript, bundles with Vite, and packages the Electron app.
 ## License
 
 MIT
+
+## Troubleshooting
+
+If startup fails with:
+- `sh: vite: command not found`
+- `ModuleNotFoundError: No module named 'elevenlabs'`
+
+run:
+
+```bash
+cd /Users/hikaru/project/42/Mistral_Hackathon2026_check
+
+# Frontend dependencies (fixes vite not found)
+cd frontend
+npm install
+
+# Backend dependencies (fixes elevenlabs not found)
+cd ../backend
+python3 -m pip install --upgrade pip
+python3 -m pip install -r requirements.txt
+
+# Optional explicit check/install
+python3 -c "import elevenlabs; print('elevenlabs ok')"
+```

@@ -1,15 +1,18 @@
 import asyncio
 import time
+import tempfile
+from pathlib import Path
 from typing import Awaitable, Callable, Dict, Optional
 
 from capture import ScreenCapture
-from ocr import extract_text_with_boxes, OCRResult
+from ocr import OCRResult, OCRWord
 from vision import analyze_screen
 from classifier import classify_intent, IntentResult
 from agents import agent_registry
 from agents.base import AgentContext, AgentResponse
 from config import OCR_FPS, VISION_FPS, CLASSIFIER_FPS
 from metrics import log_pipeline_tick, log_intent
+from doraimon_integration import run_doraimon_pipeline
 
 
 class PipelineOrchestrator:
@@ -25,6 +28,60 @@ class PipelineOrchestrator:
         self._translation_enabled = False
         # Voice selection
         self._voice_id: Optional[str] = None
+        self._tmp_dir = Path(tempfile.gettempdir()) / "doraimon_live_check"
+        self._tmp_dir.mkdir(parents=True, exist_ok=True)
+
+    def _build_ocr_result_from_coord(self, coord_output: dict) -> OCRResult:
+        items = coord_output.get("Text Coordination", [])
+        words: list[OCRWord] = []
+        full_text_parts: list[str] = []
+        if isinstance(items, list):
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                text = str(item.get("text", "")).strip()
+                bbox = item.get("bbox", {})
+                if not text or not isinstance(bbox, dict):
+                    continue
+                try:
+                    x = int(bbox.get("x"))
+                    y = int(bbox.get("y"))
+                    w = int(bbox.get("w"))
+                    h = int(bbox.get("h"))
+                except Exception:
+                    continue
+                if w <= 0 or h <= 0:
+                    continue
+                words.append(
+                    OCRWord(
+                        text=text,
+                        x=x,
+                        y=y,
+                        width=w,
+                        height=h,
+                        confidence=0.99,
+                    )
+                )
+                full_text_parts.append(text)
+
+        full_text = " ".join(full_text_parts).strip()
+        if not full_text:
+            context = coord_output.get("Context", "")
+            if isinstance(context, str):
+                full_text = context.strip()
+        if not words and full_text:
+            words = [
+                OCRWord(
+                    text=full_text[:5000],
+                    x=20,
+                    y=20,
+                    width=900,
+                    height=80,
+                    confidence=0.5,
+                )
+            ]
+
+        return OCRResult(words=words, full_text=full_text, timestamp=time.time())
 
     def set_assistant_enabled(self, enabled: bool):
         self._assistant_enabled = enabled
@@ -74,13 +131,35 @@ class PipelineOrchestrator:
             start = time.time()
             try:
                 frame = await loop.run_in_executor(None, self.capture.grab_frame)
-                result = await loop.run_in_executor(
-                    None, extract_text_with_boxes, frame
+                ts = int(time.time() * 1000)
+                image_path = self._tmp_dir / f"live_{ts}.png"
+                ocr_out = self._tmp_dir / f"live_{ts}_ocr.json"
+                coord_out = self._tmp_dir / f"live_{ts}_coord.json"
+                await loop.run_in_executor(None, frame.save, image_path, "PNG")
+                run_result = await loop.run_in_executor(
+                    None,
+                    run_doraimon_pipeline,
+                    str(image_path),
+                    "same",
+                    str(ocr_out),
+                    str(coord_out),
                 )
+                coord_output = run_result.get("coord_output", {}) if isinstance(run_result, dict) else {}
+                result = self._build_ocr_result_from_coord(coord_output)
                 self._latest_ocr = result
                 await on_ocr(result)
             except Exception as e:
                 print(f"[OCR] Error: {e}")
+            finally:
+                try:
+                    if 'image_path' in locals():
+                        Path(image_path).unlink(missing_ok=True)
+                    if 'ocr_out' in locals():
+                        Path(ocr_out).unlink(missing_ok=True)
+                    if 'coord_out' in locals():
+                        Path(coord_out).unlink(missing_ok=True)
+                except Exception:
+                    pass
 
             elapsed = time.time() - start
             await log_pipeline_tick("ocr", elapsed, interval)
