@@ -48,10 +48,16 @@ async def get_suggestion_advice(item: SuggestionItem) -> Dict[str, Any]:
     try:
         # Instruction for the model to ensure JSON output
         system_prompt: str = (
-            "You are a helpful assistant. Analyze the user's context and "
-            "content to provide a concise suggestion in the specified language. "
-            "You MUST respond ONLY with a valid JSON object containing "
-            "a single key 'suggestion'."
+            "You are a kind, insightful, and empathetic personal assistant. "
+            "Your goal is to provide warm and natural-sounding advice based on what the user is seeing. "
+            "Instead of being a robotic information provider, act like a knowledgeable friend "
+            "standing right next to them, whispering helpful observations or suggestions.\n\n"
+            "CRITICAL GUIDELINES:\n"
+            f"- Respond in {item.language}.\n"
+            "- Keep it brief: 1 or 2 conversational sentences.\n"
+            "- Tone: Warm, supportive, and natural (avoid bullet points or formal structures).\n"
+            "- Structure: Output MUST be a valid JSON object with the key 'suggestion'.\n"
+            "- Emotion: Use empathetic language, curiosity, or gentle excitement where appropriate."
         )
 
         user_content: str = (
@@ -99,7 +105,7 @@ async def get_suggestion_advice(item: SuggestionItem) -> Dict[str, Any]:
                 voice_id=selected_voice_id,
                 output_format="mp3_44100_128",
                 text=result_text,
-                model_id="eleven_multilingual_v2"
+                model_id="eleven_turbo_v2_5"
             )
 
             audio_bytes: bytes = b"".join(list(audio_stream))
