@@ -1,0 +1,66 @@
+_wandb:
+    value:
+        cli_version: 0.25.0
+        e:
+            hgfhaupjib9iibvyyxuxw0qnsgnva3qg:
+                apple:
+                    ecpuCores: 4
+                    gpuCores: 8
+                    memoryGb: 8
+                    name: Apple M2
+                    pcpuCores: 4
+                    ramTotalBytes: "8589934592"
+                    swapTotalBytes: "11811160064"
+                args:
+                    - main:app
+                    - --host
+                    - 0.0.0.0
+                    - --port
+                    - "8000"
+                    - --reload
+                cpu_count: 8
+                cpu_count_logical: 8
+                disk:
+                    /:
+                        total: "245107195904"
+                        used: "163702226944"
+                email: emoulayali54@gmail.com
+                executable: /Library/Developer/CommandLineTools/usr/bin/python3
+                git:
+                    commit: 7b0f2b8cdf61bbe713c1093774d63e19e714e96e
+                    remote: https://github.com/sakemyali/Mistral_Hackathon2026.git
+                host: mys-MacBook-Air.local
+                memory:
+                    total: "8589934592"
+                os: macOS-14.5-arm64-arm-64bit
+                program: <python with no main file>
+                python: CPython 3.9.6
+                root: /Users/mvrm/Desktop/Hackathons/test/doraemon/backend
+                startedAt: "2026-03-01T05:49:38.911628Z"
+                writerId: hgfhaupjib9iibvyyxuxw0qnsgnva3qg
+        m: []
+        python_version: 3.9.6
+        t:
+            "1":
+                - 105
+            "2":
+                - 105
+            "3":
+                - 2
+                - 13
+                - 16
+                - 61
+            "4": 3.9.6
+            "5": 0.25.0
+            "12": 0.25.0
+            "13": darwin-arm64
+classifier_fps:
+    value: 0.5
+ocr_fps:
+    value: 2
+ocr_model:
+    value: mistral-ocr-latest
+text_model:
+    value: mistral-large-latest
+vision_fps:
+    value: 0.25
