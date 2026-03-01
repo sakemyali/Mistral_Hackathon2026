@@ -125,8 +125,8 @@ function createTray() {
     if (!tray || isQuitting) return
     const contextMenu = Menu.buildFromTemplate([
       {
-        label: overlayVisible ? 'Hide Overlay' : 'Show Overlay',
-        click: () => toggleOverlay(),
+        label: 'Toggle Minimize',
+        click: () => sendToRenderer('toggle-minimize'),
       },
       {
         label: 'Toggle Translation',
@@ -165,23 +165,21 @@ function toggleOverlay() {
 }
 
 // ─── Global hotkeys ──────────────────────────────────────────────────────────
+function sendToRenderer(channel: string) {
+  if (!isQuitting && overlayWindow && !overlayWindow.isDestroyed()) {
+    overlayWindow.webContents.send(channel)
+  }
+}
+
 function registerHotkeys() {
-  globalShortcut.register('Alt+T', () => {
-    if (!isQuitting && overlayWindow && !overlayWindow.isDestroyed()) {
-      overlayWindow.webContents.send('toggle-translation')
-    }
-  })
-  globalShortcut.register('Alt+H', () => {
-    toggleOverlay()
-  })
-  globalShortcut.register('Alt+Q', () => {
-    gracefulQuit()
-  })
-  globalShortcut.register('Alt+R', () => {
-    if (!isQuitting && overlayWindow && !overlayWindow.isDestroyed()) {
-      overlayWindow.webContents.send('start-region-select')
-    }
-  })
+  globalShortcut.register('Alt+T', () => sendToRenderer('toggle-translation'))
+  globalShortcut.register('Alt+H', () => sendToRenderer('toggle-minimize'))
+  globalShortcut.register('Alt+Q', () => gracefulQuit())
+  globalShortcut.register('Alt+R', () => sendToRenderer('start-region-select'))
+  globalShortcut.register('Alt+D', () => sendToRenderer('dismiss-suggestion'))
+  globalShortcut.register('Alt+A', () => sendToRenderer('apply-suggestion'))
+  globalShortcut.register('Alt+C', () => sendToRenderer('toggle-chat'))
+  globalShortcut.register('Alt+S', () => sendToRenderer('toggle-assistant'))
 }
 
 // ─── IPC handlers ────────────────────────────────────────────────────────────
@@ -250,6 +248,17 @@ ipcMain.handle('paste-to-active-window', async (_event, text: string) => {
   } catch (err) {
     console.error('[Paste] Keyboard simulation failed:', err)
     return { success: false, error: String(err) }
+  }
+})
+
+// Temporarily toggle window focusable (for region selection)
+ipcMain.on('set-focusable', (_event, focusable: boolean) => {
+  if (isQuitting || !overlayWindow || overlayWindow.isDestroyed()) return
+  overlayWindow.setFocusable(focusable)
+  if (focusable) {
+    overlayWindow.focus()
+  } else {
+    overlayWindow.setIgnoreMouseEvents(true, { forward: true })
   }
 })
 

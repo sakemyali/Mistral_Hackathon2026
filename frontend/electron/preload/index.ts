@@ -1,5 +1,11 @@
 import { ipcRenderer, contextBridge } from 'electron'
 
+// Helper to create IPC listener with cleanup
+function onIpc(channel: string, callback: (...args: unknown[]) => void) {
+  ipcRenderer.on(channel, (_event, ...args) => callback(...args))
+  return () => { ipcRenderer.removeAllListeners(channel) }
+}
+
 contextBridge.exposeInMainWorld('electronAPI', {
   setIgnoreMouse: (ignore: boolean) =>
     ipcRenderer.send('set-ignore-mouse', ignore),
@@ -13,28 +19,25 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.send('set-capture-region', region),
   setRegionSelecting: (active: boolean) =>
     ipcRenderer.send('region-selecting', active),
+  setFocusable: (focusable: boolean) =>
+    ipcRenderer.send('set-focusable', focusable),
   pasteToActiveWindow: (text: string) =>
     ipcRenderer.invoke('paste-to-active-window', text),
 
   // Listen for main process events
-  onToggleTranslation: (callback: () => void) => {
-    ipcRenderer.on('toggle-translation', () => callback())
-    return () => { ipcRenderer.removeAllListeners('toggle-translation') }
-  },
-  onAppQuit: (callback: () => void) => {
-    ipcRenderer.on('app-quit', () => callback())
-    return () => { ipcRenderer.removeAllListeners('app-quit') }
-  },
-  onStartRegionSelect: (callback: () => void) => {
-    ipcRenderer.on('start-region-select', () => callback())
-    return () => { ipcRenderer.removeAllListeners('start-region-select') }
-  },
-  onCaptureRegionUpdated: (callback: (region: { x: number; y: number; width: number; height: number } | null) => void) => {
-    ipcRenderer.on('capture-region-updated', (_event, region) => callback(region))
-    return () => { ipcRenderer.removeAllListeners('capture-region-updated') }
-  },
-  onCancelRegionSelect: (callback: () => void) => {
-    ipcRenderer.on('cancel-region-select', () => callback())
-    return () => { ipcRenderer.removeAllListeners('cancel-region-select') }
-  },
+  onToggleTranslation: (callback: () => void) => onIpc('toggle-translation', callback),
+  onAppQuit: (callback: () => void) => onIpc('app-quit', callback),
+  onStartRegionSelect: (callback: () => void) => onIpc('start-region-select', callback),
+  onCaptureRegionUpdated: (callback: (region: { x: number; y: number; width: number; height: number } | null) => void) =>
+    onIpc('capture-region-updated', callback as (...args: unknown[]) => void),
+  onCancelRegionSelect: (callback: () => void) => onIpc('cancel-region-select', callback),
+
+  // F6: Minimized head mode
+  onToggleMinimize: (callback: () => void) => onIpc('toggle-minimize', callback),
+
+  // F7: Keyboard shortcuts
+  onDismissSuggestion: (callback: () => void) => onIpc('dismiss-suggestion', callback),
+  onApplySuggestion: (callback: () => void) => onIpc('apply-suggestion', callback),
+  onToggleChat: (callback: () => void) => onIpc('toggle-chat', callback),
+  onToggleAssistant: (callback: () => void) => onIpc('toggle-assistant', callback),
 })
