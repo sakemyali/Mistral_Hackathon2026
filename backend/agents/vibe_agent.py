@@ -1,19 +1,21 @@
 """
-VibeAgent — Code helper agent for dorAImon.
+VibeAgent — Versatile AI assistant agent for dorAImon.
 
-Activates on 'hesitant' or 'typo' intents. Uses Devstral (codestral-latest)
-via the official Mistral SDK to analyze on-screen code and provide deliverable
-code suggestions (code_before / code_after).
+Activates on 'hesitant', 'typo', or 'normal' intents. Uses Devstral (codestral-latest)
+via the official Mistral SDK to analyze the screen and provide contextual suggestions:
+code fixes, ideas, tips, or actions.
+
 Chains to NarrationService for optional TTS narration.
 
-Throttled with 5 gates: intent, exact dedup, cooldown, narration guard, similarity.
+Throttled with 6 gates: intent, pending-suggestion, exact dedup, cooldown, narration guard, similarity.
+Turn-aware: tracks last N suggestions and feeds history into prompt.
 """
 
 import hashlib
 import json
 import time
 from difflib import SequenceMatcher
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from mistralai import Mistral
 
@@ -25,14 +27,16 @@ from config import (
     VIBE_COOLDOWN_SECONDS,
     VIBE_SIMILARITY_THRESHOLD,
     VIBE_NARRATION_GUARD_SECONDS,
+    NORMAL_COOLDOWN_SECONDS,
 )
 from prompts import VIBE_AGENT_PROMPT
 
 
-# Intent → action mapping
+# Intent → action mapping (now includes "normal" for general assistance)
 INTENT_ACTION_MAP: Dict[str, str] = {
     "hesitant": "suggestFunction",
     "typo": "fixError",
+    "normal": "suggest",
 }
 
 
@@ -43,9 +47,33 @@ class VibeAgent(BaseAgent):
         self._last_ocr_hash: Optional[str] = None
         self._last_ocr_text: Optional[str] = None
         self._last_activation_time: float = 0.0
+        # Turn awareness
+        self._suggestion_history: List[Dict[str, str]] = []  # last 5
+        self._pending_suggestion: Optional[Dict[str, str]] = None
+
+    def record_feedback(self, action: str):
+        """Record user feedback (applied/dismissed) for turn awareness."""
+        if self._pending_suggestion:
+            self._pending_suggestion["feedback"] = action
+            self._suggestion_history.append(self._pending_suggestion)
+            # Keep last 5
+            if len(self._suggestion_history) > 5:
+                self._suggestion_history = self._suggestion_history[-5:]
+            self._pending_suggestion = None
+
+    def _build_history_text(self) -> str:
+        """Build a text summary of recent suggestions for context injection."""
+        if not self._suggestion_history:
+            return ""
+        lines = ["\nRecent suggestion history (do NOT repeat these):"]
+        for i, entry in enumerate(self._suggestion_history[-3:], 1):
+            feedback = entry.get("feedback", "unknown")
+            explanation = entry.get("explanation", "")[:80]
+            lines.append(f"  {i}. [{feedback}] {explanation}")
+        return "\n".join(lines)
 
     async def should_activate(self, context: AgentContext) -> bool:
-        """Activate on hesitant/typo intents with 5 throttle gates."""
+        """Activate on hesitant/typo/normal intents with 6 throttle gates."""
         # Gate 1: Intent filter
         if context.intent not in INTENT_ACTION_MAP:
             return False
@@ -53,22 +81,27 @@ class VibeAgent(BaseAgent):
         if context.confidence < 0.5:
             return False
 
-        # Gate 2: Exact dedup via MD5 hash
+        # Gate 2: Pending suggestion — don't generate new ones until user dismisses/applies
+        if self._pending_suggestion is not None:
+            return False
+
+        # Gate 3: Exact dedup via MD5 hash
         ocr_hash = hashlib.md5(context.ocr_text.encode()).hexdigest()
         if ocr_hash == self._last_ocr_hash:
             return False
 
         now = time.time()
 
-        # Gate 3: Time-based cooldown (default 10s)
-        if (now - self._last_activation_time) < VIBE_COOLDOWN_SECONDS:
+        # Gate 4: Time-based cooldown (longer for "normal" intent)
+        cooldown = NORMAL_COOLDOWN_SECONDS if context.intent == "normal" else VIBE_COOLDOWN_SECONDS
+        if (now - self._last_activation_time) < cooldown:
             return False
 
-        # Gate 4: Narration guard (default 8s — let voice finish)
+        # Gate 5: Narration guard (default 8s — let voice finish)
         if (now - self._last_activation_time) < VIBE_NARRATION_GUARD_SECONDS:
             return False
 
-        # Gate 5: Similarity check (catches scrolling logs / minor text shifts)
+        # Gate 6: Similarity check (catches scrolling logs / minor text shifts)
         if self._last_ocr_text is not None:
             ratio = SequenceMatcher(
                 None,
@@ -82,21 +115,25 @@ class VibeAgent(BaseAgent):
 
     async def execute(self, context: AgentContext) -> AgentResponse:
         """
-        Analyze on-screen code via Devstral and return deliverable code + narration.
+        Analyze on-screen content via Devstral and return contextual suggestion + narration.
         """
         # Update throttle state
         self._last_ocr_hash = hashlib.md5(context.ocr_text.encode()).hexdigest()
         self._last_ocr_text = context.ocr_text
         self._last_activation_time = time.time()
 
-        action = INTENT_ACTION_MAP.get(context.intent, "suggestFunction")
+        action = INTENT_ACTION_MAP.get(context.intent, "suggest")
 
-        # --- Build prompt from centralized prompts.py ---
+        # --- Build prompt with history ---
+        history_text = self._build_history_text()
         prompt = VIBE_AGENT_PROMPT.format(
             vision_analysis=context.vision_analysis,
             ocr_text=context.ocr_text,
+            suggestion_history=history_text,
         )
 
+        suggestion_type = "code"
+        content = ""
         code_before = ""
         code_after = ""
         explanation = ""
@@ -122,6 +159,8 @@ class VibeAgent(BaseAgent):
 
             try:
                 parsed = json.loads(raw_content)
+                suggestion_type = parsed.get("suggestion_type", "code")
+                content = parsed.get("content", "")
                 code_before = parsed.get("code_before", "")
                 code_after = parsed.get("code_after", "")
                 explanation = parsed.get("explanation", raw_content)
@@ -130,7 +169,14 @@ class VibeAgent(BaseAgent):
 
         except Exception as e:
             print(f"[VibeAgent] API error: {e}")
-            explanation = f"Could not analyze code: {str(e)}"
+            explanation = f"Could not analyze: {str(e)}"
+
+        # Store as pending for turn awareness
+        self._pending_suggestion = {
+            "explanation": explanation,
+            "suggestion_type": suggestion_type,
+            "content": content[:100],
+        }
 
         # --- Chain to narration service for optional TTS ---
         narration: Optional[Dict[str, Any]] = None
@@ -139,6 +185,7 @@ class VibeAgent(BaseAgent):
                 intent=context.intent,
                 action=action,
                 ocr_snippet=context.ocr_text[:200],
+                voice_id=context.voice_id,
             )
         except Exception as e:
             print(f"[VibeAgent] Narration error: {e}")
@@ -148,6 +195,8 @@ class VibeAgent(BaseAgent):
             action=action,
             data={
                 "suggestion": {
+                    "suggestion_type": suggestion_type,
+                    "content": content,
                     "code_before": code_before,
                     "code_after": code_after,
                     "explanation": explanation,

@@ -10,6 +10,7 @@ class AgentContext(BaseModel):
     ocr_text: str
     vision_analysis: str
     timestamp: float
+    voice_id: Optional[str] = None
 
 
 class AgentResponse(BaseModel):

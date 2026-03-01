@@ -34,6 +34,7 @@ async def generate_narration(
     action: str,
     ocr_snippet: str,
     language: str = "English",
+    voice_id: Optional[str] = None,
 ) -> Optional[Dict[str, Any]]:
     """
     Generate a short narration + TTS audio for an agent action.
@@ -43,6 +44,7 @@ async def generate_narration(
         action: The action being taken (e.g. "suggestFunction", "fixError").
         ocr_snippet: Truncated OCR text from the screen (~200 chars).
         language: Target language for TTS voice selection.
+        voice_id: Override voice ID from frontend voice selector.
 
     Returns:
         Dict with audioBuffer (base64), text, voiceMode — or None if disabled.
@@ -85,7 +87,7 @@ async def generate_narration(
         try:
             el_client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
 
-            voice_id = VOICE_MAP.get(language, VOICE_ID_EN)
+            voice_id = voice_id or VOICE_MAP.get(language, VOICE_ID_EN)
 
             audio_stream = el_client.text_to_speech.convert(
                 voice_id=voice_id,
