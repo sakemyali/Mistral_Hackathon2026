@@ -19,6 +19,15 @@ PIXTRAL_MODEL = "pixtral-12b-2409"
 # Ministral 3B for classification & translation
 MINISTRAL_MODEL = os.getenv("MINISTRAL_MODEL", "ministral-3b-latest")
 
+# ElevenLabs TTS
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "")
+VOICE_ID_JP = os.getenv("VOICE_ID_JP", "pFZP5JQG7iQjIQuC4Bku")
+VOICE_ID_EN = os.getenv("VOICE_ID_EN", "JBFqnCBsd6RMkjVDRZzb")
+VOICE_MODE = os.getenv("VOICE_MODE", "auto").lower()  # silent | voice | auto
+
+# Devstral model for code analysis
+DEVSTRAL_MODEL = os.getenv("DEVSTRAL_MODEL", "codestral-latest")
+
 # Weights & Biases (optional)
 WANDB_ENABLED = os.getenv("WANDB_ENABLED", "false").lower() in ("true", "1", "yes")
 WANDB_PROJECT = os.getenv("WANDB_PROJECT", "dorAImon")

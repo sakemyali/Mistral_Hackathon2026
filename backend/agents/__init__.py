@@ -1,7 +1,5 @@
 from .registry import AgentRegistry
+from .vibe_agent import VibeAgent
 
-# Initialize with no agents for hackathon MVP.
-# To add agents later:
-#   from agents import agent_registry
-#   agent_registry.register(MyAgent())
 agent_registry = AgentRegistry()
+agent_registry.register(VibeAgent())
