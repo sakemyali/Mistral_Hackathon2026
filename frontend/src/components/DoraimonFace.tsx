@@ -5,6 +5,7 @@ interface DoraimonFaceProps {
   loading?: boolean
   connected?: boolean
   size?: number
+  talking?: boolean
 }
 
 export default function DoraimonFace({
@@ -12,6 +13,7 @@ export default function DoraimonFace({
   loading = false,
   connected = true,
   size = 24,
+  talking = false,
 }: DoraimonFaceProps) {
   const r = size / 2
 
@@ -64,6 +66,14 @@ export default function DoraimonFace({
             attributeName="opacity"
             values="0.9;0.5;0.9"
             dur="1.2s"
+            repeatCount="indefinite"
+          />
+        )}
+        {talking && !loading && (
+          <animate
+            attributeName="opacity"
+            values="0.9;0.7;0.9"
+            dur="0.6s"
             repeatCount="indefinite"
           />
         )}
@@ -181,6 +191,13 @@ export default function DoraimonFace({
           strokeWidth="2"
           opacity="0.7"
         />
+      ) : talking ? (
+        /* Talking: animated open/close mouth */
+        <ellipse cx="24" cy="34" rx="5" ry="3" fill="white" opacity="0.4"
+          stroke="white" strokeWidth="1.5">
+          <animate attributeName="ry" values="1;4;1" dur="0.4s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.3;0.6;0.3" dur="0.4s" repeatCount="indefinite" />
+        </ellipse>
       ) : intent === 'normal' ? (
         /* Normal: smile */
         <path

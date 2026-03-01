@@ -2,6 +2,7 @@ import { useRef, useState, useCallback, useEffect } from 'react'
 import { useAppStore } from '../store/appStore'
 import type { VibeAgentData } from '../types'
 import DoraimonFace from './DoraimonFace'
+import { useTypewriter } from '../hooks/useTypewriter'
 
 const AUTO_DISMISS_MS = 30_000
 const APPLIED_DISMISS_MS = 2_000
@@ -59,6 +60,17 @@ function computeLineDiff(before: string, after: string) {
   return result
 }
 
+// ── Badge helpers ─────────────────────────────────────────────────────────
+function getBadge(actionType: string | null, suggestionType?: string) {
+  if (actionType === 'fixError') return { label: 'Fix Error', color: 'bg-red-500/20 text-red-400 border-red-500/30' }
+  switch (suggestionType) {
+    case 'idea': return { label: 'Idea', color: 'bg-purple-500/20 text-purple-400 border-purple-500/30' }
+    case 'tip': return { label: 'Tip', color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' }
+    case 'action': return { label: 'Action', color: 'bg-green-500/20 text-green-400 border-green-500/30' }
+    default: return { label: 'Suggestion', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30' }
+  }
+}
+
 // ── Panel states ─────────────────────────────────────────────────────────────
 type PanelView = 'suggestion' | 'diff' | 'applied'
 
@@ -67,6 +79,7 @@ export default function CodeSuggestionPanel() {
   const codeSuggestionVisible = useAppStore((s) => s.codeSuggestionVisible)
   const narrationPlaying = useAppStore((s) => s.narrationPlaying)
   const dismissCodeSuggestion = useAppStore((s) => s.dismissCodeSuggestion)
+  const wsSend = useAppStore((s) => s.wsSend)
 
   const panelRef = useRef<HTMLDivElement>(null)
   const [position, setPosition] = useState(() => ({
@@ -82,13 +95,33 @@ export default function CodeSuggestionPanel() {
     if (codeSuggestionVisible) setView('suggestion')
   }, [agentAction, codeSuggestionVisible])
 
-  // Auto-dismiss timer (paused during diff view)
+  // Auto-dismiss timer (paused during diff view or while narration is playing)
   useEffect(() => {
     if (!codeSuggestionVisible || view === 'diff') return
+    // Pause auto-dismiss while narration is playing so user can listen
+    if (view === 'suggestion' && narrationPlaying) return
     const ms = view === 'applied' ? APPLIED_DISMISS_MS : AUTO_DISMISS_MS
-    const timer = setTimeout(dismissCodeSuggestion, ms)
+    const timer = setTimeout(() => {
+      // Send feedback to backend so pending_suggestion is cleared
+      wsSend?.({ type: 'suggestion_feedback', action: 'auto_dismissed' })
+      dismissCodeSuggestion()
+    }, ms)
     return () => clearTimeout(timer)
-  }, [codeSuggestionVisible, agentAction, dismissCodeSuggestion, view])
+  }, [codeSuggestionVisible, agentAction, dismissCodeSuggestion, view, narrationPlaying, wsSend])
+
+  // Listen for Alt+A (apply-suggestion) custom event from App.tsx
+  useEffect(() => {
+    const handler = () => {
+      if (!codeSuggestionVisible) return
+      if (view === 'suggestion') {
+        setView('diff')
+      } else if (view === 'diff') {
+        handleConfirmApplyRef.current?.()
+      }
+    }
+    window.addEventListener('doraemon-apply-suggestion', handler)
+    return () => window.removeEventListener('doraemon-apply-suggestion', handler)
+  }, [codeSuggestionVisible, view])
 
   const handleMouseEnter = useCallback(() => {
     window.electronAPI?.setIgnoreMouse(false)
@@ -129,8 +162,8 @@ export default function CodeSuggestionPanel() {
   )
 
   const handleCopy = useCallback(() => {
-    const data = agentAction?.data as VibeAgentData | undefined
-    const text = data?.suggestion?.code_after
+    const d = agentAction?.data as VibeAgentData | undefined
+    const text = d?.suggestion?.code_after || d?.suggestion?.content
     if (text) {
       window.electronAPI?.copyToClipboard(text)
     }
@@ -141,9 +174,12 @@ export default function CodeSuggestionPanel() {
   }, [])
 
   const handleConfirmApply = useCallback(async () => {
-    const data = agentAction?.data as VibeAgentData | undefined
-    const code = data?.suggestion?.code_after
+    const d = agentAction?.data as VibeAgentData | undefined
+    const code = d?.suggestion?.code_after
     if (!code) return
+
+    // Send feedback to backend
+    wsSend?.({ type: 'suggestion_feedback', action: 'applied' })
 
     // Make overlay transparent FIRST so Cmd+V reaches the editor
     window.electronAPI?.setIgnoreMouse(true)
@@ -153,7 +189,6 @@ export default function CodeSuggestionPanel() {
       if (result?.success) {
         setView('applied')
       } else {
-        // Fallback: just copy to clipboard
         window.electronAPI?.copyToClipboard(code)
         setView('applied')
       }
@@ -161,29 +196,43 @@ export default function CodeSuggestionPanel() {
       window.electronAPI?.copyToClipboard(code)
       setView('applied')
     }
-  }, [agentAction])
+  }, [agentAction, wsSend])
+
+  // Keep a ref for the event listener
+  const handleConfirmApplyRef = useRef(handleConfirmApply)
+  handleConfirmApplyRef.current = handleConfirmApply
+
+  const handleDismiss = useCallback(() => {
+    wsSend?.({ type: 'suggestion_feedback', action: 'dismissed' })
+    dismissCodeSuggestion()
+  }, [wsSend, dismissCodeSuggestion])
 
   const handleCancelDiff = useCallback(() => {
     setView('suggestion')
   }, [])
 
+  // Typewriter animations
+  const data = (codeSuggestionVisible && agentAction?.agent_name === 'vibe')
+    ? agentAction.data as VibeAgentData | undefined
+    : undefined
+  const narrationText = useTypewriter(data?.narration?.text || '', 25, narrationPlaying)
+  const explanationText = useTypewriter(data?.suggestion?.explanation || '', 20, codeSuggestionVisible)
+
   if (!codeSuggestionVisible || !agentAction || agentAction.agent_name !== 'vibe') {
     return null
   }
 
-  const data = agentAction.data as VibeAgentData | undefined
   const suggestion = data?.suggestion
   const narration = data?.narration
   const actionType = agentAction.action
 
-  const isFixError = actionType === 'fixError'
-  const badge = isFixError ? 'Fix Error' : 'Suggestion'
-  const badgeColor = isFixError
-    ? 'bg-red-500/20 text-red-400 border-red-500/30'
-    : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
+  // Determine suggestion type (F9: flexible suggestions)
+  const suggestionType = suggestion?.suggestion_type || 'code'
+  const isCodeSuggestion = suggestionType === 'code'
+  const { label: badge, color: badgeColor } = getBadge(actionType, suggestionType)
 
-  const hasCode = !!(suggestion?.code_after)
-  const hasDiff = !!(suggestion?.code_before && suggestion?.code_after && suggestion.code_before !== suggestion.code_after)
+  const hasCode = isCodeSuggestion && !!(suggestion?.code_after)
+  const hasDiff = isCodeSuggestion && !!(suggestion?.code_before && suggestion?.code_after && suggestion.code_before !== suggestion.code_after)
 
   return (
     <div
@@ -209,10 +258,11 @@ export default function CodeSuggestionPanel() {
         >
           <div className="flex items-center gap-2">
             <DoraimonFace
-              intent={isFixError ? 'typo' : 'hesitant'}
+              intent={actionType === 'fixError' ? 'typo' : 'hesitant'}
               loading={false}
               connected={true}
               size={18}
+              talking={narrationPlaying}
             />
             <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded border ${badgeColor}`}>
               {badge}
@@ -222,9 +272,9 @@ export default function CodeSuggestionPanel() {
             )}
           </div>
           <button
-            onClick={dismissCodeSuggestion}
+            onClick={handleDismiss}
             className="text-white/40 hover:text-white text-xs px-1 cursor-pointer transition-colors"
-            title="Dismiss"
+            title="Dismiss (Alt+D)"
           >
             ✕
           </button>
@@ -237,7 +287,10 @@ export default function CodeSuggestionPanel() {
               {narrationPlaying ? '🔊' : '💬'}
             </span>
             <span className="text-white/60 text-[11px] italic leading-snug">
-              {narration.text}
+              {narrationText}
+              {narrationText.length < (narration.text?.length || 0) && (
+                <span className="animate-pulse ml-0.5">|</span>
+              )}
             </span>
           </div>
         )}
@@ -246,7 +299,10 @@ export default function CodeSuggestionPanel() {
         {suggestion?.explanation && view !== 'applied' && (
           <div className="px-3 py-1.5 border-b border-white/5">
             <span className="text-white/70 text-[11px] leading-snug">
-              {suggestion.explanation}
+              {explanationText}
+              {explanationText.length < (suggestion.explanation?.length || 0) && (
+                <span className="animate-pulse ml-0.5">|</span>
+              )}
             </span>
           </div>
         )}
@@ -261,12 +317,19 @@ export default function CodeSuggestionPanel() {
             </div>
           )}
 
-          {/* Suggestion view: show code_after */}
+          {/* Suggestion view */}
           {view === 'suggestion' && (
-            hasCode ? (
+            isCodeSuggestion && hasCode ? (
               <pre className="px-3 py-2.5 text-[11px] leading-relaxed text-green-300/90 font-mono whitespace-pre-wrap break-words">
                 {suggestion!.code_after}
               </pre>
+            ) : !isCodeSuggestion && suggestion?.content ? (
+              // Non-code suggestion: show content text
+              <div className="px-3 py-3">
+                <p className="text-white/80 text-[12px] leading-relaxed">
+                  {suggestion.content}
+                </p>
+              </div>
             ) : (
               <div className="px-3 py-4 text-center">
                 <span className="text-white/25 text-xs">
@@ -292,10 +355,10 @@ export default function CodeSuggestionPanel() {
           )}
         </div>
 
-        {/* Footer */}
-        {view === 'suggestion' && hasCode && (
+        {/* Footer for code suggestions */}
+        {view === 'suggestion' && isCodeSuggestion && hasCode && (
           <div className="flex items-center justify-between px-3 py-1.5 border-t border-white/10">
-            <span className="text-white/20 text-[9px]">Auto-dismiss in 30s</span>
+            <span className="text-white/20 text-[9px]">Alt+D dismiss · Alt+A apply</span>
             <div className="flex items-center gap-1.5">
               <button
                 onClick={handleCopy}
@@ -312,6 +375,20 @@ export default function CodeSuggestionPanel() {
                 Apply
               </button>
             </div>
+          </div>
+        )}
+
+        {/* Footer for non-code suggestions */}
+        {view === 'suggestion' && !isCodeSuggestion && (
+          <div className="flex items-center justify-between px-3 py-1.5 border-t border-white/10">
+            <span className="text-white/20 text-[9px]">Alt+D to dismiss</span>
+            <button
+              onClick={handleDismiss}
+              className="bg-white/10 hover:bg-white/20 text-white/70 text-[10px]
+                rounded px-2 py-0.5 cursor-pointer transition-colors"
+            >
+              Dismiss
+            </button>
           </div>
         )}
 

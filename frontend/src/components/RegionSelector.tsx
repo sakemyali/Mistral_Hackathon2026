@@ -1,5 +1,6 @@
 import { useRef, useState, useCallback, useEffect } from 'react'
 import { useAppStore } from '../store/appStore'
+import DoraimonFace from './DoraimonFace'
 
 interface SelectionBox {
   startX: number
@@ -12,7 +13,6 @@ export default function RegionSelector() {
   const { regionSelecting, setRegionSelecting, setCaptureRegion } = useAppStore()
   const [renderBox, setRenderBox] = useState<SelectionBox | null>(null)
 
-  // Use refs to avoid stale closures in mouse event handlers
   const selectionRef = useRef<SelectionBox | null>(null)
   const isDrawing = useRef(false)
 
@@ -21,6 +21,7 @@ export default function RegionSelector() {
     selectionRef.current = null
     setRenderBox(null)
     setRegionSelecting(false)
+    window.electronAPI?.setFocusable(false)
     window.electronAPI?.setIgnoreMouse(true)
     window.electronAPI?.setRegionSelecting(false)
   }, [setRegionSelecting])
@@ -39,7 +40,6 @@ export default function RegionSelector() {
     const width = Math.abs(sel.endX - sel.startX)
     const height = Math.abs(sel.endY - sel.startY)
 
-    // Minimum 20x20 selection
     if (width >= 20 && height >= 20) {
       const region = { x, y, width, height }
       setCaptureRegion(region)
@@ -49,15 +49,16 @@ export default function RegionSelector() {
     selectionRef.current = null
     setRenderBox(null)
     setRegionSelecting(false)
+    window.electronAPI?.setFocusable(false)
     window.electronAPI?.setIgnoreMouse(true)
     window.electronAPI?.setRegionSelecting(false)
   }, [setCaptureRegion, setRegionSelecting, cancelSelection])
 
-  // When entering region-select mode, register Escape via main process
-  // and attach window-level mouse listeners
   useEffect(() => {
     if (!regionSelecting) return
 
+    // Make window focusable + capture mouse events for reliable drag
+    window.electronAPI?.setFocusable(true)
     window.electronAPI?.setIgnoreMouse(false)
     window.electronAPI?.setRegionSelecting(true)
 
@@ -93,12 +94,10 @@ export default function RegionSelector() {
       finishSelection()
     }
 
-    // Use capture phase to intercept events before any child elements
     window.addEventListener('mousedown', handleMouseDown, true)
     window.addEventListener('mousemove', handleMouseMove, true)
     window.addEventListener('mouseup', handleMouseUp, true)
 
-    // Listen for Escape from Electron main process (window is non-focusable)
     const cleanupCancel = window.electronAPI?.onCancelRegionSelect(() => {
       cancelSelection()
     })
@@ -125,39 +124,90 @@ export default function RegionSelector() {
   return (
     <div
       className="fixed inset-0 z-[100000] cursor-crosshair"
-      style={{ pointerEvents: 'auto' }}
+      style={{ pointerEvents: 'auto', background: 'transparent' }}
     >
-      {/* Semi-transparent overlay — pointer-events-none so it doesn't eat drags */}
-      <div className="absolute inset-0 bg-black/30 pointer-events-none" />
-
-      {/* Instructions */}
+      {/* Instruction pill — top center */}
       <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
-        <div className="bg-black/80 backdrop-blur-md rounded-full px-4 py-1.5
-          border border-white/20 text-white text-xs font-medium">
-          Drag to select capture region · Press Esc to cancel
+        <div className="flex items-center gap-2 bg-gray-900/80 backdrop-blur-md rounded-full
+          px-4 py-1.5 border border-white/20 shadow-lg">
+          <DoraimonFace intent="normal" connected={true} size={16} />
+          <span className="text-white text-xs font-medium">
+            Drag to capture · Esc to cancel
+          </span>
         </div>
       </div>
 
-      {/* Selection rectangle — pointer-events-none so it doesn't interfere */}
+      {/* Selection rectangle — marching ants border, fully transparent background */}
       {rect && rect.width > 0 && rect.height > 0 && (
         <div className="pointer-events-none">
-          <div
-            className="absolute border-2 border-blue-400 rounded"
+          {/* SVG marching ants border */}
+          <svg
+            className="absolute"
             style={{
-              left: rect.left,
-              top: rect.top,
-              width: rect.width,
-              height: rect.height,
-              boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.3)',
-              backgroundColor: 'transparent',
+              left: rect.left - 2,
+              top: rect.top - 2,
+              width: rect.width + 4,
+              height: rect.height + 4,
             }}
-          />
-          {/* Size indicator */}
+          >
+            {/* White background stroke for visibility on dark/light backgrounds */}
+            <rect
+              x="2" y="2"
+              width={rect.width}
+              height={rect.height}
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+              rx="3"
+              opacity="0.4"
+            />
+            {/* Animated blue marching ants */}
+            <rect
+              x="2" y="2"
+              width={rect.width}
+              height={rect.height}
+              fill="none"
+              stroke="#60a5fa"
+              strokeWidth="2"
+              strokeDasharray="6 6"
+              rx="3"
+              style={{ animation: 'marchingAnts 0.4s linear infinite' }}
+            />
+          </svg>
+
+          {/* Corner handles */}
+          {[
+            { x: rect.left, y: rect.top },
+            { x: rect.left + rect.width, y: rect.top },
+            { x: rect.left, y: rect.top + rect.height },
+            { x: rect.left + rect.width, y: rect.top + rect.height },
+          ].map((corner, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 bg-blue-400 rounded-full border border-white/60"
+              style={{ left: corner.x - 4, top: corner.y - 4 }}
+            />
+          ))}
+
+          {/* Doraemon with camera — bottom right of selection */}
           <div
-            className="absolute text-white text-[10px] bg-blue-500/80 rounded px-1.5 py-0.5"
+            className="absolute flex items-center gap-1"
+            style={{
+              left: rect.left + rect.width - 48,
+              top: rect.top + rect.height + 6,
+            }}
+          >
+            <DoraimonFace intent="normal" connected={true} size={20} />
+            <span className="text-sm" style={{ lineHeight: 1 }}>📸</span>
+          </div>
+
+          {/* Size badge — bottom left */}
+          <div
+            className="absolute bg-blue-500/90 text-white text-[10px] font-mono
+              rounded px-1.5 py-0.5 shadow-md"
             style={{
               left: rect.left,
-              top: rect.top + rect.height + 4,
+              top: rect.top + rect.height + 6,
             }}
           >
             {Math.round(rect.width)} × {Math.round(rect.height)}

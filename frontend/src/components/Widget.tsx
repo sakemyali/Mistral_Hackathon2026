@@ -4,6 +4,7 @@ import IntentBadge from './IntentBadge'
 import DoraimonFace from './DoraimonFace'
 import OpacitySlider from './OpacitySlider'
 import LanguagePicker from './LanguagePicker'
+import VoiceSelector from './VoiceSelector'
 
 export default function Widget() {
   const {
@@ -19,8 +20,10 @@ export default function Widget() {
     regionSelecting,
     setRegionSelecting,
     agentAction,
-    voiceEnabled,
-    setVoiceEnabled,
+    narrationPlaying,
+    assistantEnabled,
+    setAssistantEnabled,
+    wsSend,
   } = useAppStore()
 
   const widgetRef = useRef<HTMLDivElement>(null)
@@ -79,6 +82,18 @@ export default function Widget() {
     window.electronAPI?.quit()
   }, [])
 
+  const handleToggleTranslation = useCallback(() => {
+    const next = !translationEnabled
+    setTranslationEnabled(next)
+    wsSend?.({ type: 'toggle_translation', enabled: next })
+  }, [translationEnabled, setTranslationEnabled, wsSend])
+
+  const handleToggleAssistant = useCallback(() => {
+    const next = !assistantEnabled
+    setAssistantEnabled(next)
+    wsSend?.({ type: 'toggle_assistant', enabled: next })
+  }, [assistantEnabled, setAssistantEnabled, wsSend])
+
   return (
     <div
       ref={widgetRef}
@@ -104,6 +119,7 @@ export default function Widget() {
             loading={translationLoading}
             connected={connected}
             size={22}
+            talking={narrationPlaying}
           />
           <span className="text-white text-xs font-medium">dorAImon</span>
         </button>
@@ -124,6 +140,7 @@ export default function Widget() {
                 loading={translationLoading}
                 connected={connected}
                 size={26}
+                talking={narrationPlaying}
               />
               <span className="text-white text-xs font-semibold">dorAImon</span>
             </div>
@@ -155,6 +172,26 @@ export default function Widget() {
               <IntentBadge />
             </div>
 
+            {/* Assistant toggle */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <label className="text-white/70 text-xs">Assistant</label>
+                <span className="text-white/30 text-[9px]">Alt+S</span>
+              </div>
+              <button
+                onClick={handleToggleAssistant}
+                className={`relative w-8 h-4 rounded-full transition-colors cursor-pointer ${
+                  assistantEnabled ? 'bg-green-500' : 'bg-white/20'
+                }`}
+              >
+                <div
+                  className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform ${
+                    assistantEnabled ? 'translate-x-4' : 'translate-x-0.5'
+                  }`}
+                />
+              </button>
+            </div>
+
             {/* Translation toggle */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
@@ -162,7 +199,7 @@ export default function Widget() {
                 <span className="text-white/30 text-[9px]">Alt+T</span>
               </div>
               <button
-                onClick={() => setTranslationEnabled(!translationEnabled)}
+                onClick={handleToggleTranslation}
                 className={`relative w-8 h-4 rounded-full transition-colors cursor-pointer ${
                   translationEnabled ? 'bg-blue-500' : 'bg-white/20'
                 }`}
@@ -221,22 +258,8 @@ export default function Widget() {
               </div>
             </div>
 
-            {/* Voice toggle */}
-            <div className="flex items-center justify-between">
-              <label className="text-white/70 text-xs">Voice</label>
-              <button
-                onClick={() => setVoiceEnabled(!voiceEnabled)}
-                className={`relative w-8 h-4 rounded-full transition-colors cursor-pointer ${
-                  voiceEnabled ? 'bg-blue-500' : 'bg-white/20'
-                }`}
-              >
-                <div
-                  className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform ${
-                    voiceEnabled ? 'translate-x-4' : 'translate-x-0.5'
-                  }`}
-                />
-              </button>
-            </div>
+            {/* Voice selector */}
+            <VoiceSelector />
 
             {/* Agent status */}
             {agentAction && (
@@ -260,8 +283,12 @@ export default function Widget() {
             <div className="border-t border-white/10 pt-2 mt-1">
               <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
                 <span className="text-white/30 text-[9px]">Alt+T  Translate</span>
-                <span className="text-white/30 text-[9px]">Alt+H  Hide</span>
+                <span className="text-white/30 text-[9px]">Alt+H  Minimize</span>
                 <span className="text-white/30 text-[9px]">Alt+R  Region</span>
+                <span className="text-white/30 text-[9px]">Alt+S  Assistant</span>
+                <span className="text-white/30 text-[9px]">Alt+D  Dismiss</span>
+                <span className="text-white/30 text-[9px]">Alt+A  Apply</span>
+                <span className="text-white/30 text-[9px]">Alt+C  Chat</span>
                 <span className="text-white/30 text-[9px]">Alt+Q  Quit</span>
               </div>
             </div>
