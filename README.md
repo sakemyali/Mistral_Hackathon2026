@@ -89,17 +89,6 @@ Screen Content → Vision Analysis → Intent Classification → Vibe Detection
 - **Agent context passing** - Structured AgentContext with intent, confidence, OCR, vision data
 - **Agent response handling** - Standardized AgentResponse format with actions and data
 
-#### 🏙️ **Local Challenges** *(San Francisco / NYC)*
-
-##### 4. 🏗️ **Tilde Research - Best Architectural Modification**
-**Why we qualify:**
-- **Novel multi-model orchestration** - 4 Mistral models running in parallel with different FPS rates
-- **Heterogeneous pipeline design** - OCR (2 FPS), Vision (0.25 FPS), Classifier (0.5 FPS)
-- **Asynchronous coordination** - Staggered loops prevent resource conflicts
-- **Agent-based architecture** - Clean separation of concerns (capture → process → act → narrate)
-- **Modular design** - Each pipeline can be independently tuned or replaced
-- **Real-time performance** - 3 FPS combined throughput with error recovery
-
 **Architectural Innovation:**
 ```
 Traditional AI Assistant:         dorAImon Architecture:
