@@ -66,6 +66,11 @@ Screen text:
 {ocr_text}"""
 
 
+# ── Translation (Mistral Large) ───────────────────────────────────────────
+# Template vars: {source_lang}, {target_lang}, {text}
+TRANSLATION_PROMPT = "Translate the following text from {source_lang} to {target_lang}. Reply with ONLY the translated text, no explanations:\n\n{text}"
+
+
 # ── Narration System Prompt (Ministral-3B) ────────────────────────────────
 # System message for generating TTS narration text.
 NARRATION_SYSTEM_PROMPT = (
