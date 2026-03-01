@@ -9,8 +9,8 @@ python-dotenv>=1.0.0
 pydantic>=2.0.0
 mistralai>=1.6.0
 wandb>=0.15.0
+elevenlabs>=1.0.0
 
 # Note:
 # - Frontend error "vite: command not found" is fixed by running `npm install` in ../frontend.
 # - Backend error "No module named 'elevenlabs'" is fixed by installing the package below.
-elevenlabs>=1.0.0
