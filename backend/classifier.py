@@ -4,19 +4,7 @@ from typing import Literal
 from pydantic import BaseModel
 from config import MINISTRAL_MODEL
 from api import mistral_chat
-
-CLASSIFIER_PROMPT = """You are a work productivity intent classifier. Based on the OCR text and visual analysis from a user's screen, classify their current state into exactly one intent:
-
-- "normal": User is actively and productively working. Text is coherent, actions are purposeful.
-- "hesitant": User appears stuck, indecisive, or distracted. Signs include: long pauses with empty input fields, switching between windows frequently, cursor hovering without action, search queries that suggest confusion.
-- "typo": User's text contains typos, repeated corrections, or garbled input suggesting they are typing carelessly or struggling with input.
-
-Respond in JSON:
-{{"intent": "normal"|"hesitant"|"typo", "confidence": 0.0-1.0, "reasoning": "brief explanation"}}
-
-OCR Text: {ocr_text}
-
-Visual Analysis: {vision_analysis}"""
+from prompts import CLASSIFIER_PROMPT
 
 
 class IntentResult(BaseModel):

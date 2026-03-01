@@ -25,6 +25,7 @@ interface AppState {
   voiceEnabled: boolean
   voiceIdEn: string
   voiceIdJp: string
+  diffPreviewVisible: boolean
 }
 
 interface AppActions {
@@ -47,6 +48,8 @@ interface AppActions {
   setVoiceEnabled: (enabled: boolean) => void
   setVoiceIdEn: (id: string) => void
   setVoiceIdJp: (id: string) => void
+  showDiffPreview: () => void
+  hideDiffPreview: () => void
 }
 
 export const useAppStore = create<AppState & AppActions>((set) => ({
@@ -73,6 +76,7 @@ export const useAppStore = create<AppState & AppActions>((set) => ({
   voiceEnabled: true,
   voiceIdEn: 'JBFqnCBsd6RMkjVDRZzb',
   voiceIdJp: 'pFZP5JQG7iQjIQuC4Bku',
+  diffPreviewVisible: false,
 
   setConnected: (connected) => set({ connected }),
   setIntent: (intent, confidence, reasoning) =>
@@ -94,4 +98,6 @@ export const useAppStore = create<AppState & AppActions>((set) => ({
   setVoiceEnabled: (enabled) => set({ voiceEnabled: enabled }),
   setVoiceIdEn: (id) => set({ voiceIdEn: id }),
   setVoiceIdJp: (id) => set({ voiceIdJp: id }),
+  showDiffPreview: () => set({ diffPreviewVisible: true }),
+  hideDiffPreview: () => set({ diffPreviewVisible: false }),
 }))

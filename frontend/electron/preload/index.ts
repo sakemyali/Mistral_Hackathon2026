@@ -13,6 +13,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.send('set-capture-region', region),
   setRegionSelecting: (active: boolean) =>
     ipcRenderer.send('region-selecting', active),
+  pasteToActiveWindow: (text: string) =>
+    ipcRenderer.invoke('paste-to-active-window', text),
 
   // Listen for main process events
   onToggleTranslation: (callback: () => void) => {

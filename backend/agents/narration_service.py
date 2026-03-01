@@ -20,6 +20,7 @@ from config import (
     VOICE_MODE,
     MINISTRAL_MODEL,
 )
+from prompts import NARRATION_SYSTEM_PROMPT, NARRATION_USER_PROMPT
 
 # Voice mapping: language → voice ID
 VOICE_MAP: Dict[str, str] = {
@@ -56,23 +57,16 @@ async def generate_narration(
     try:
         client = Mistral(api_key=MISTRAL_API_KEY)
 
-        system_prompt = (
-            "You are dorAImon, a friendly AI coding assistant. "
-            "Write 1-2 short sentences narrating what you're about to do. "
-            "Be specific about what you see on screen. "
-            "Keep it conversational and under 30 words."
-        )
-
-        user_prompt = (
-            f"Intent: {intent}\n"
-            f"Action: {action}\n"
-            f"What's on screen: {ocr_snippet[:200]}"
+        user_prompt = NARRATION_USER_PROMPT.format(
+            intent=intent,
+            action=action,
+            ocr_snippet=ocr_snippet[:200],
         )
 
         response = client.chat.complete(
             model=MINISTRAL_MODEL,
             messages=[
-                {"role": "system", "content": system_prompt},
+                {"role": "system", "content": NARRATION_SYSTEM_PROMPT},
                 {"role": "user", "content": user_prompt},
             ],
             temperature=0.7,

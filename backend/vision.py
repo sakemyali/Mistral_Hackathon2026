@@ -1,20 +1,7 @@
 import json
 from config import PIXTRAL_MODEL
 from api import mistral_chat
-
-VISION_PROMPT = """Analyze this screenshot of a user's screen. Describe in JSON format:
-{
-  "active_application": "string - what app/website is visible",
-  "user_activity": "string - what the user appears to be doing",
-  "visual_cues": {
-    "cursor_position": "string - where the cursor appears to be",
-    "active_input": "boolean - is there an active text input",
-    "multiple_windows": "boolean",
-    "idle_indicators": "string - any signs of inactivity"
-  },
-  "context_summary": "string - one sentence summary of the scene"
-}
-Be concise. Focus on productivity-relevant observations."""
+from prompts import VISION_ANALYSIS_PROMPT
 
 
 async def analyze_screen(base64_image: str) -> str:
@@ -28,7 +15,7 @@ async def analyze_screen(base64_image: str) -> str:
             {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": VISION_PROMPT},
+                    {"type": "text", "text": VISION_ANALYSIS_PROMPT},
                     {
                         "type": "image_url",
                         "image_url": {

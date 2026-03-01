@@ -37,7 +37,9 @@ export interface AgentAction {
 }
 
 export interface CodeSuggestion {
-  raw: string
+  code_before: string
+  code_after: string
+  explanation: string
   context: string
 }
 
@@ -83,6 +85,7 @@ declare global {
       setOpacity: (opacity: number) => void
       quit: () => void
       copyToClipboard: (text: string) => void
+      pasteToActiveWindow: (text: string) => Promise<{ success: boolean; error?: string }>
       setCaptureRegion: (region: CaptureRegion | null) => void
       setRegionSelecting: (active: boolean) => void
       onToggleTranslation: (callback: () => void) => () => void

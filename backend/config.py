@@ -28,6 +28,11 @@ VOICE_MODE = os.getenv("VOICE_MODE", "auto").lower()  # silent | voice | auto
 # Devstral model for code analysis
 DEVSTRAL_MODEL = os.getenv("DEVSTRAL_MODEL", "codestral-latest")
 
+# VibeAgent throttling
+VIBE_COOLDOWN_SECONDS = float(os.getenv("VIBE_COOLDOWN_SECONDS", "10"))
+VIBE_SIMILARITY_THRESHOLD = float(os.getenv("VIBE_SIMILARITY_THRESHOLD", "0.85"))
+VIBE_NARRATION_GUARD_SECONDS = float(os.getenv("VIBE_NARRATION_GUARD_SECONDS", "8"))
+
 # Weights & Biases (optional)
 WANDB_ENABLED = os.getenv("WANDB_ENABLED", "false").lower() in ("true", "1", "yes")
 WANDB_PROJECT = os.getenv("WANDB_PROJECT", "dorAImon")
