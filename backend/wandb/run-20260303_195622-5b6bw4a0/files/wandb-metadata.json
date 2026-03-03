@@ -1,0 +1,43 @@
+{
+  "os": "macOS-14.5-arm64-arm-64bit",
+  "python": "CPython 3.9.6",
+  "startedAt": "2026-03-03T10:56:22.627388Z",
+  "args": [
+    "main:app",
+    "--host",
+    "0.0.0.0",
+    "--port",
+    "8000",
+    "--reload"
+  ],
+  "program": "<python with no main file>",
+  "git": {
+    "remote": "https://github.com/sakemyali/Mistral_Hackathon2026",
+    "commit": "d4cca9e5615d3baf151cc436b900c7dcb4e7c762"
+  },
+  "email": "emoulayali54@gmail.com",
+  "root": "/Users/mvrm/Desktop/Hackathons/Mistral_Hackathon2026/backend",
+  "host": "mys-MacBook-Air.local",
+  "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+  "cpu_count": 8,
+  "cpu_count_logical": 8,
+  "disk": {
+    "/": {
+      "total": "245107195904",
+      "used": "153547948032"
+    }
+  },
+  "memory": {
+    "total": "8589934592"
+  },
+  "apple": {
+    "name": "Apple M2",
+    "ecpuCores": 4,
+    "pcpuCores": 4,
+    "gpuCores": 8,
+    "memoryGb": 8,
+    "swapTotalBytes": "4294967296",
+    "ramTotalBytes": "8589934592"
+  },
+  "writerId": "2y1rcrjuzz1i3crdawc8md2l713i6cb7"
+}

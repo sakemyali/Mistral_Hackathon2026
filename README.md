@@ -7,20 +7,6 @@
 [![ElevenLabs](https://img.shields.io/badge/Voice-ElevenLabs-blue?style=flat-square)](https://elevenlabs.io)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
----
-
-<div align="center">
-
-## **[>>> WATCH THE DEMO <<<](https://youtu.be/aCfqFJFCwUU?feature=shared)**
-
-[![Watch dorAImon Demo](https://img.shields.io/badge/%E2%96%B6%EF%B8%8F_DEMO_VIDEO-Watch_on_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/aCfqFJFCwUU?feature=shared)
-
-*See dorAImon in action — 4 Mistral models running in parallel, real-time code suggestions, live translation overlay, and voice narration.*
-
-</div>
-
----
-
 ## Overview
 
 **dorAImon** is an always-on desktop AI assistant that monitors your screen in real-time using **4 Mistral models in parallel**, understands your workflow, and provides proactive assistance. It runs as a transparent Electron overlay that never steals focus from your active applications.
